@@ -8,18 +8,22 @@ public class Walk extends Move {
     public Location destination;
 
     public Walk(Piece source, Location destination) {
-        super(source);
+        super(MoveType.WALK, source);
         this.destination = destination;
     }
 
     @Override
-    public boolean apply(Board board) {
-        if (!board.isValidLocation(this.destination)) return false;
-        if (board.isOccupied(this.destination)) return false;
+    public boolean applyOnBoard(Board board) {
+        if (!this.isValidOnBoard(board)) return false;
         board.removePiece(source);
         this.source.setLocation(destination);
         board.setPiece(this.source);
         return true;
+    }
+
+    @Override
+    public boolean isValidOnBoard(Board board) {
+        return board.isValidPiece(this.source) && board.isValidLocation(this.destination) && !board.isOccupied(this.destination);
     }
 
     @Override

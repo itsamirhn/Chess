@@ -72,7 +72,7 @@ public class Chess {
     }
 
     public boolean applyMove(Move move) {
-        if (move.apply(this.board)) {
+        if (move.applyOnBoard(this.board)) {
             turn += 1;
             return true;
         } else return false;

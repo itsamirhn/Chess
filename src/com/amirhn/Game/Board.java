@@ -26,13 +26,15 @@ public class Board {
     public Piece getPiece(Location location) {
         return this.pieceByLocation.get(location);
     }
-
     public void setPiece(Piece piece) {
         this.pieceByLocation.put(piece.getLocation(), piece);
     }
-
     public void removePiece(Piece piece) {
         this.pieceByLocation.remove(piece.getLocation());
+    }
+
+    public boolean isValidPiece(Piece piece) {
+        return this.getPiece(piece.getLocation()) == piece;
     }
 
     @Override

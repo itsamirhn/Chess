@@ -4,6 +4,8 @@ import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
 import com.amirhn.Moves.Movable;
 
+import java.util.Objects;
+
 public abstract class Piece implements Movable {
 
     public final PieceType type;
@@ -22,6 +24,19 @@ public abstract class Piece implements Movable {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return type == piece.type && color == piece.color && Objects.equals(location, piece.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, color, location);
     }
 
     @Override
