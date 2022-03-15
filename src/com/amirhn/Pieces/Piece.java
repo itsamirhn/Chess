@@ -1,11 +1,8 @@
 package com.amirhn.Pieces;
 
-import com.amirhn.Game.Board;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import com.amirhn.Moves.Movable;
 
 public abstract class Piece implements Movable {
 
@@ -29,13 +26,15 @@ public abstract class Piece implements Movable {
 
     @Override
     public String toString() {
-        if (color == Color.WHITE) return this.type.toString();
-        else return this.type.toString().toLowerCase();
+        return "Piece{" +
+                "type=" + type +
+                ", color=" + color +
+                ", location=" + location +
+                '}';
     }
 
     public boolean canBeCapturedBy(Piece piece) {
         if (piece == null) return false;
-        if (this.color == piece.color) return false;
-        return true;
+        return this.color != piece.color;
     }
 }

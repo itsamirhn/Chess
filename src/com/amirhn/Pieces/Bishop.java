@@ -3,6 +3,9 @@ package com.amirhn.Pieces;
 import com.amirhn.Game.Board;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
+import com.amirhn.Moves.Capture;
+import com.amirhn.Moves.Move;
+import com.amirhn.Moves.Walk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +17,18 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Location> naturalMoves(Board board) {
-        List<Location> moves = new ArrayList<>();
+    public List<Move> getNaturalMoves(Board board) {
+        List<Move> moves = new ArrayList<>();
         int[] dx = {+1, +1, -1, -1};
         int[] dy = {+1, -1, +1, -1};
         for (int i = 0; i < 4; i++) {
             Location location = this.getLocation().byOffset(dx[i], dy[i]);
             while (board.isValidLocation(location)) {
                 if (board.isOccupied(location)) {
-                    if (board.getPiece(location).canBeCapturedBy(this)) moves.add(location);
+                    Piece capturingPiece = board.getPiece(location);
+                    if (capturingPiece.canBeCapturedBy(this)) moves.add(new Capture(this, capturingPiece));
                     break;
-                }
-                moves.add(location);
+                } else moves.add(new Walk(this, location));
                 location = location.byOffset(dx[i], dy[i]);
             }
         }

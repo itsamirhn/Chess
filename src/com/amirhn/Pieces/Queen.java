@@ -3,9 +3,9 @@ package com.amirhn.Pieces;
 import com.amirhn.Game.Board;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
+import com.amirhn.Moves.Move;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Queen extends Piece {
@@ -27,9 +27,9 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Location> naturalMoves(Board board) {
-        List<Location> rookMoves = this.rook.naturalMoves(board);
-        List<Location> bishopMoves = this.bishop.naturalMoves(board);
-        return Stream.concat(rookMoves.stream(), bishopMoves.stream()).toList();
+    public List<Move> getNaturalMoves(Board board) {
+        List<Move> rookMoves = this.rook.getNaturalMoves(board).stream().peek(move -> move.source = this).toList();
+        List<Move> bishopWalks = this.bishop.getNaturalMoves(board).stream().peek(move -> move.source = this).toList();
+        return Stream.concat(rookMoves.stream(), bishopWalks.stream()).toList();
     }
 }

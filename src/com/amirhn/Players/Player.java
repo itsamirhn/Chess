@@ -1,6 +1,8 @@
 package com.amirhn.Players;
 
+import com.amirhn.Game.Board;
 import com.amirhn.Game.Color;
+import com.amirhn.Moves.Move;
 import com.amirhn.Pieces.Piece;
 
 import java.util.ArrayList;
@@ -16,5 +18,11 @@ public abstract class Player {
 
     public Color getColor() {
         return color;
+    }
+
+    public List<Move> getNaturalMoves(Board board) {
+        List<Move> moves = new ArrayList<>();
+        for (Piece piece: this.activePieces) moves.addAll(piece.getNaturalMoves(board));
+        return moves;
     }
 }

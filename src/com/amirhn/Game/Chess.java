@@ -1,16 +1,20 @@
 package com.amirhn.Game;
 
 
+import com.amirhn.Moves.Move;
 import com.amirhn.Pieces.*;
 import com.amirhn.Players.BlackPlayer;
+import com.amirhn.Players.Player;
 import com.amirhn.Players.WhitePlayer;
+
+import java.util.List;
 
 public class Chess {
 
     private Board board;
     public WhitePlayer whitePlayer;
     public BlackPlayer blackPlayer;
-    public int round = 0;
+    public int turn = 0;
 
     public Chess() {
         this.whitePlayer = new WhitePlayer();
@@ -53,4 +57,24 @@ public class Chess {
         return board;
     }
 
+    public Color getTurnColor() {
+        if (this.turn % 2 == 0) return Color.WHITE;
+        else return  Color.BLACK;
+    }
+
+    public Player getTurnPlayer() {
+        if (this.getTurnColor() == Color.WHITE) return this.whitePlayer;
+        else return this.blackPlayer;
+    }
+
+    public List<Move> getNaturalMoves() {
+        return getTurnPlayer().getNaturalMoves(this.board);
+    }
+
+    public boolean applyMove(Move move) {
+        if (move.apply(this.board)) {
+            turn += 1;
+            return true;
+        } else return false;
+    }
 }

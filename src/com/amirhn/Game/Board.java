@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
+    public int appliedMovesCount = 0;
     public final int rows, columns;
-    public final Map<Location, Piece> pieceByLocation = new HashMap<>();;
+    public final Map<Location, Piece> pieceByLocation = new HashMap<>();
     public Board(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
@@ -30,13 +31,17 @@ public class Board {
         this.pieceByLocation.put(piece.getLocation(), piece);
     }
 
+    public void removePiece(Piece piece) {
+        this.pieceByLocation.remove(piece.getLocation());
+    }
+
     @Override
     public String toString() {
         StringBuilder board = new StringBuilder();
         for (int i = 0; i < this.rows; i++) {
             board.append(i + 1).append('\t');
             for (int j = 0; j < this.columns; j++) {
-                if (this.isOccupied(Location.valueOf(i, j))) board.append(this.getPiece(Location.valueOf(i, j)));
+                if (this.isOccupied(Location.valueOf(i, j))) board.append(this.getPiece(Location.valueOf(i, j)).type);
                 else board.append('_');
                 board.append(' ');
             }
