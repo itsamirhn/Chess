@@ -19,6 +19,10 @@ public class Location {
         return Location.valueOf(this.row + dx, this.column + dy);
     }
 
+    public boolean isLight() {
+        return ((this.row + this.column) % 2) == 0;
+    }
+
     @Override
     public String toString() {
         return ((char) (this.column + 'a')) + String.valueOf(this.row + 1);
