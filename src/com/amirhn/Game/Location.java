@@ -20,7 +20,7 @@ public class Location {
     }
 
     public boolean isLight() {
-        return ((this.row + this.column) % 2) == 0;
+        return ((this.row + this.column) % 2) == 1;
     }
 
     @Override
