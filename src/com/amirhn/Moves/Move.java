@@ -5,13 +5,15 @@ import com.amirhn.Pieces.Piece;
 
 public abstract class Move {
     public final MoveType type;
-    public Piece source;
+    public Piece piece;
 
-    public Move(MoveType type, Piece source) {
+    public Move(MoveType type, Piece piece) {
         this.type = type;
-        this.source = source;
+        this.piece = piece;
     }
 
     public abstract boolean applyOnBoard(Board board);
-    public abstract boolean isValidOnBoard(Board board);
+    public abstract boolean undoOnBoard(Board board);
+    public abstract boolean isValidApplyOnBoard(Board board);
+    public abstract boolean isValidUndoOnBoard(Board board);
 }

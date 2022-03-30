@@ -28,8 +28,8 @@ public class Queen extends Piece {
 
     @Override
     public List<Move> getNaturalMoves(Board board) {
-        List<Move> rookMoves = this.rook.getNaturalMoves(board).stream().peek(move -> move.source = this).toList();
-        List<Move> bishopWalks = this.bishop.getNaturalMoves(board).stream().peek(move -> move.source = this).toList();
+        List<Move> rookMoves = this.rook.getNaturalMoves(board).stream().peek(move -> move.piece = this).toList();
+        List<Move> bishopWalks = this.bishop.getNaturalMoves(board).stream().peek(move -> move.piece = this).toList();
         return Stream.concat(rookMoves.stream(), bishopWalks.stream()).toList();
     }
 }

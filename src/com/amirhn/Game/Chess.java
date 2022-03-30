@@ -78,6 +78,13 @@ public class Chess {
         } else return false;
     }
 
+    public boolean undoMove(Move move) {
+        if (move.undoOnBoard(this.board)) {
+            turn -= 1;
+            return true;
+        } else return false;
+    }
+
     @Override
     public String toString() {
         return "Turn: " + getTurnColor() + "\n" + board;
