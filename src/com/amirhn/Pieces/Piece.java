@@ -51,4 +51,8 @@ public abstract class Piece implements Movable {
         if (piece == null) return false;
         return this.color != piece.color;
     }
+
+    public char getSymbol() {
+        return this.type.getSymbol(this.color);
+    }
 }
