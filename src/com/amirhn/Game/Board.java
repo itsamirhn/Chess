@@ -45,7 +45,7 @@ public class Board {
             board.append('\n').append(i + 1).append('\t');
             for (int j = 0; j < this.columns; j++) {
                 if (!this.isOccupied(Location.valueOf(i, j))) board.append('_');
-                else board.append(this.getPiece(Location.valueOf(i, j)).type.letter);
+                else board.append(this.getPiece(Location.valueOf(i, j)).getSymbol());
                 board.append(' ');
             }
         }
