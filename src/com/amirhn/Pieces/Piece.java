@@ -41,9 +41,8 @@ public abstract class Piece implements Movable {
 
     @Override
     public String toString() {
-        return "Piece{" +
-                "type=" + type +
-                ", color=" + color +
+        return this.type + "{" +
+                "color=" + color +
                 ", location=" + location +
                 '}';
     }

@@ -28,6 +28,6 @@ public class Walk extends Move {
 
     @Override
     public String toString() {
-        return "" + this.source.type + this.source.getLocation() + this.destination;
+        return "" + this.source.type.letter + this.destination;
     }
 }

@@ -13,9 +13,4 @@ public enum PieceType {
     PieceType(char letter) {
         this.letter = letter;
     }
-
-    @Override
-    public String toString() {
-        return String.valueOf(this.letter);
-    }
 }

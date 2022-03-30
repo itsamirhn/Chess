@@ -77,4 +77,9 @@ public class Chess {
             return true;
         } else return false;
     }
+
+    @Override
+    public String toString() {
+        return "Turn: " + getTurnColor() + "\n" + board;
+    }
 }

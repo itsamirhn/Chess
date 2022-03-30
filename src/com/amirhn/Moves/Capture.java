@@ -29,6 +29,6 @@ public class Capture extends Move {
 
     @Override
     public String toString() {
-        return "" + this.source.type + this.source.getLocation() + "x" + this.destination;
+        return "" + this.source.type.letter + "x" + this.destination.getLocation();
     }
 }

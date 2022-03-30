@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    public int appliedMovesCount = 0;
     public final int rows, columns;
     public final Map<Location, Piece> pieceByLocation = new HashMap<>();
     public Board(int rows, int columns) {
@@ -40,20 +39,16 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder board = new StringBuilder();
+        board.append(" \t");
+        for (int j = 0; j < this.columns; j++) board.append((char) ('a' + j)).append(' ');
         for (int i = 0; i < this.rows; i++) {
-            board.append(i + 1).append('\t');
+            board.append('\n').append(i + 1).append('\t');
             for (int j = 0; j < this.columns; j++) {
-                if (this.isOccupied(Location.valueOf(i, j))) board.append(this.getPiece(Location.valueOf(i, j)).type);
-                else board.append('_');
+                if (!this.isOccupied(Location.valueOf(i, j))) board.append('_');
+                else board.append(this.getPiece(Location.valueOf(i, j)).type.letter);
                 board.append(' ');
             }
-            board.append('\n');
         }
-        board.append("\n \t");
-        for (int j = 0; j < this.columns; j++) {
-            board.append((char) ('a' + j)).append(' ');
-        }
-        board.append('\n');
         return board.toString();
     }
 }
