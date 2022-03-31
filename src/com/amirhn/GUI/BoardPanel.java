@@ -32,7 +32,7 @@ public class BoardPanel extends JPanel {
         for (int i = board.rows - 1; i >= 0; i--) for (int j = 0; j < board.columns; j++) {
             Location location = Location.valueOf(i, j);
             this.locationPanels[i][j] = new LocationPanel(this, location);
-            if (board.isOccupied(location)) this.locationPanels[i][j].showPiece(board.getPiece(location));
+            if (board.isOccupied(location)) this.locationPanels[i][j].setPiece(board.getPiece(location));
             this.add(locationPanels[i][j]);
         }
         this.board = board;

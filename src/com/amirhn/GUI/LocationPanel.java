@@ -10,18 +10,20 @@ import java.awt.event.MouseListener;
 
 public class LocationPanel extends JPanel implements MouseListener {
 
+    public static final Dimension Size = new Dimension(100, 100);
     public static final Color SelectedLocationColor = new Color(135, 151, 106);
     public static final Color LightLocationColor = new Color(240, 217, 181);
     public static final Color DarkLocationColor = new Color(181, 136, 99);
 
     public final BoardPanel boardPanel;
     public final Location location;
-    public JLabel label;
+    public PiecePanel piecePanel;
 
     public LocationPanel(BoardPanel boardPanel, Location location) {
         super(new GridBagLayout());
         this.boardPanel = boardPanel;
         this.location = location;
+        this.setPreferredSize(Size);
         this.addMouseListener(this);
         this.setDefaultBackground();
         this.validate();
@@ -34,10 +36,10 @@ public class LocationPanel extends JPanel implements MouseListener {
         this.setBackground(SelectedLocationColor);
     }
 
-    public void showPiece(Piece piece) {
+    public void setPiece(Piece piece) {
         this.removeAll();
-        this.label = new JLabel(new PieceImageIcon(piece));
-        this.add(this.label);
+        this.piecePanel = new PiecePanel(this, piece);
+        this.add(this.piecePanel);
     }
 
     @Override
