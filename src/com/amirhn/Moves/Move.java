@@ -1,6 +1,7 @@
 package com.amirhn.Moves;
 
 import com.amirhn.Game.Board;
+import com.amirhn.Game.Chess;
 import com.amirhn.Pieces.Piece;
 
 public abstract class Move {
@@ -12,6 +13,14 @@ public abstract class Move {
         this.piece = piece;
     }
 
+    public boolean isAllowed(Chess chess) {
+        Board board = chess.getBoard();
+        if (chess.getTurnColor() != piece.color) return false;
+        if (!applyOnBoard(board)) return false;
+        boolean isInCheck = chess.isInCheck();
+        assert undoOnBoard(board);
+        return !isInCheck;
+    }
     public abstract boolean applyOnBoard(Board board);
     public abstract boolean undoOnBoard(Board board);
     public abstract boolean isValidApplyOnBoard(Board board);

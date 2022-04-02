@@ -1,6 +1,7 @@
 package com.amirhn.Moves;
 
 import com.amirhn.Game.Board;
+import com.amirhn.Game.Chess;
 import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Piece;
 

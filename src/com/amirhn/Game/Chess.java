@@ -63,26 +63,39 @@ public class Chess {
     }
 
     public Player getTurnPlayer() {
-        if (this.getTurnColor() == Color.WHITE) return this.whitePlayer;
-        else return this.blackPlayer;
+        return getPlayer(getTurnColor());
+    }
+
+    public Player getPlayer(Color color) {
+        if (color == Color.WHITE) return this.whitePlayer;
+        return this.blackPlayer;
     }
 
     public List<Move> getNaturalMoves() {
         return getTurnPlayer().getNaturalMoves(this.board);
     }
 
-    public boolean applyMove(Move move) {
-        if (move.applyOnBoard(this.board)) {
-            turn += 1;
-            return true;
-        } else return false;
+    public boolean isAllowed(Move move) {
+        return move.isAllowed(this);
     }
 
-    public boolean undoMove(Move move) {
-        if (move.undoOnBoard(this.board)) {
-            turn -= 1;
+    public boolean applyMove(Move move) {
+        if (!isAllowed(move)) return false;
+        if (move.applyOnBoard(board)) {
+            turn += 1;
             return true;
-        } else return false;
+        }
+        return false;
+    }
+
+    public boolean isInCheck() {
+        King king = getTurnPlayer().getKing();
+        return getPlayer(getTurnColor().opposite()).isThreatening(board, king);
+    }
+
+    public boolean isCheckmate() {
+        if (!isInCheck()) return false;
+        return getTurnPlayer().getKing().getNaturalMoves(board).isEmpty();
     }
 
     @Override

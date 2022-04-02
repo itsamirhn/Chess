@@ -1,12 +1,15 @@
 package com.amirhn.Pieces;
 
+import com.amirhn.Game.Board;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
-import com.amirhn.Moves.Movable;
+import com.amirhn.Moves.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece implements Movable {
+public abstract class Piece implements Movable, Attacker {
 
     public final PieceType type;
     public final Color color;
@@ -49,10 +52,23 @@ public abstract class Piece implements Movable {
 
     public boolean canBeCapturedBy(Piece piece) {
         if (piece == null) return false;
+        if (piece.type == PieceType.KING) return false;
         return this.color != piece.color;
     }
 
     public char getSymbol() {
         return this.type.getSymbol(this.color);
+    }
+
+    @Override
+    public List<Move> getNaturalMoves(Board board) {
+        List<Move> moves = new ArrayList<>();
+        for (Location location : this.getThreatenedLocations(board)) {
+            if (board.isOccupied(location)) {
+                Piece capturingPiece = board.getPiece(location);
+                if (capturingPiece.canBeCapturedBy(this)) moves.add(new Capture(this, capturingPiece));
+            } else moves.add(new Walk(this, location));
+        }
+        return moves;
     }
 }
