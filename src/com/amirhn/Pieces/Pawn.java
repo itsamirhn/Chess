@@ -3,6 +3,7 @@ package com.amirhn.Pieces;
 import com.amirhn.Game.Board;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
+import com.amirhn.Moves.Capture;
 import com.amirhn.Moves.Move;
 import com.amirhn.Moves.Walk;
 
@@ -25,11 +26,16 @@ public class Pawn extends Piece {
     @Override
     public List<Move> getNaturalMoves(Board board) {
         int sign = this.color == Color.WHITE ? +1 : -1;
-        List<Move> moves = super.getNaturalMoves(board);
-        Location location = this.getLocation().byOffset(sign, 0);
+        List<Move> moves = new ArrayList<>();
+        for (Location location : this.getThreatenedLocations(board)) {
+            if (!board.isOccupied(location)) continue;
+            Piece capturingPiece = board.getPiece(location);
+            if (capturingPiece.canBeCapturedBy(this)) moves.add(new Capture(this, capturingPiece));
+        }
+        Location location = getLocation().byOffset(sign, 0);
         if (board.isValidLocation(location) && !board.isOccupied(location)) moves.add(new Walk(this, location));
-        if (!this.moved) {
-            location = this.getLocation().byOffset(sign * 2, 0);
+        if (!moved) {
+            location = getLocation().byOffset(sign * 2, 0);
             if (board.isValidLocation(location) && !board.isOccupied(location)) moves.add(new Walk(this, location));
         }
         return moves;
