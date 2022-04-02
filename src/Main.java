@@ -9,7 +9,7 @@ public class Main {
         System.out.println(chess);
         for (int i = 0; i < 10; i++) {
             System.out.println();
-            var moves = chess.getNaturalMoves();
+            var moves = chess.getAllowedMoves();
             var move = moves.get((int) (Math.random() * moves.size()));
             if (move.type == MoveType.CAPTURE) System.err.println(move);
             System.out.println(move);

@@ -1,6 +1,7 @@
 package com.amirhn.Players;
 
 import com.amirhn.Game.Board;
+import com.amirhn.Game.Chess;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
 import com.amirhn.Moves.Move;
@@ -26,6 +27,12 @@ public abstract class Player {
     public List<Move> getNaturalMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         for (Piece piece: this.activePieces) moves.addAll(piece.getNaturalMoves(board));
+        return moves;
+    }
+
+    public List<Move> getAllowedMoves(Chess chess) {
+        List<Move> moves = new ArrayList<>();
+        for (Piece piece: this.activePieces) moves.addAll(piece.getAllowedMoves(chess));
         return moves;
     }
 

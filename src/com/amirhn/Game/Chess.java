@@ -67,12 +67,15 @@ public class Chess {
     }
 
     public Player getPlayer(Color color) {
-        if (color == Color.WHITE) return this.whitePlayer;
-        return this.blackPlayer;
+        if (color == Color.WHITE) return whitePlayer;
+        return blackPlayer;
     }
 
     public List<Move> getNaturalMoves() {
-        return getTurnPlayer().getNaturalMoves(this.board);
+        return getTurnPlayer().getNaturalMoves(board);
+    }
+    public List<Move> getAllowedMoves() {
+        return getTurnPlayer().getAllowedMoves(this);
     }
 
     public boolean isAllowed(Move move) {
