@@ -18,7 +18,7 @@ public abstract class Move {
         if (chess.getTurnColor() != piece.color) return false;
         if (!applyOnBoard(board)) return false;
         boolean isInCheck = chess.isInCheck();
-        assert undoOnBoard(board);
+        undoOnBoard(board);
         return !isInCheck;
     }
     public abstract boolean applyOnBoard(Board board);
