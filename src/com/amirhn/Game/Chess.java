@@ -94,7 +94,6 @@ public class Chess {
         return getTurnPlayer().getNaturalMoves(board);
     }
     public List<Move> getAllowedMoves() {
-        if (isCheckmate()) return Collections.emptyList();
         return getTurnPlayer().getAllowedMoves(this);
     }
 
@@ -121,6 +120,11 @@ public class Chess {
     public boolean isCheckmate() {
         if (!isInCheck()) return false;
         return getTurnPlayer().getKing(board).getAllowedMoves(this).isEmpty();
+    }
+
+    public boolean isStalemate() {
+        if (isInCheck()) return false;
+        return getTurnPlayer().getAllowedMoves(this).isEmpty();
     }
 
     @Override
