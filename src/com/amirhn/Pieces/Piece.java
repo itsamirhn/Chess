@@ -21,6 +21,20 @@ public abstract class Piece implements Movable, Attacker {
         this.location = location;
     }
 
+    public static Piece valueOf(Color color, String p) {
+        PieceType type = PieceType.valueOf(p.charAt(0));
+        if (type == null) return null;
+        Location location = Location.valueOf(p.substring(1));
+        return switch (type) {
+            case KING -> new King(color , location);
+            case PAWN -> new Pawn(color , location);
+            case ROOK -> new Rook(color , location);
+            case QUEEN -> new Queen(color , location);
+            case BISHOP -> new Bishop(color , location);
+            case KNIGHT -> new Knight(color , location);
+        };
+    }
+
     public Location getLocation() {
         return location;
     }

@@ -5,10 +5,15 @@ import java.util.Objects;
 public class Location {
     public final int row, column;
     private final int hashCode;
+
     public Location(int row, int column) {
         this.row = row;
         this.column = column;
         this.hashCode = Objects.hash(row, column);
+    }
+
+    public static Location valueOf(String loc) {
+        return new Location(loc.charAt(0) - 'a', loc.charAt(1) - '1');
     }
 
     public static Location valueOf(int row, int column) {

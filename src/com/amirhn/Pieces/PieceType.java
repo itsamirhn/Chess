@@ -18,6 +18,13 @@ public enum PieceType {
         this.symbols = symbols;
     }
 
+    public static PieceType valueOf(char letter) {
+        for (PieceType pieceType : PieceType.values()) {
+            if (pieceType.letter == letter) return pieceType;
+        }
+        return null;
+    }
+
     public char getSymbol(Color color) {
         if (color == Color.WHITE) return this.symbols.charAt(0);
         if (color == Color.BLACK) return this.symbols.charAt(1);
