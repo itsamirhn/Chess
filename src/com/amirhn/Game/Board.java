@@ -3,6 +3,7 @@ package com.amirhn.Game;
 import com.amirhn.Pieces.Piece;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -32,6 +33,10 @@ public class Board {
         this.pieceByLocation.remove(piece.getLocation());
     }
 
+    public List<Piece> getAllPieces() {
+        return pieceByLocation.values().stream().toList();
+    }
+    
     public boolean isValidPiece(Piece piece) {
         return this.getPiece(piece.getLocation()) == piece;
     }

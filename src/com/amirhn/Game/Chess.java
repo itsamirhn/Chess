@@ -1,12 +1,15 @@
 package com.amirhn.Game;
 
 
+import com.amirhn.Moves.Capture;
 import com.amirhn.Moves.Move;
+import com.amirhn.Moves.MoveType;
 import com.amirhn.Pieces.*;
 import com.amirhn.Players.BlackPlayer;
 import com.amirhn.Players.Player;
 import com.amirhn.Players.WhitePlayer;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Chess {
@@ -19,37 +22,49 @@ public class Chess {
     public Chess() {
         this.whitePlayer = new WhitePlayer();
         this.blackPlayer = new BlackPlayer();
-        this.resetBoard();
+        this.setupChessBoard();
     }
 
-    public void resetBoard() {
+    public void setupChessBoard() {
         this.board = new Board(8, 8);
 
-        this.setPiece(new Rook(Color.WHITE, Location.valueOf(0, 0)));
-        this.setPiece(new Knight(Color.WHITE, Location.valueOf(0, 1)));
-        this.setPiece(new Bishop(Color.WHITE, Location.valueOf(0, 2)));
-        this.setPiece(new Queen(Color.WHITE, Location.valueOf(0, 3)));
-        this.setPiece(new King(Color.WHITE, Location.valueOf(0, 4)));
-        this.setPiece(new Bishop(Color.WHITE, Location.valueOf(0, 5)));
-        this.setPiece(new Knight(Color.WHITE, Location.valueOf(0, 6)));
-        this.setPiece(new Rook(Color.WHITE, Location.valueOf(0, 7)));
-        for (int i = 0; i < 8; i++) this.setPiece(new Pawn(Color.WHITE, Location.valueOf(1, i)));
+        setPiece(new Rook(Color.WHITE, Location.valueOf(0, 0)));
+        setPiece(new Knight(Color.WHITE, Location.valueOf(0, 1)));
+        setPiece(new Bishop(Color.WHITE, Location.valueOf(0, 2)));
+        setPiece(new Queen(Color.WHITE, Location.valueOf(0, 3)));
+        setPiece(new King(Color.WHITE, Location.valueOf(0, 4)));
+        setPiece(new Bishop(Color.WHITE, Location.valueOf(0, 5)));
+        setPiece(new Knight(Color.WHITE, Location.valueOf(0, 6)));
+        setPiece(new Rook(Color.WHITE, Location.valueOf(0, 7)));
+        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.WHITE, Location.valueOf(1, i)));
 
-        this.setPiece(new Rook(Color.BLACK, Location.valueOf(7, 0)));
-        this.setPiece(new Knight(Color.BLACK, Location.valueOf(7, 1)));
-        this.setPiece(new Bishop(Color.BLACK, Location.valueOf(7, 2)));
-        this.setPiece(new Queen(Color.BLACK, Location.valueOf(7, 3)));
-        this.setPiece(new King(Color.BLACK, Location.valueOf(7, 4)));
-        this.setPiece(new Bishop(Color.BLACK, Location.valueOf(7, 5)));
-        this.setPiece(new Knight(Color.BLACK, Location.valueOf(7, 6)));
-        this.setPiece(new Rook(Color.BLACK, Location.valueOf(7, 7)));
-        for (int i = 0; i < 8; i++) this.setPiece(new Pawn(Color.BLACK, Location.valueOf(6, i)));
+        setPiece(new Rook(Color.BLACK, Location.valueOf(7, 0)));
+        setPiece(new Knight(Color.BLACK, Location.valueOf(7, 1)));
+        setPiece(new Bishop(Color.BLACK, Location.valueOf(7, 2)));
+        setPiece(new Queen(Color.BLACK, Location.valueOf(7, 3)));
+        setPiece(new King(Color.BLACK, Location.valueOf(7, 4)));
+        setPiece(new Bishop(Color.BLACK, Location.valueOf(7, 5)));
+        setPiece(new Knight(Color.BLACK, Location.valueOf(7, 6)));
+        setPiece(new Rook(Color.BLACK, Location.valueOf(7, 7)));
+        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.BLACK, Location.valueOf(6, i)));
+
+    }
+
+    public void setupCustomScenario() {
+        this.board = new Board(8, 8);
+
+        setPiece(new King(Color.WHITE, Location.valueOf("h1")));
+        setPiece(new Queen(Color.WHITE, Location.valueOf("c5")));
+
+
+        setPiece(new King(Color.BLACK, Location.valueOf("a8")));
+        setPiece(new Pawn(Color.BLACK, Location.valueOf("f2")));
+        setPiece(new Pawn(Color.BLACK, Location.valueOf("g3")));
+        setPiece(new Bishop(Color.BLACK, Location.valueOf("f3")));
 
     }
 
     public void setPiece(Piece piece) {
-        if (piece.color == Color.WHITE) { this.whitePlayer.activePieces.add(piece); }
-        if (piece.color == Color.BLACK) { this.blackPlayer.activePieces.add(piece); }
         this.board.setPiece(piece);
     }
 
@@ -66,6 +81,10 @@ public class Chess {
         return getPlayer(getTurnColor());
     }
 
+    public Player getOpponentPlayer() {
+        return getPlayer(getTurnColor().opposite());
+    }
+
     public Player getPlayer(Color color) {
         if (color == Color.WHITE) return whitePlayer;
         return blackPlayer;
@@ -75,6 +94,7 @@ public class Chess {
         return getTurnPlayer().getNaturalMoves(board);
     }
     public List<Move> getAllowedMoves() {
+        if (isCheckmate()) return Collections.emptyList();
         return getTurnPlayer().getAllowedMoves(this);
     }
 
@@ -84,21 +104,23 @@ public class Chess {
 
     public boolean applyMove(Move move) {
         if (!isAllowed(move)) return false;
-        if (move.applyOnBoard(board)) {
-            turn += 1;
-            return true;
+        if (!move.applyOnBoard(board)) return false;
+        if (move.type == MoveType.CAPTURE) {
+            Piece capturedPiece = ((Capture) move).capturePiece;
+            getTurnPlayer().capturedPieces.add(capturedPiece);
         }
-        return false;
+        turn += 1;
+        return true;
     }
 
     public boolean isInCheck() {
-        King king = getTurnPlayer().getKing();
-        return getPlayer(getTurnColor().opposite()).isThreatening(board, king);
+        King king = getTurnPlayer().getKing(board);
+        return getOpponentPlayer().isThreatening(board, king.getLocation());
     }
 
     public boolean isCheckmate() {
         if (!isInCheck()) return false;
-        return getTurnPlayer().getKing().getNaturalMoves(board).isEmpty();
+        return getTurnPlayer().getKing(board).getAllowedMoves(this).isEmpty();
     }
 
     @Override

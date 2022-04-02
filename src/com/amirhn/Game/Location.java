@@ -4,16 +4,14 @@ import java.util.Objects;
 
 public class Location {
     public final int row, column;
-    private final int hashCode;
 
     public Location(int row, int column) {
         this.row = row;
         this.column = column;
-        this.hashCode = Objects.hash(row, column);
     }
 
     public static Location valueOf(String loc) {
-        return new Location(loc.charAt(0) - 'a', loc.charAt(1) - '1');
+        return new Location(loc.charAt(1) - '1', loc.charAt(0) - 'a');
     }
 
     public static Location valueOf(int row, int column) {
@@ -38,11 +36,11 @@ public class Location {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Location location = (Location) o;
-        return row == location.row && column == location.column && hashCode == location.hashCode;
+        return row == location.row && column == location.column && hashCode() == location.hashCode();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column, hashCode);
+        return Objects.hash(row, column);
     }
 }

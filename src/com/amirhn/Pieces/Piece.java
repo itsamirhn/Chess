@@ -46,9 +46,9 @@ public abstract class Piece implements Movable, Attacker {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null) return false;
         Piece piece = (Piece) o;
-        return type == piece.type && color == piece.color && Objects.equals(location, piece.location);
+        return type.equals(piece.type) && color.equals(piece.color) && location.equals(piece.location);
     }
 
     @Override
@@ -66,7 +66,7 @@ public abstract class Piece implements Movable, Attacker {
 
     public boolean canBeCapturedBy(Piece piece) {
         if (piece == null) return false;
-        if (piece.type == PieceType.KING) return false;
+        if (type == PieceType.KING) return false;
         return this.color != piece.color;
     }
 
@@ -85,4 +85,5 @@ public abstract class Piece implements Movable, Attacker {
         }
         return moves;
     }
+
 }
