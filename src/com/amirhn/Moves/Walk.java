@@ -25,22 +25,15 @@ public class Walk extends Move {
     }
 
     @Override
-    public boolean undoOnBoard(Board board) {
-        if (!this.isValidUndoOnBoard(board)) return false;
+    public void undoOnBoard(Board board) {
         board.removePiece(this.piece);
         this.piece.setLocationBack(this.source);
         board.setPiece(this.piece);
-        return true;
     }
 
     @Override
     public boolean isValidApplyOnBoard(Board board) {
         return super.isValidApplyOnBoard(board) && board.isValidLocation(this.destination) && !board.isOccupied(this.destination);
-    }
-
-    @Override
-    public boolean isValidUndoOnBoard(Board board) {
-        return super.isValidUndoOnBoard(board) && board.isValidLocation(this.source) && !board.isOccupied(this.source);
     }
 
     @Override

@@ -23,12 +23,9 @@ public abstract class Move {
         return !isInCheck;
     }
     public abstract boolean applyOnBoard(Board board);
-    public abstract boolean undoOnBoard(Board board);
+    protected abstract void undoOnBoard(Board board);
     public boolean isValidApplyOnBoard(Board board) {
         return board.isValidPiece(piece);
-    }
-    public boolean isValidUndoOnBoard(Board board) {
-        return board.isValidPiece(this.piece);
     }
     public abstract Location getEndpointLocation();
 }

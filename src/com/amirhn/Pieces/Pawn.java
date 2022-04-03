@@ -21,9 +21,9 @@ public class Pawn extends Piece {
         direction = this.color == Color.WHITE ? +1 : -1;
     }
 
-    private boolean isLastRank(Board board) {
-        if (direction > 0) return location.row == board.rows - 1;
-        return location.row == 0;
+    private boolean isBeforeLastRank(Board board) {
+        if (direction > 0) return location.row == board.rows - 2;
+        return location.row == 1;
     }
 
     private List<Move> makeMoves(Board board, Location location) {
@@ -34,7 +34,7 @@ public class Pawn extends Piece {
             if (capturingPiece.canBeCapturedBy(this)) move = new Capture(this, capturingPiece);
         } else move = new Walk(this, location);
         if (move == null) return Collections.emptyList();
-        if (!isLastRank(board)) return Collections.singletonList(move);
+        if (!isBeforeLastRank(board)) return Collections.singletonList(move);
         List<Move> promotions = new ArrayList<>();
         promotions.add(new PawnPromotion(move, PieceType.QUEEN));
         promotions.add(new PawnPromotion(move, PieceType.ROOK));
@@ -45,16 +45,15 @@ public class Pawn extends Piece {
 
     @Override
     public List<Move> getNaturalMoves(Board board) {
-        int sign = this.color == Color.WHITE ? +1 : -1;
         List<Move> moves = new ArrayList<>();
         for (Location location : this.getThreatenedLocations(board)) {
             if (!board.isOccupied(location)) continue;
             moves.addAll(makeMoves(board, location));
         }
-        Location location = getLocation().byOffset(sign, 0);
+        Location location = getLocation().byOffset(direction, 0);
         moves.addAll(makeMoves(board, location));
         if (!hasMoved()) {
-            location = getLocation().byOffset(sign * 2, 0);
+            location = getLocation().byOffset(direction * 2, 0);
             moves.addAll(makeMoves(board, location));
         }
         return moves;

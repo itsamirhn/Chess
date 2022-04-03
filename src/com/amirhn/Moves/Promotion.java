@@ -28,22 +28,15 @@ public class Promotion extends Move {
     }
 
     @Override
-    public boolean undoOnBoard(Board board) {
-        if (!isValidUndoOnBoard(board)) return false;
+    public void undoOnBoard(Board board) {
         board.removePiece(promotedPiece);
         promotedPiece.removeLocation();
         move.undoOnBoard(board);
-        return true;
     }
 
     @Override
     public boolean isValidApplyOnBoard(Board board) {
         return super.isValidApplyOnBoard(board) && move.isValidApplyOnBoard(board);
-    }
-
-    @Override
-    public boolean isValidUndoOnBoard(Board board) {
-        return super.isValidUndoOnBoard(board) && move.isValidUndoOnBoard(board);
     }
 
     @Override

@@ -49,11 +49,9 @@ public abstract class Castling extends Move {
     }
 
     @Override
-    public boolean undoOnBoard(Board board) {
-        if (!isValidUndoOnBoard(board)) return false;
+    public void undoOnBoard(Board board) {
         rookMove.undoOnBoard(board);
         kingMove.undoOnBoard(board);
-        return true;
     }
 
     @Override
@@ -62,11 +60,6 @@ public abstract class Castling extends Move {
                 king.color.equals(rook.color) &&
                 king.getLocation().row == rook.getLocation().row &&
                 kingMove.isValidApplyOnBoard(board) && rookMove.isValidApplyOnBoard(board);
-    }
-
-    @Override
-    public boolean isValidUndoOnBoard(Board board) {
-        return super.isValidUndoOnBoard(board) && kingMove.isValidUndoOnBoard(board) && rookMove.isValidUndoOnBoard(board);
     }
 
     @Override
