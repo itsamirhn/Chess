@@ -68,6 +68,16 @@ public class Chess {
 
     }
 
+    public void setupPawnPromotionScenario() {
+        this.board = new Board(8, 8);
+
+        setPiece(new King(Color.WHITE, Location.valueOf(3, 2)));
+        setPiece(new King(Color.BLACK, Location.valueOf(4, 5)));
+        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.BLACK, Location.valueOf(1, i)));
+        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.WHITE, Location.valueOf(6, i)));
+
+    }
+
     public void setPiece(Piece piece) {
         this.board.setPiece(piece);
     }
