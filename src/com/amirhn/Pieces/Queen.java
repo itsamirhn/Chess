@@ -26,6 +26,19 @@ public class Queen extends Piece {
     }
 
     @Override
+    public void setLocationBack(Location location) {
+        super.setLocationBack(location);
+        this.rook.setLocationBack(location);
+        this.bishop.setLocationBack(location);
+    }
+
+    @Override
+    public void removeLocation() {
+        super.removeLocation();
+
+    }
+
+    @Override
     public List<Location> getThreatenedLocations(Board board) {
         List<Location> rookThreatenedLocation = this.rook.getThreatenedLocations(board);
         List<Location> bishopThreatenedLocation = this.bishop.getThreatenedLocations(board);
