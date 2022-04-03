@@ -20,6 +20,13 @@ public abstract class Castling extends Move {
         this.rook = (Rook) rookMove.piece;
     }
 
+    public static Castling generate(King king, Rook rook) {
+        if (king.getLocation().row != rook.getLocation().row) return null;
+        if (king.getLocation().column < rook.getLocation().column) return new KingsideCastling(king, rook);
+        if (king.getLocation().column > rook.getLocation().column) return new QueensideCastling(king, rook);
+        return null;
+    }
+
     @Override
     public boolean isAllowed(Chess chess) {
         if (!super.isAllowed(chess)) return false;
@@ -29,7 +36,7 @@ public abstract class Castling extends Move {
         for (int i = from; i <= to; i++) if (chess.getBoard().isOccupied(Location.valueOf(king.getLocation().row, i))) return false;
         from = Math.min(kingMove.source.column, kingMove.destination.column) + 1;
         to = Math.max(kingMove.source.column, kingMove.destination.column);
-        for (int i = from; i <= to; i++) if (chess.getTurnPlayer().isThreatening(chess.getBoard(), Location.valueOf(king.getLocation().row, i))) return false;
+        for (int i = from; i <= to; i++) if (chess.getOpponentPlayer().isThreatening(chess.getBoard(), Location.valueOf(king.getLocation().row, i))) return false;
         return true;
     }
 
