@@ -2,5 +2,6 @@ package com.amirhn.Moves;
 
 public enum MoveType {
     WALK,
-    CAPTURE
+    CAPTURE,
+    CASTLING,
 }
