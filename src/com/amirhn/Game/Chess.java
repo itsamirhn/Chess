@@ -10,6 +10,7 @@ import com.amirhn.Players.BlackPlayer;
 import com.amirhn.Players.Player;
 import com.amirhn.Players.WhitePlayer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,9 +19,11 @@ public class Chess {
     private Board board;
     public WhitePlayer whitePlayer;
     public BlackPlayer blackPlayer;
+    public List<Move> moves;
     public int turn = 0;
 
     public Chess() {
+        this.moves = new ArrayList<>();
         this.whitePlayer = new WhitePlayer();
         this.blackPlayer = new BlackPlayer();
         this.setupChessBoard();
@@ -131,6 +134,7 @@ public class Chess {
         }
         if (move.type == MoveType.CASTLING) getTurnPlayer().castling = (Castling) move;
         turn += 1;
+        moves.add(move);
         return true;
     }
 
@@ -147,6 +151,24 @@ public class Chess {
     public boolean isStalemate() {
         if (isInCheck()) return false;
         return getTurnPlayer().getAllowedMoves(this).isEmpty();
+    }
+
+    public boolean isThreefoldRepetition() {
+        // TODO
+        return false;
+    }
+
+    public boolean is50MoveRule() {
+        if (moves.size() < 50) return false;
+        return moves.subList(moves.size() - 50, moves.size()).stream().noneMatch(move -> move.type == MoveType.CAPTURE || move.piece.type == PieceType.PAWN);
+    }
+
+    public boolean isDraw() {
+        return isStalemate() || is50MoveRule() || isThreefoldRepetition();
+    }
+
+    public boolean isFinished() {
+        return isCheckmate() || isDraw();
     }
 
     @Override
