@@ -51,17 +51,17 @@ public class Chess {
 
     }
 
-    public void setupCustomScenario() {
+    public void setupCastlingScenario() {
         this.board = new Board(8, 8);
 
         setPiece(new Rook(Color.WHITE, Location.valueOf(0, 0)));
-        setPiece(new Queen(Color.WHITE, Location.valueOf(0, 3)));
+//        setPiece(new Queen(Color.WHITE, Location.valueOf(0, 3)));
         setPiece(new King(Color.WHITE, Location.valueOf(0, 4)));
         setPiece(new Rook(Color.WHITE, Location.valueOf(0, 7)));
         for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.WHITE, Location.valueOf(1, i)));
 
         setPiece(new Rook(Color.BLACK, Location.valueOf(7, 0)));
-        setPiece(new Queen(Color.BLACK, Location.valueOf(7, 3)));
+//        setPiece(new Queen(Color.BLACK, Location.valueOf(7, 3)));
         setPiece(new King(Color.BLACK, Location.valueOf(7, 4)));
         setPiece(new Rook(Color.BLACK, Location.valueOf(7, 7)));
         for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.BLACK, Location.valueOf(6, i)));
