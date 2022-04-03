@@ -8,7 +8,12 @@ public class ChessFrame extends JFrame {
     public final Chess chess;
 
     public ChessFrame() {
-        this.chess = new Chess();
+        this(new Chess());
+    }
+
+    public ChessFrame(Chess chess) {
+        this.chess = chess;
+
         this.setTitle("Chess");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

@@ -20,8 +20,7 @@ public class Main {
                 break;
             }
             System.out.println();
-            var moves = chess.getAllowedMoves();
-            var move = moves.get((int) (Math.random() * moves.size()));
+            var move = chess.applyRandomMove();
             System.out.println(move);
             chess.applyMove(move);
             System.out.println(chess);

@@ -110,6 +110,13 @@ public class Chess {
     public List<Move> getAllowedMoves() {
         return getTurnPlayer().getAllowedMoves(this);
     }
+    public Move applyRandomMove() {
+        List<Move> moves = getAllowedMoves();
+        if (moves.isEmpty()) return null;
+        Move move = moves.get((int) (Math.random() * moves.size()));
+        applyMove(move);
+        return move;
+    }
 
     public boolean isAllowed(Move move) {
         return move.isAllowed(this);
