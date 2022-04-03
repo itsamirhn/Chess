@@ -2,6 +2,7 @@ package com.amirhn.Moves;
 
 import com.amirhn.Game.Board;
 import com.amirhn.Game.Chess;
+import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Piece;
 
 public abstract class Move {
@@ -29,4 +30,5 @@ public abstract class Move {
     public boolean isValidUndoOnBoard(Board board) {
         return board.isValidPiece(this.piece);
     }
+    public abstract Location getEndpointLocation();
 }

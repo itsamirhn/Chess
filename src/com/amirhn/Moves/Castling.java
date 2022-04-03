@@ -22,8 +22,8 @@ public abstract class Castling extends Move {
 
     public static Castling generate(King king, Rook rook) {
         if (king.getLocation().row != rook.getLocation().row) return null;
-        if (king.getLocation().column < rook.getLocation().column) return new KingsideCastling(king, rook);
-        if (king.getLocation().column > rook.getLocation().column) return new QueensideCastling(king, rook);
+        if (king.getLocation().column < rook.getLocation().column) return new ShortCastling(king, rook);
+        if (king.getLocation().column > rook.getLocation().column) return new LongCastling(king, rook);
         return null;
     }
 
@@ -67,5 +67,10 @@ public abstract class Castling extends Move {
     @Override
     public boolean isValidUndoOnBoard(Board board) {
         return super.isValidUndoOnBoard(board) && kingMove.isValidUndoOnBoard(board) && rookMove.isValidUndoOnBoard(board);
+    }
+
+    @Override
+    public Location getEndpointLocation() {
+        return kingMove.getEndpointLocation();
     }
 }

@@ -4,9 +4,9 @@ import com.amirhn.Game.Location;
 import com.amirhn.Pieces.King;
 import com.amirhn.Pieces.Rook;
 
-public class KingsideCastling extends Castling {
+public class ShortCastling extends Castling {
 
-    public KingsideCastling(King king, Rook rook) {
+    public ShortCastling(King king, Rook rook) {
         super(new Walk(king, Location.valueOf(king.getLocation().row, 6)), new Walk(rook, Location.valueOf(rook.getLocation().row, 5)));
     }
 

@@ -44,6 +44,11 @@ public class Walk extends Move {
     }
 
     @Override
+    public Location getEndpointLocation() {
+        return destination;
+    }
+
+    @Override
     public String toString() {
         return "" + this.piece.type.letter + this.source + "-" + this.destination;
     }

@@ -5,19 +5,14 @@ import com.amirhn.Game.Chess;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
 import com.amirhn.Moves.Castling;
-import com.amirhn.Moves.KingsideCastling;
 import com.amirhn.Moves.Move;
-import com.amirhn.Moves.QueensideCastling;
 import com.amirhn.Pieces.King;
 import com.amirhn.Pieces.Piece;
 import com.amirhn.Pieces.PieceType;
 import com.amirhn.Pieces.Rook;
 
-import javax.xml.crypto.dsig.keyinfo.KeyInfo;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class Player {

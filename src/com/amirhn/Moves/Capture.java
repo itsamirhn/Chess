@@ -56,4 +56,9 @@ public class Capture extends Move {
     public String toString() {
         return "" + piece.type.letter + source + "x" + destination;
     }
+
+    @Override
+    public Location getEndpointLocation() {
+        return destination;
+    }
 }

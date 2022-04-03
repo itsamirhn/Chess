@@ -21,10 +21,8 @@ public class Bishop extends Piece {
         for (int i = 0; i < 4; i++) {
             Location location = this.getLocation().byOffset(dx[i], dy[i]);
             while (board.isValidLocation(location) ) {
-                if (board.isOccupied(location)) {
-                    threatenedLocations.add(location);
-                    break;
-                } else threatenedLocations.add(location);
+                threatenedLocations.add(location);
+                if (board.isOccupied(location)) break;
                 location = location.byOffset(dx[i], dy[i]);
             }
         }

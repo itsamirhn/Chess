@@ -13,8 +13,8 @@ public abstract class Piece implements Movable, Attacker {
 
     public final PieceType type;
     public final Color color;
-    private Location location;
-    private int moves = 0;
+    protected Location location;
+    protected int moves = 0;
 
     public Piece(PieceType type, Color color, Location location) {
         this.type = type;
@@ -22,17 +22,21 @@ public abstract class Piece implements Movable, Attacker {
         this.location = location;
     }
 
-    public static Piece valueOf(Color color, String p) {
+    public static Piece generate(Color color, String p) {
         PieceType type = PieceType.valueOf(p.charAt(0));
         if (type == null) return null;
         Location location = Location.valueOf(p.substring(1));
-        return switch (type) {
-            case KING -> new King(color , location);
-            case PAWN -> new Pawn(color , location);
-            case ROOK -> new Rook(color , location);
-            case QUEEN -> new Queen(color , location);
-            case BISHOP -> new Bishop(color , location);
-            case KNIGHT -> new Knight(color , location);
+        return Piece.generate(type, color, location);
+    }
+
+    public static Piece generate(PieceType pieceType, Color color, Location location) {
+        return switch (pieceType) {
+            case KING -> new King(color, location);
+            case PAWN -> new Pawn(color, location);
+            case ROOK -> new Rook(color, location);
+            case QUEEN -> new Queen(color, location);
+            case BISHOP -> new Bishop(color, location);
+            case KNIGHT -> new Knight(color, location);
         };
     }
 
