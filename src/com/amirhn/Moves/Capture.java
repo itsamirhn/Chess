@@ -25,6 +25,7 @@ public class Capture extends Move {
         board.removePiece(capturePiece);
         board.removePiece(piece);
         piece.setLocation(destination);
+        capturePiece.removeLocation();
         board.setPiece(piece);
         return true;
     }
@@ -34,8 +35,8 @@ public class Capture extends Move {
         if (!isValidUndoOnBoard(board)) return false;
         board.removePiece(capturePiece);
         board.removePiece(piece);
-        piece.setLocation(source);
-        capturePiece.setLocation(destination);
+        piece.setLocationBack(source);
+        capturePiece.setLocationBack(destination);
         board.setPiece(piece);
         board.setPiece(capturePiece);
         return true;
@@ -43,12 +44,12 @@ public class Capture extends Move {
 
     @Override
     public boolean isValidApplyOnBoard(Board board) {
-        return board.isValidPiece(piece) && board.isValidPiece(capturePiece) && capturePiece.canBeCapturedBy(piece);
+        return super.isValidApplyOnBoard(board) && board.isValidPiece(capturePiece) && capturePiece.canBeCapturedBy(piece);
     }
 
     @Override
     public boolean isValidUndoOnBoard(Board board) {
-        return board.isValidLocation(source) && !board.isOccupied(source) && board.isValidPiece(piece);
+        return super.isValidUndoOnBoard(board) && board.isValidLocation(source) && !board.isOccupied(source);
     }
 
     @Override

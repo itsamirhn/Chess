@@ -23,6 +23,10 @@ public abstract class Move {
     }
     public abstract boolean applyOnBoard(Board board);
     public abstract boolean undoOnBoard(Board board);
-    public abstract boolean isValidApplyOnBoard(Board board);
-    public abstract boolean isValidUndoOnBoard(Board board);
+    public boolean isValidApplyOnBoard(Board board) {
+        return board.isValidPiece(piece);
+    }
+    public boolean isValidUndoOnBoard(Board board) {
+        return board.isValidPiece(this.piece);
+    }
 }

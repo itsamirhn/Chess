@@ -12,15 +12,8 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-    private boolean moved = false;
     public Pawn(Color color, Location location) {
         super(PieceType.PAWN, color, location);
-    }
-
-    @Override
-    public void setLocation(Location location) {
-        super.setLocation(location);
-        this.moved = true;
     }
 
     @Override
@@ -34,7 +27,7 @@ public class Pawn extends Piece {
         }
         Location location = getLocation().byOffset(sign, 0);
         if (board.isValidLocation(location) && !board.isOccupied(location)) moves.add(new Walk(this, location));
-        if (!moved) {
+        if (!hasMoved()) {
             location = getLocation().byOffset(sign * 2, 0);
             if (board.isValidLocation(location) && !board.isOccupied(location)) moves.add(new Walk(this, location));
         }

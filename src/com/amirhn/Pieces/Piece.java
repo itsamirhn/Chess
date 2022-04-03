@@ -14,6 +14,7 @@ public abstract class Piece implements Movable, Attacker {
     public final PieceType type;
     public final Color color;
     private Location location;
+    private int moves = 0;
 
     public Piece(PieceType type, Color color, Location location) {
         this.type = type;
@@ -40,13 +41,27 @@ public abstract class Piece implements Movable, Attacker {
     }
 
     public void setLocation(Location location) {
+        if (this.location != null) moves++;
         this.location = location;
+    }
+
+    public void setLocationBack(Location location) {
+        if (this.location != null) moves--;
+        this.location = location;
+    }
+
+    public void removeLocation() {
+        this.location = null;
+    }
+
+    public boolean hasMoved() {
+        return moves > 0;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
         return type.equals(piece.type) && color.equals(piece.color) && location.equals(piece.location);
     }
