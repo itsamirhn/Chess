@@ -17,41 +17,26 @@ import java.util.List;
 public class Chess {
 
     private Board board;
-    public WhitePlayer whitePlayer;
-    public BlackPlayer blackPlayer;
-    public List<Move> moves;
-    public int turn = 0;
+    public WhitePlayer whitePlayer = new WhitePlayer();
+    public BlackPlayer blackPlayer = new BlackPlayer();
+    public List<Move> moves = new ArrayList<>();
+    public Color turn = Color.WHITE;
 
     public Chess() {
-        this.moves = new ArrayList<>();
-        this.whitePlayer = new WhitePlayer();
-        this.blackPlayer = new BlackPlayer();
-        this.setupChessBoard();
+        this.setupStandardChessBoard();
     }
 
-    public void setupChessBoard() {
-        this.board = new Board(8, 8);
+    public void setupFEN(String fen) {
+        String[] parts = fen.split(" ");
+        this.board = Board.fromFEN(parts[0]);
+        this.turn = Color.fromString(parts[1]);
+        // TODO: implement castling
+        // TODO: en passant
+        // TODO: move count
+    }
 
-        setPiece(new Rook(Color.WHITE, Location.valueOf(0, 0)));
-        setPiece(new Knight(Color.WHITE, Location.valueOf(0, 1)));
-        setPiece(new Bishop(Color.WHITE, Location.valueOf(0, 2)));
-        setPiece(new Queen(Color.WHITE, Location.valueOf(0, 3)));
-        setPiece(new King(Color.WHITE, Location.valueOf(0, 4)));
-        setPiece(new Bishop(Color.WHITE, Location.valueOf(0, 5)));
-        setPiece(new Knight(Color.WHITE, Location.valueOf(0, 6)));
-        setPiece(new Rook(Color.WHITE, Location.valueOf(0, 7)));
-        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.WHITE, Location.valueOf(1, i)));
-
-        setPiece(new Rook(Color.BLACK, Location.valueOf(7, 0)));
-        setPiece(new Knight(Color.BLACK, Location.valueOf(7, 1)));
-        setPiece(new Bishop(Color.BLACK, Location.valueOf(7, 2)));
-        setPiece(new Queen(Color.BLACK, Location.valueOf(7, 3)));
-        setPiece(new King(Color.BLACK, Location.valueOf(7, 4)));
-        setPiece(new Bishop(Color.BLACK, Location.valueOf(7, 5)));
-        setPiece(new Knight(Color.BLACK, Location.valueOf(7, 6)));
-        setPiece(new Rook(Color.BLACK, Location.valueOf(7, 7)));
-        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.BLACK, Location.valueOf(6, i)));
-
+    public void setupStandardChessBoard() {
+        setupFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     }
 
     public void setupCastlingScenario() {
@@ -89,17 +74,12 @@ public class Chess {
         return board;
     }
 
-    public Color getTurnColor() {
-        if (this.turn % 2 == 0) return Color.WHITE;
-        else return  Color.BLACK;
-    }
-
     public Player getTurnPlayer() {
-        return getPlayer(getTurnColor());
+        return getPlayer(turn);
     }
 
     public Player getOpponentPlayer() {
-        return getPlayer(getTurnColor().opposite());
+        return getPlayer(turn.opposite());
     }
 
     public Player getPlayer(Color color) {
@@ -133,7 +113,7 @@ public class Chess {
             getTurnPlayer().capturedPieces.add(capturedPiece);
         }
         if (move.type == MoveType.CASTLING) getTurnPlayer().castling = (Castling) move;
-        turn += 1;
+        turn = turn.opposite();
         moves.add(move);
         return true;
     }
@@ -173,6 +153,6 @@ public class Chess {
 
     @Override
     public String toString() {
-        return "Turn: " + getTurnColor() + "\n" + board;
+        return "Turn: " + turn + "\n" + board;
     }
 }

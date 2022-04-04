@@ -14,6 +14,29 @@ public class Board {
         this.columns = columns;
     }
 
+    public static Board fromFEN(String fen) {
+        int rows = fen.split("/").length;
+        Board board = new Board(rows, rows);
+        board.setupFEN(fen);
+        return board;
+    }
+
+    public void setupFEN(String fen) {
+        pieceByLocation.clear();
+        String[] rows = fen.split("/");
+        for (int i =  this.rows - 1; i >= 0; i--) {
+            int j = 0;
+            for (char c : rows[i].toCharArray()) {
+                if (Character.isDigit(c)) {
+                    j += c - '0';
+                } else {
+                    setPiece(Piece.generate(c, Location.valueOf(i, j)));
+                    j++;
+                }
+            }
+        }
+    }
+
     public boolean isValidLocation(Location location) {
         if (location == null) return false;
         return 0 <= location.row && location.row < this.rows && 0 <= location.column && location.column < this.columns;

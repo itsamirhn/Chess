@@ -26,7 +26,7 @@ public abstract class Piece implements Movable, Attacker {
         PieceType type = PieceType.valueOf(p.charAt(0));
         if (type == null) return null;
         Location location = Location.valueOf(p.substring(1));
-        return Piece.generate(type, color, location);
+        return generate(type, color, location);
     }
 
     public static Piece generate(PieceType pieceType, Color color, Location location) {
@@ -38,6 +38,10 @@ public abstract class Piece implements Movable, Attacker {
             case BISHOP -> new Bishop(color, location);
             case KNIGHT -> new Knight(color, location);
         };
+    }
+
+    public static Piece generate(char fen, Location location) {
+        return generate(PieceType.valueOf(fen), Color.valueOfPieceChar(fen), location);
     }
 
     public Location getLocation() {

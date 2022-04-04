@@ -20,7 +20,7 @@ public enum PieceType {
 
     public static PieceType valueOf(char letter) {
         for (PieceType pieceType : PieceType.values()) {
-            if (pieceType.letter == letter) return pieceType;
+            if (pieceType.letter == Character.toUpperCase(letter)) return pieceType;
         }
         return null;
     }
