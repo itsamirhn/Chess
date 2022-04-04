@@ -24,9 +24,10 @@ public class Board {
     public void setupFEN(String fen) {
         pieceByLocation.clear();
         String[] rows = fen.split("/");
-        for (int i =  this.rows - 1; i >= 0; i--) {
+        int i = rows.length - 1;
+        for (String row : rows) {
             int j = 0;
-            for (char c : rows[i].toCharArray()) {
+            for (char c : row.toCharArray()) {
                 if (Character.isDigit(c)) {
                     j += c - '0';
                 } else {
@@ -34,6 +35,7 @@ public class Board {
                     j++;
                 }
             }
+            i--;
         }
     }
 
