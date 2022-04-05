@@ -37,14 +37,20 @@ public class LocationPanel extends JPanel implements MouseListener {
     }
 
     public void setPiece(Piece piece) {
-        this.removeAll();
-        this.piecePanel = new PiecePanel(this, piece);
-        this.add(this.piecePanel);
+        removeAll();
+        if (piece == null) {
+            this.piecePanel = null;
+        } else {
+            this.piecePanel = new PiecePanel(piece);
+            add(this.piecePanel);
+        }
+        validate();
+        repaint();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.boardPanel.clicked(this.location);
+        this.boardPanel.locationSelected(this.location);
     }
 
     @Override
