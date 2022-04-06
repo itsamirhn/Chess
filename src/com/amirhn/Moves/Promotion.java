@@ -8,13 +8,11 @@ import com.amirhn.Pieces.PieceType;
 
 public class Promotion extends Move {
     public Move move;
-    public Location destination;
     public Piece promotedPiece;
 
     public Promotion(Move move, PieceType promotedPieceType) {
         super(MoveType.PROMOTION, move.piece);
         this.move = move;
-        this.destination = move.getEndpointLocation();
         this.promotedPiece = Piece.generate(promotedPieceType, move.piece.color, null);
     }
 
@@ -41,7 +39,12 @@ public class Promotion extends Move {
 
     @Override
     public Location getEndpointLocation() {
-        return destination;
+        return move.getEndpointLocation();
+    }
+
+    @Override
+    public Location getStartpointLocation() {
+        return move.getStartpointLocation();
     }
 
     @Override

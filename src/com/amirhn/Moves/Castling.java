@@ -66,4 +66,9 @@ public abstract class Castling extends Move {
     public Location getEndpointLocation() {
         return kingMove.getEndpointLocation();
     }
+
+    @Override
+    public Location getStartpointLocation() {
+        return kingMove.getStartpointLocation();
+    }
 }

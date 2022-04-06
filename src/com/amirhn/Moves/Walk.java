@@ -37,6 +37,11 @@ public class Walk extends Move {
     }
 
     @Override
+    public Location getStartpointLocation() {
+        return source;
+    }
+
+    @Override
     public Location getEndpointLocation() {
         return destination;
     }

@@ -27,5 +27,6 @@ public abstract class Move {
     public boolean isValidApplyOnBoard(Board board) {
         return board.isValidPiece(piece);
     }
+    public abstract Location getStartpointLocation();
     public abstract Location getEndpointLocation();
 }

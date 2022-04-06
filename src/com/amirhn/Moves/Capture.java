@@ -54,4 +54,9 @@ public class Capture extends Move {
     public Location getEndpointLocation() {
         return destination;
     }
+
+    @Override
+    public Location getStartpointLocation() {
+        return source;
+    }
 }
