@@ -8,23 +8,46 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class LocationPanel extends JPanel implements MouseListener {
+public class LocationPanel extends JPanel {
 
     public static final Dimension Size = new Dimension(100, 100);
     public static final Color SelectedLocationColor = new Color(135, 151, 106);
     public static final Color LightLocationColor = new Color(240, 217, 181);
     public static final Color DarkLocationColor = new Color(181, 136, 99);
 
-    public final BoardPanel boardPanel;
     public final Location location;
     public PiecePanel piecePanel;
 
-    public LocationPanel(BoardPanel boardPanel, Location location) {
+    public LocationPanel(Location location, LocationListener locationListener) {
         super(new GridBagLayout());
-        this.boardPanel = boardPanel;
         this.location = location;
         this.setPreferredSize(Size);
-        this.addMouseListener(this);
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                locationListener.locationSelected(location);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         this.setDefaultBackground();
         this.validate();
     }
@@ -46,30 +69,5 @@ public class LocationPanel extends JPanel implements MouseListener {
         }
         validate();
         repaint();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        this.boardPanel.locationSelected(this.location);
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 }

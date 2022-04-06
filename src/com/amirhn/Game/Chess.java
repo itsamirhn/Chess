@@ -92,6 +92,7 @@ public class Chess {
     public List<Move> getAllowedMoves() {
         return getTurnPlayer().getAllowedMoves(this);
     }
+
     public Move applyRandomMove() {
         List<Move> moves = getAllowedMoves();
         if (moves.isEmpty()) return null;
@@ -105,6 +106,7 @@ public class Chess {
     }
 
     public boolean applyMove(Move move) {
+        if (move == null) return false;
         if (!isAllowed(move)) return false;
         if (!move.applyOnBoard(board)) return false;
         if (move.type == MoveType.CAPTURE) {
