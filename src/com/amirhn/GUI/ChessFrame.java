@@ -40,6 +40,11 @@ public class ChessFrame extends JFrame implements MoveController {
     }
 
     @Override
+    public boolean isAllowedToMove(Piece piece) {
+        return chess.getBoard().isValidPiece(piece) && piece.isAllowedToMove(chess);
+    }
+
+    @Override
     public List<Move> getAllowedMoves(Piece piece) {
         return piece.getAllowedMoves(chess);
     }

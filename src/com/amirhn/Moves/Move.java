@@ -16,7 +16,7 @@ public abstract class Move {
 
     public boolean isAllowed(Chess chess) {
         Board board = chess.getBoard();
-        if (chess.turn != piece.color) return false;
+        if (!piece.isAllowedToMove(chess)) return false;
         if (!applyOnBoard(board)) return false;
         boolean isInCheck = chess.isInCheck();
         undoOnBoard(board);

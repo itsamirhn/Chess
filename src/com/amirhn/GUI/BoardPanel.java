@@ -12,12 +12,7 @@ import java.awt.*;
 public class BoardPanel extends JPanel implements LocationListener {
 
     private final MoveController moveController;
-
-    public void setCurrentSelectedPiece(Piece currentSelectedPiece) {
-        hideAllowedMoves();
-        this.currentSelectedPiece = currentSelectedPiece;
-        updateAllowedMoves();
-    }
+    private Move lastMove;
 
     private final Board board;
     private final LocationPanel[][] locationPanels;
@@ -40,28 +35,56 @@ public class BoardPanel extends JPanel implements LocationListener {
         this.validate();
     }
 
-    public void updateBoard() {
+    private void setLastMove(Move lastMove) {
+        resetStates(LocationPanel.State.LASTMOVE);
+        this.lastMove = lastMove;
+        updateLastMove(lastMove);
+    }
+
+    private void setCurrentSelectedPiece(Piece currentSelectedPiece) {
+        resetStates(LocationPanel.State.SELECTED);
+        resetStates(LocationPanel.State.SUGGESTED);
+        this.currentSelectedPiece = currentSelectedPiece;
+        updateLastMove(lastMove);
+        updateAllowedMoves();
+    }
+
+    private void resetStates(LocationPanel.State state) {
+        for (int i = 0; i < board.rows; i++) for (int j = 0; j < board.columns; j++) {
+            LocationPanel locationPanel = getLocationPanel(Location.valueOf(i, j));
+            if (locationPanel.getState() == state) locationPanel.setState(LocationPanel.State.NORMAL);
+        }
+    }
+
+    private void resetStates() {
+        for (int i = 0; i < board.rows; i++) for (int j = 0; j < board.columns; j++) {
+            getLocationPanel(Location.valueOf(i, j)).setState(LocationPanel.State.NORMAL);
+        }
+    }
+
+    private void updateBoard() {
         for (int i = 0; i < board.rows; i++) for (int j = 0; j < board.columns; j++) {
             if (board.isOccupied(Location.valueOf(i, j))) getLocationPanel(Location.valueOf(i, j)).setPiece(board.getPiece(Location.valueOf(i, j)));
             else getLocationPanel(Location.valueOf(i, j)).setPiece(null);
         }
     }
 
-    public void hideAllowedMoves() {
+    private void updateAllowedMoves() {
         if (currentSelectedPiece == null) return;
-        getLocationPanel(currentSelectedPiece.getLocation()).setDefaultBackground();
-        for (Move move : moveController.getAllowedMoves(currentSelectedPiece)) getLocationPanel(move.getEndpointLocation()).setDefaultBackground();
+        getLocationPanel(currentSelectedPiece.getLocation()).setState(LocationPanel.State.SELECTED);
+        for (Move move : moveController.getAllowedMoves(currentSelectedPiece)) getLocationPanel(move.getEndpointLocation()).setState(LocationPanel.State.SUGGESTED);
     }
 
-    public void updateAllowedMoves() {
-        if (currentSelectedPiece == null) return;
-        getLocationPanel(currentSelectedPiece.getLocation()).setSelectedBackground();
-        for (Move move : moveController.getAllowedMoves(currentSelectedPiece)) getLocationPanel(move.getEndpointLocation()).setSelectedBackground();
+    private void updateLastMove(Move move) {
+        if (move == null) return;
+        getLocationPanel(move.getStartpointLocation()).setState(LocationPanel.State.LASTMOVE);
+        getLocationPanel(move.getEndpointLocation()).setState(LocationPanel.State.LASTMOVE);
     }
 
     public void update() {
-        hideAllowedMoves();
+        resetStates();
         updateBoard();
+        updateLastMove(lastMove);
         updateAllowedMoves();
         validate();
     }
@@ -76,11 +99,14 @@ public class BoardPanel extends JPanel implements LocationListener {
         if (currentSelectedPiece == null) {
             if (!board.isOccupied(location)) return;
             Piece piece = board.getPiece(location);
-            if (!moveController.getAllowedMoves(piece).isEmpty()) setCurrentSelectedPiece(piece);
-        } else {
+            if (moveController.isAllowedToMove(piece)) setCurrentSelectedPiece(piece);
+        } else if (!currentSelectedPiece.getLocation().equals(location)) {
             Move move = moveController.makeMove(currentSelectedPiece, location);
             setCurrentSelectedPiece(null);
-            if (move != null && moveController.applyMove(move)) updateBoard();
-        }
+            if (move != null && moveController.applyMove(move)) {
+                setLastMove(move);
+                updateBoard();
+            } else if (board.isOccupied(location)) locationSelected(location);
+        } else setCurrentSelectedPiece(null);
     }
 }

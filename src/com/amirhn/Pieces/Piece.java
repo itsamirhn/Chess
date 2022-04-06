@@ -1,6 +1,7 @@
 package com.amirhn.Pieces;
 
 import com.amirhn.Game.Board;
+import com.amirhn.Game.Chess;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
 import com.amirhn.Moves.*;
@@ -85,6 +86,11 @@ public abstract class Piece implements Movable, Attacker {
                 "color=" + color +
                 ", location=" + location +
                 '}';
+    }
+
+    @Override
+    public boolean isAllowedToMove(Chess chess) {
+        return chess.turn.equals(this.color);
     }
 
     public boolean canBeCapturedBy(Piece piece) {

@@ -8,20 +8,36 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class LocationPanel extends JPanel {
+public class LocationPanel extends JLayeredPane {
 
     public static final Dimension Size = new Dimension(100, 100);
-    public static final Color SelectedLocationColor = new Color(135, 151, 106);
     public static final Color LightLocationColor = new Color(240, 217, 181);
     public static final Color DarkLocationColor = new Color(181, 136, 99);
 
+    enum State {
+        LASTMOVE(new Color(155, 199, 0, 90)),
+        SELECTED(new Color(20,85,30,100)),
+        SUGGESTED(new Color(20,85,30,100)),
+        NORMAL(new Color(0, 0, 0, 0));
+
+        private final Color color;
+
+        State(Color color) {
+            this.color = color;
+        }
+    }
+
+    private State state;
+    private final JPanel statePanel;
+    private PiecePanel piecePanel;
+
     public final Location location;
-    public PiecePanel piecePanel;
 
     public LocationPanel(Location location, LocationListener locationListener) {
-        super(new GridBagLayout());
+        super();
         this.location = location;
         this.setPreferredSize(Size);
+
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -48,24 +64,42 @@ public class LocationPanel extends JPanel {
 
             }
         });
-        this.setDefaultBackground();
+        this.setBackground(this.location.isLight() ? LightLocationColor : DarkLocationColor);
+        this.setOpaque(true);
+
+        this.statePanel = new JPanel();
+        this.statePanel.setLayout(null);
+        this.statePanel.setPreferredSize(Size);
+        this.statePanel.setBounds(0, 0, Size.width, Size.height);
+        this.add(statePanel,0);
+
+        this.setState(State.NORMAL);
+
         this.validate();
     }
-    public void setDefaultBackground() {
-        this.setBackground(this.location.isLight() ? LightLocationColor : DarkLocationColor);
+
+    public void setState(State state) {
+        this.statePanel.setBackground(state.color);
+        this.state = state;
+        repaint();
     }
 
-    public void setSelectedBackground() {
-        this.setBackground(SelectedLocationColor);
+     public State getState() {
+        return this.state;
     }
 
     public void setPiece(Piece piece) {
-        removeAll();
+        if (this.piecePanel != null) {
+            remove(this.piecePanel);
+        }
         if (piece == null) {
             this.piecePanel = null;
         } else {
             this.piecePanel = new PiecePanel(piece);
-            add(this.piecePanel);
+            this.piecePanel.setPreferredSize(Size);
+            this.piecePanel.setBounds(0, 0, Size.width, Size.height);
+            this.add(this.piecePanel,1);
+            this.moveToFront(this.piecePanel);
         }
         validate();
         repaint();
