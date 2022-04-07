@@ -62,7 +62,7 @@ public class BoardPanel extends JPanel implements LocationListener {
         }
     }
 
-    private void updateBoard() {
+    private void updatePieces() {
         for (int i = 0; i < board.rows; i++) for (int j = 0; j < board.columns; j++) {
             if (board.isOccupied(Location.valueOf(i, j))) getLocationPanel(Location.valueOf(i, j)).setPiece(board.getPiece(Location.valueOf(i, j)));
             else getLocationPanel(Location.valueOf(i, j)).setPiece(null);
@@ -83,7 +83,7 @@ public class BoardPanel extends JPanel implements LocationListener {
 
     public void update() {
         resetStates();
-        updateBoard();
+        updatePieces();
         updateLastMove(lastMove);
         updateAllowedMoves();
         validate();
@@ -105,7 +105,7 @@ public class BoardPanel extends JPanel implements LocationListener {
             setCurrentSelectedPiece(null);
             if (move != null && moveController.applyMove(move)) {
                 setLastMove(move);
-                updateBoard();
+                updatePieces();
             } else if (board.isOccupied(location)) locationSelected(location);
         } else setCurrentSelectedPiece(null);
     }

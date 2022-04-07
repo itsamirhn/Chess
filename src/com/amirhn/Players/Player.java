@@ -18,8 +18,6 @@ public abstract class Player {
     private final Color color;
     public List<Piece> capturedPieces = new ArrayList<>();
 
-    public Castling castling = null;
-
     public Player(Color color) {
         this.color = color;
     }
@@ -35,13 +33,6 @@ public abstract class Player {
     public List<Move> getNaturalMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         for (Piece piece: this.getActivePieces(board)) moves.addAll(piece.getNaturalMoves(board));
-        if (castling == null) {
-            King king = getKing(board);
-            if (king.hasMoved()) return moves;
-            List<Rook> rooks = getRooks(board);
-            for (Rook rook : rooks) if (!rook.hasMoved() && rook.getLocation().row == king.getLocation().row)
-                moves.add(Castling.generate(king, rook));
-        }
         return moves;
     }
 

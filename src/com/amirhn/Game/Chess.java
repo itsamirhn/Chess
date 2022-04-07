@@ -113,7 +113,7 @@ public class Chess {
             Piece capturedPiece = ((Capture) move).capturePiece;
             getTurnPlayer().capturedPieces.add(capturedPiece);
         }
-        if (move.type == MoveType.CASTLING) getTurnPlayer().castling = (Castling) move;
+//        if (move.type == MoveType.CASTLING) getTurnPlayer().castling = (Castling) move;
         turn = turn.opposite();
         moves.add(move);
         return true;

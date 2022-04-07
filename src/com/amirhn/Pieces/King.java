@@ -1,8 +1,11 @@
 package com.amirhn.Pieces;
 
 import com.amirhn.Game.Board;
+import com.amirhn.Game.Chess;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
+import com.amirhn.Moves.Castling;
+import com.amirhn.Moves.Move;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,5 +32,20 @@ public class King extends Piece {
             threatenedLocations.add(location);
         }
         return threatenedLocations;
+    }
+
+    @Override
+    public List<Move> getNaturalMoves(Board board) {
+        List<Move> moves = super.getNaturalMoves(board);
+        int[] dy = {+1, -1};
+        for (int i = 0; i < 2; i++) {
+            Location location = this.getLocation().byOffset(0, dy[i]);
+            while (board.isValidLocation(location) && !board.isOccupied(location)) location = location.byOffset(0, dy[i]);
+            if (!board.isValidLocation(location) || !board.isOccupied(location)) continue;
+            Piece piece = board.getPiece(location);
+            if (piece.type.equals(PieceType.ROOK) && piece.color.equals(this.color))
+                moves.add(Castling.generate(this, (Rook) piece));
+        }
+        return moves;
     }
 }
