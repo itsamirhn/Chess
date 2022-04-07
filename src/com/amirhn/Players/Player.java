@@ -18,6 +18,9 @@ public abstract class Player {
     private final Color color;
     public List<Piece> capturedPieces = new ArrayList<>();
 
+    public boolean hadLongCastling = false;
+    public boolean hadShortCastling = false;
+
     public Player(Color color) {
         this.color = color;
     }

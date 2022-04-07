@@ -31,6 +31,7 @@ public abstract class Castling extends Move {
     public boolean isAllowed(Chess chess) {
         if (!super.isAllowed(chess)) return false;
         if (king.hasMoved() || rook.hasMoved()) return false;
+        if (chess.getTurnPlayer().hadShortCastling || chess.getTurnPlayer().hadLongCastling) return false;
         int from = Math.min(king.getLocation().column, rook.getLocation().column) + 1;
         int to = Math.max(king.getLocation().column, rook.getLocation().column) - 1;
         for (int i = from; i <= to; i++) if (chess.getBoard().isOccupied(Location.valueOf(king.getLocation().row, i))) return false;

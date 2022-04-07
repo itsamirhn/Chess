@@ -1,10 +1,7 @@
 package com.amirhn.Game;
 
 
-import com.amirhn.Moves.Capture;
-import com.amirhn.Moves.Castling;
-import com.amirhn.Moves.Move;
-import com.amirhn.Moves.MoveType;
+import com.amirhn.Moves.*;
 import com.amirhn.Pieces.*;
 import com.amirhn.Players.BlackPlayer;
 import com.amirhn.Players.Player;
@@ -27,42 +24,25 @@ public class Chess {
 
     public void setupFEN(String fen) {
         String[] parts = fen.split(" ");
-        this.board = Board.fromFEN(parts[0]);
-        this.turn = Color.fromString(parts[1]);
-        // TODO: implement castling
+        board = Board.fromFEN(parts[0]);
+        turn = Color.fromString(parts[1]);
+        whitePlayer.hadShortCastling = true;
+        whitePlayer.hadLongCastling = true;
+        blackPlayer.hadShortCastling = true;
+        blackPlayer.hadLongCastling = true;
+        if (!parts[2].equals("-")) {
+            for (char c : parts[2].toCharArray()) {
+                if (Character.toLowerCase(c) == 'k') getPlayer(Color.valueOfPieceChar(c)).hadShortCastling = false;
+                if (Character.toLowerCase(c) == 'q') getPlayer(Color.valueOfPieceChar(c)).hadLongCastling = false;
+            }
+        }
+
         // TODO: en passant
         // TODO: move count
     }
 
     public void setupStandardChessBoard() {
         setupFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-    }
-
-    public void setupCastlingScenario() {
-        this.board = new Board(8, 8);
-
-        setPiece(new Rook(Color.WHITE, Location.valueOf(0, 0)));
-//        setPiece(new Queen(Color.WHITE, Location.valueOf(0, 3)));
-        setPiece(new King(Color.WHITE, Location.valueOf(0, 4)));
-        setPiece(new Rook(Color.WHITE, Location.valueOf(0, 7)));
-        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.WHITE, Location.valueOf(1, i)));
-
-        setPiece(new Rook(Color.BLACK, Location.valueOf(7, 0)));
-//        setPiece(new Queen(Color.BLACK, Location.valueOf(7, 3)));
-        setPiece(new King(Color.BLACK, Location.valueOf(7, 4)));
-        setPiece(new Rook(Color.BLACK, Location.valueOf(7, 7)));
-        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.BLACK, Location.valueOf(6, i)));
-
-    }
-
-    public void setupPawnPromotionScenario() {
-        this.board = new Board(8, 8);
-
-        setPiece(new King(Color.WHITE, Location.valueOf(3, 2)));
-        setPiece(new King(Color.BLACK, Location.valueOf(4, 5)));
-        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.BLACK, Location.valueOf(1, i)));
-        for (int i = 0; i < 8; i++) setPiece(new Pawn(Color.WHITE, Location.valueOf(6, i)));
-
     }
 
     public void setPiece(Piece piece) {
@@ -113,7 +93,10 @@ public class Chess {
             Piece capturedPiece = ((Capture) move).capturePiece;
             getTurnPlayer().capturedPieces.add(capturedPiece);
         }
-//        if (move.type == MoveType.CASTLING) getTurnPlayer().castling = (Castling) move;
+        if (move.type == MoveType.CASTLING) {
+            if (move instanceof ShortCastling) getTurnPlayer().hadShortCastling = true;
+            if (move instanceof LongCastling) getTurnPlayer().hadLongCastling = true;
+        }
         turn = turn.opposite();
         moves.add(move);
         return true;
