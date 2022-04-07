@@ -19,7 +19,11 @@ public class Chess {
     public Color turn = Color.WHITE;
 
     public Chess() {
-        this.setupStandardChessBoard();
+        this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    }
+
+    public Chess(String fen) {
+        this.setupFEN(fen);
     }
 
     public void setupFEN(String fen) {
@@ -39,10 +43,6 @@ public class Chess {
 
         // TODO: en passant
         // TODO: move count
-    }
-
-    public void setupStandardChessBoard() {
-        setupFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     }
 
     public void setPiece(Piece piece) {
@@ -73,12 +73,10 @@ public class Chess {
         return getTurnPlayer().getAllowedMoves(this);
     }
 
-    public Move applyRandomMove() {
+    public Move getRandomMove() {
         List<Move> moves = getAllowedMoves();
         if (moves.isEmpty()) return null;
-        Move move = moves.get((int) (Math.random() * moves.size()));
-        applyMove(move);
-        return move;
+        return moves.get((int) (Math.random() * moves.size()));
     }
 
     public boolean isAllowed(Move move) {

@@ -18,6 +18,11 @@ public class ChessFrame extends JFrame implements MoveController {
         this(new Chess());
     }
 
+    public ChessFrame(String fen) {
+        this(new Chess(fen));
+    }
+
+
     public ChessFrame(Chess chess) {
 
         this.chess = chess;
