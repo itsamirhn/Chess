@@ -54,7 +54,7 @@ public class Pawn extends Piece {
         if (!board.isOccupied(location)) moves.addAll(makeMoves(board, location));
         if (!hasMoved() && !board.isOccupied(location)) {
             location = getLocation().byOffset(direction * 2, 0);
-            moves.addAll(makeMoves(board, location));
+            if (!board.isOccupied(location)) moves.addAll(makeMoves(board, location));
         }
         return moves;
     }
