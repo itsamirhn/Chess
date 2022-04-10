@@ -16,13 +16,13 @@ public class PiecePanel extends JPanel implements MouseMotionListener, MouseList
 
     private boolean isDragging = false;
 
-    private final PieceListener pieceListener;
+    private final PieceController pieceController;
 
-    public PiecePanel(Piece piece, PieceListener pieceListener) {
+    public PiecePanel(Piece piece, PieceController pieceController) {
         super(new BorderLayout());
         this.setOpaque(false);
         this.piece = piece;
-        this.pieceListener = pieceListener;
+        this.pieceController = pieceController;
         this.label = new JLabel(new PieceImageIcon(piece));
         this.setPreferredSize(Size);
         this.addMouseMotionListener(this);
@@ -33,8 +33,10 @@ public class PiecePanel extends JPanel implements MouseMotionListener, MouseList
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        e.translatePoint(e.getComponent().getX() - e.getComponent().getWidth() / 2, e.getComponent().getY() - e.getComponent().getHeight() / 2);
-        this.setLocation(e.getPoint());
+        if (this.isDragging) {
+            e.translatePoint(e.getComponent().getX() - e.getComponent().getWidth() / 2, e.getComponent().getY() - e.getComponent().getHeight() / 2);
+            this.setLocation(e.getPoint());
+        }
     }
 
     @Override
@@ -44,21 +46,23 @@ public class PiecePanel extends JPanel implements MouseMotionListener, MouseList
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        this.pieceController.locationSelected(this.piece.getLocation(), e);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         e.translatePoint(e.getComponent().getX(), e.getComponent().getY());
-        this.isDragging = true;
-        this.pieceListener.pieceGrabbed(this.piece, e);
+        if (this.pieceController.pieceCanBeDragged(this.piece)){
+            this.isDragging = true;
+            this.pieceController.pieceGrabbed(this.piece, e);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         e.translatePoint(e.getComponent().getX(), e.getComponent().getY());
+        if (this.isDragging) this.pieceController.pieceDropped(this.piece, e);
         this.isDragging = false;
-        this.pieceListener.pieceDropped(this.piece, e);
     }
 
     @Override

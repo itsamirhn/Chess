@@ -9,7 +9,7 @@ import com.amirhn.Pieces.Piece;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 
-public class BoardPanel extends JLayeredPane implements LocationListener, PieceListener {
+public class BoardPanel extends JLayeredPane implements PieceController, LocationListener {
 
     private final MoveController moveController;
     private Move lastMove;
@@ -58,7 +58,8 @@ public class BoardPanel extends JLayeredPane implements LocationListener, PieceL
     }
 
     private void updatePieces() {
-        this.remove(1);
+        this.removeAll();
+        this.add(this.tablePanel, Integer.valueOf(0));
         for (Piece piece : board.pieceByLocation.values()) setPiece(piece);
     }
 
@@ -99,13 +100,25 @@ public class BoardPanel extends JLayeredPane implements LocationListener, PieceL
         } else setCurrentSelectedPiece(null);
     }
 
+
+    @Override
+    public boolean pieceCanBeDragged(Piece piece) {
+        return moveController.isAllowedToMove(piece);
+    }
+
     @Override
     public void pieceGrabbed(Piece piece, MouseEvent e) {
-        System.out.println("Grabbed " + piece + " at " + this.tablePanel.locationOf(e.getPoint()));
+        setCurrentSelectedPiece(piece);
     }
 
     @Override
     public void pieceDropped(Piece piece, MouseEvent e) {
-        System.out.println("Dropped " + piece + " at " + this.tablePanel.locationOf(e.getPoint()));
+        Location location = this.tablePanel.locationOf(e.getPoint());
+        if (!piece.getLocation().equals(location)) {
+            Move move = moveController.makeMove(currentSelectedPiece, location);
+            setCurrentSelectedPiece(null);
+            if (move != null && moveController.applyMove(move)) setLastMove(move);
+        }
+        updatePieces();
     }
 }

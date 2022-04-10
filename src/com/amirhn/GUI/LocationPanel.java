@@ -44,7 +44,6 @@ public class LocationPanel extends JLayeredPane {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println("mouse pressed " + location);
                 locationListener.locationSelected(location, e);
             }
 

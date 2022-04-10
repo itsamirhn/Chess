@@ -55,7 +55,6 @@ public class TablePanel extends JPanel {
     }
 
     public Location locationOf(Point point) {
-        System.out.println(point);
         return Location.valueOf(rows - 1 - point.y / LocationPanel.Size.height, point.x / LocationPanel.Size.width);
     }
 }
