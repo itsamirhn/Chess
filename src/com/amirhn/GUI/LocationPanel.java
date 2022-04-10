@@ -1,7 +1,6 @@
 package com.amirhn.GUI;
 
 import com.amirhn.Game.Location;
-import com.amirhn.Pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +28,6 @@ public class LocationPanel extends JLayeredPane {
 
     private State state;
     private final JPanel statePanel;
-    private PiecePanel piecePanel;
 
     public final Location location;
 
@@ -41,12 +39,13 @@ public class LocationPanel extends JLayeredPane {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                locationListener.locationSelected(location);
+
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-
+                System.out.println("mouse pressed " + location);
+                locationListener.locationSelected(location, e);
             }
 
             @Override
@@ -71,7 +70,7 @@ public class LocationPanel extends JLayeredPane {
         this.statePanel.setLayout(null);
         this.statePanel.setPreferredSize(Size);
         this.statePanel.setBounds(0, 0, Size.width, Size.height);
-        this.add(statePanel,0);
+        this.add(statePanel, Integer.valueOf(0));
 
         this.setState(State.NORMAL);
 
@@ -86,22 +85,5 @@ public class LocationPanel extends JLayeredPane {
 
      public State getState() {
         return this.state;
-    }
-
-    public void setPiece(Piece piece) {
-        if (this.piecePanel != null) {
-            remove(this.piecePanel);
-        }
-        if (piece == null) {
-            this.piecePanel = null;
-        } else {
-            this.piecePanel = new PiecePanel(piece);
-            this.piecePanel.setPreferredSize(Size);
-            this.piecePanel.setBounds(0, 0, Size.width, Size.height);
-            this.add(this.piecePanel,1);
-            this.moveToFront(this.piecePanel);
-        }
-        validate();
-        repaint();
     }
 }

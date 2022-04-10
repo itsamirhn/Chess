@@ -7,94 +7,83 @@ import com.amirhn.Moves.MoveController;
 import com.amirhn.Pieces.Piece;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.MouseEvent;
 
-public class BoardPanel extends JPanel implements LocationListener {
+public class BoardPanel extends JLayeredPane implements LocationListener, PieceListener {
 
     private final MoveController moveController;
     private Move lastMove;
 
+    private final TablePanel tablePanel;
+
     private final Board board;
-    private final LocationPanel[][] locationPanels;
 
     private Piece currentSelectedPiece;
 
     public BoardPanel(Board board, MoveController moveController) {
-        super(new GridLayout(board.rows, board.columns));
+        super();
 
         this.moveController = moveController;
         this.board = board;
-        this.locationPanels = new LocationPanel[board.rows][board.columns];
 
-        for (int i = board.rows - 1; i >= 0; i--) for (int j = 0; j < board.columns; j++) {
-            Location location = Location.valueOf(i, j);
-            this.locationPanels[i][j] = new LocationPanel(location, this);
-            this.add(locationPanels[i][j]);
-        }
-        this.update();
+        this.tablePanel = new TablePanel(board.rows, board.columns, this);
+        this.tablePanel.setBounds(0, 0, this.tablePanel.getPreferredSize().width, this.tablePanel.getPreferredSize().height);
+        this.setPreferredSize(this.tablePanel.getPreferredSize());
+        this.add(tablePanel, Integer.valueOf(0));
+        for (Piece piece : board.pieceByLocation.values()) setPiece(piece);
+
         this.validate();
     }
 
+    private void setPiece(Piece piece) {
+        Location location = piece.getLocation();
+        if (location == null) return;
+        PiecePanel piecePanel = new PiecePanel(piece, this);
+        piecePanel.setBounds(this.tablePanel.pointOf(location).x, this.tablePanel.pointOf(location).y, piecePanel.getPreferredSize().width, piecePanel.getPreferredSize().height);
+        this.add(piecePanel, Integer.valueOf(1));
+    }
+
     private void setLastMove(Move lastMove) {
-        resetStates(LocationPanel.State.LASTMOVE);
+        this.tablePanel.resetStates(LocationPanel.State.LASTMOVE);
         this.lastMove = lastMove;
-        updateLastMove(lastMove);
+        showLastMove(lastMove);
     }
 
     private void setCurrentSelectedPiece(Piece currentSelectedPiece) {
-        resetStates(LocationPanel.State.SELECTED);
-        resetStates(LocationPanel.State.SUGGESTED);
+        this.tablePanel.resetStates(LocationPanel.State.SELECTED);
+        this.tablePanel.resetStates(LocationPanel.State.SUGGESTED);
         this.currentSelectedPiece = currentSelectedPiece;
-        updateLastMove(lastMove);
-        updateAllowedMoves();
-    }
-
-    private void resetStates(LocationPanel.State state) {
-        for (int i = 0; i < board.rows; i++) for (int j = 0; j < board.columns; j++) {
-            LocationPanel locationPanel = getLocationPanel(Location.valueOf(i, j));
-            if (locationPanel.getState() == state) locationPanel.setState(LocationPanel.State.NORMAL);
-        }
-    }
-
-    private void resetStates() {
-        for (int i = 0; i < board.rows; i++) for (int j = 0; j < board.columns; j++) {
-            getLocationPanel(Location.valueOf(i, j)).setState(LocationPanel.State.NORMAL);
-        }
+        showLastMove(lastMove);
+        showAllowedMoves();
     }
 
     private void updatePieces() {
-        for (int i = 0; i < board.rows; i++) for (int j = 0; j < board.columns; j++) {
-            if (board.isOccupied(Location.valueOf(i, j))) getLocationPanel(Location.valueOf(i, j)).setPiece(board.getPiece(Location.valueOf(i, j)));
-            else getLocationPanel(Location.valueOf(i, j)).setPiece(null);
-        }
+        this.remove(1);
+        for (Piece piece : board.pieceByLocation.values()) setPiece(piece);
     }
 
-    private void updateAllowedMoves() {
+    private void showAllowedMoves() {
         if (currentSelectedPiece == null) return;
-        getLocationPanel(currentSelectedPiece.getLocation()).setState(LocationPanel.State.SELECTED);
-        for (Move move : moveController.getAllowedMoves(currentSelectedPiece)) getLocationPanel(move.getEndpointLocation()).setState(LocationPanel.State.SUGGESTED);
+        this.tablePanel.getLocationPanel(currentSelectedPiece.getLocation()).setState(LocationPanel.State.SELECTED);
+        for (Move move : moveController.getAllowedMoves(currentSelectedPiece)) this.tablePanel.getLocationPanel(move.getEndpointLocation()).setState(LocationPanel.State.SUGGESTED);
     }
 
-    private void updateLastMove(Move move) {
+    private void showLastMove(Move move) {
         if (move == null) return;
-        getLocationPanel(move.getStartpointLocation()).setState(LocationPanel.State.LASTMOVE);
-        getLocationPanel(move.getEndpointLocation()).setState(LocationPanel.State.LASTMOVE);
+        this.tablePanel.getLocationPanel(move.getStartpointLocation()).setState(LocationPanel.State.LASTMOVE);
+        this.tablePanel.getLocationPanel(move.getEndpointLocation()).setState(LocationPanel.State.LASTMOVE);
     }
 
     public void update() {
-        resetStates();
+        this.tablePanel.resetStates();
         updatePieces();
-        updateLastMove(lastMove);
-        updateAllowedMoves();
+        showLastMove(lastMove);
+        showAllowedMoves();
         validate();
     }
 
-    public LocationPanel getLocationPanel(Location location) {
-        return this.locationPanels[location.row][location.column];
-    }
-
     @Override
-    public void locationSelected(Location location) {
+    public void locationSelected(Location location, MouseEvent e) {
         if (!board.isValidLocation(location)) return;
         if (currentSelectedPiece == null) {
             if (!board.isOccupied(location)) return;
@@ -106,7 +95,17 @@ public class BoardPanel extends JPanel implements LocationListener {
             if (move != null && moveController.applyMove(move)) {
                 setLastMove(move);
                 updatePieces();
-            } else if (board.isOccupied(location)) locationSelected(location);
+            } else if (board.isOccupied(location)) locationSelected(location, e);
         } else setCurrentSelectedPiece(null);
+    }
+
+    @Override
+    public void pieceGrabbed(Piece piece, MouseEvent e) {
+        System.out.println("Grabbed " + piece + " at " + this.tablePanel.locationOf(e.getPoint()));
+    }
+
+    @Override
+    public void pieceDropped(Piece piece, MouseEvent e) {
+        System.out.println("Dropped " + piece + " at " + this.tablePanel.locationOf(e.getPoint()));
     }
 }

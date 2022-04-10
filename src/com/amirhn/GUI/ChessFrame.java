@@ -34,8 +34,8 @@ public class ChessFrame extends JFrame implements MoveController {
         this.add(boardPanel);
 
         this.setResizable(false);
-        this.setVisible(true);
         this.pack();
+        this.setVisible(true);
     }
 
     public void update() {
