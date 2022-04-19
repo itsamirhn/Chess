@@ -3,10 +3,7 @@ package com.amirhn.Pieces;
 import com.amirhn.Game.Board;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
-import com.amirhn.Moves.Capture;
-import com.amirhn.Moves.Move;
-import com.amirhn.Moves.PawnPromotion;
-import com.amirhn.Moves.Walk;
+import com.amirhn.Moves.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,8 +44,14 @@ public class Pawn extends Piece {
     public List<Move> getNaturalMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         for (Location location : this.getThreatenedLocations(board)) {
-            if (!board.isOccupied(location)) continue;
-            moves.addAll(makeMoves(board, location));
+            if (board.isOccupied(location)) {
+                moves.addAll(makeMoves(board, location));
+            } else {
+                Location possiblePawnLocation = location.byOffset(- direction, 0);
+                if (!board.isValidLocation(possiblePawnLocation) || !board.isOccupied(possiblePawnLocation)) continue;
+                Piece piece = board.getPiece(possiblePawnLocation);
+                if (piece.type == PieceType.PAWN) moves.add(new EnPassant(this, (Pawn) piece));
+            }
         }
         Location location = getLocation().byOffset(direction, 0);
         if (!board.isOccupied(location)) moves.addAll(makeMoves(board, location));
