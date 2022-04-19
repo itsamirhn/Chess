@@ -1,8 +1,14 @@
 package com.amirhn.Game;
 
 public enum Color {
-    BLACK,
-    WHITE;
+    BLACK(-1),
+    WHITE(+1);
+
+    public final int direction;
+
+    Color(int direction) {
+        this.direction = direction;
+    }
 
     public Color opposite() {
         if (this == Color.BLACK) return Color.WHITE;

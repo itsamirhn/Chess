@@ -4,5 +4,5 @@ public enum MoveType {
     WALK,
     CAPTURE,
     CASTLING,
-    PROMOTION,
+    PROMOTION
 }

@@ -107,7 +107,7 @@ public class Chess {
 
     public boolean isCheckmate() {
         if (!isInCheck()) return false;
-        return getTurnPlayer().getAllowedMoves(this).isEmpty();
+        return getAllowedMoves().isEmpty();
     }
 
     public boolean isStalemate() {

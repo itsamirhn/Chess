@@ -18,7 +18,7 @@ public class Pawn extends Piece {
 
     public Pawn(Color color, Location location) {
         super(PieceType.PAWN, color, location);
-        direction = this.color == Color.WHITE ? +1 : -1;
+        direction = color.direction;
     }
 
     private boolean isBeforeLastRank(Board board) {
@@ -62,8 +62,7 @@ public class Pawn extends Piece {
     @Override
     public List<Location> getThreatenedLocations(Board board) {
         List<Location> threatenedLocations = new ArrayList<>();
-        int sign = this.color == Color.WHITE ? +1 : -1;
-        int[] dx = {sign, sign};
+        int[] dx = {direction, direction};
         int[] dy = {+1, -1};
         for (int i = 0; i < 2; i++) {
             Location location = this.getLocation().byOffset(dx[i], dy[i]);
