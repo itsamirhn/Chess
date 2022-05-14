@@ -1,5 +1,6 @@
 package com.amirhn.GUI;
 
+import com.amirhn.GUI.Components.BoardPanel;
 import com.amirhn.Game.Chess;
 import com.amirhn.Game.Location;
 import com.amirhn.Moves.Move;

@@ -1,4 +1,4 @@
-package com.amirhn.GUI;
+package com.amirhn.GUI.Listeners;
 
 import com.amirhn.Game.Location;
 

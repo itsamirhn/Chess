@@ -1,5 +1,6 @@
-package com.amirhn.GUI;
+package com.amirhn.GUI.Components;
 
+import com.amirhn.GUI.Listeners.LocationListener;
 import com.amirhn.Game.Location;
 
 import javax.swing.*;

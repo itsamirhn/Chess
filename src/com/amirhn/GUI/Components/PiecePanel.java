@@ -1,5 +1,6 @@
-package com.amirhn.GUI;
+package com.amirhn.GUI.Components;
 
+import com.amirhn.GUI.Listeners.PieceController;
 import com.amirhn.Pieces.Piece;
 
 import javax.swing.*;

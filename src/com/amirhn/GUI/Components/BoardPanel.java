@@ -1,5 +1,7 @@
-package com.amirhn.GUI;
+package com.amirhn.GUI.Components;
 
+import com.amirhn.GUI.Listeners.LocationListener;
+import com.amirhn.GUI.Listeners.PieceController;
 import com.amirhn.Game.Board;
 import com.amirhn.Game.Location;
 import com.amirhn.Moves.Move;
