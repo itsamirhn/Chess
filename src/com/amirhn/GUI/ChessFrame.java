@@ -8,17 +8,16 @@ import com.amirhn.Moves.MoveController;
 import com.amirhn.Moves.MoveType;
 import com.amirhn.Pieces.Piece;
 
-import javax.print.attribute.standard.Media;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class ChessFrame extends JFrame implements MoveController {
+public class ChessFrame extends JFrame implements MoveController, ChessMenuController{
 
-    private final Chess chess;
-    private final BoardPanel boardPanel;
+    private Chess chess;
+    private BoardPanel boardPanel;
 
     public ChessFrame() {
         this(new Chess());
@@ -28,19 +27,26 @@ public class ChessFrame extends JFrame implements MoveController {
         this(new Chess(fen));
     }
 
+    private void initChess(Chess chess) {
+        this.chess = chess;
+        if (boardPanel != null) this.remove(boardPanel);
+        boardPanel = new BoardPanel(chess.getBoard(), this);
+        this.add(boardPanel);
+        this.update();
+    }
 
     public ChessFrame(Chess chess) {
 
-        this.chess = chess;
+        this.initChess(chess);
 
         this.setTitle("Chess");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.boardPanel = new BoardPanel(chess.getBoard(), this);
-        this.add(boardPanel);
+        this.setJMenuBar(new ChessMenuBar(this));
 
         this.setResizable(false);
         this.pack();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -99,5 +105,17 @@ public class ChessFrame extends JFrame implements MoveController {
             e.printStackTrace();
         }
         clip.start();
+    }
+
+    @Override
+    public void newGame() {
+        initChess(new Chess());
+    }
+
+    @Override
+    public void loadFEN() {
+        String fen = JOptionPane.showInputDialog(this, "Enter FEN");
+        if (fen == null) return;
+        initChess(new Chess(fen));
     }
 }
