@@ -125,7 +125,8 @@ public class BoardPanel extends JLayeredPane implements PieceController, Locatio
         if (!piece.getLocation().equals(location)) {
             Move move = moveController.makeMove(currentSelectedPiece, location);
             setCurrentSelectedPiece(null);
-            if (applyMove(move)) updatePieces();;
+            applyMove(move);
         }
+        updatePieces();
     }
 }
