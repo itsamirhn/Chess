@@ -9,8 +9,9 @@ import com.amirhn.Moves.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-public abstract class Piece implements Movable, Attacker {
+public abstract class Piece {
 
     public final PieceType type;
     public final Color color;
@@ -21,13 +22,6 @@ public abstract class Piece implements Movable, Attacker {
         this.type = type;
         this.color = color;
         this.location = location;
-    }
-
-    public static Piece generate(Color color, String p) {
-        PieceType type = PieceType.valueOf(p.charAt(0));
-        if (type == null) return null;
-        Location location = Location.valueOf(p.substring(1));
-        return generate(type, color, location);
     }
 
     public static Piece generate(PieceType pieceType, Color color, Location location) {
@@ -42,7 +36,7 @@ public abstract class Piece implements Movable, Attacker {
     }
 
     public static Piece generate(char fen, Location location) {
-        return generate(PieceType.valueOf(fen), Color.valueOfPieceChar(fen), location);
+        return generate(Objects.requireNonNull(PieceType.valueOf(fen)), Color.valueOfPieceChar(fen), location);
     }
 
     public Location getLocation() {
@@ -88,9 +82,12 @@ public abstract class Piece implements Movable, Attacker {
                 '}';
     }
 
-    @Override
     public boolean isAllowedToMove(Chess chess) {
         return chess.turn.equals(this.color);
+    }
+
+    public List<Move> getAllowedMoves(Chess chess) {
+        return this.getNaturalMoves(chess.getBoard()).stream().filter(move -> move.isAllowed(chess)).collect(Collectors.toList());
     }
 
     public boolean canBeCapturedBy(Piece piece) {
@@ -103,7 +100,8 @@ public abstract class Piece implements Movable, Attacker {
         return this.type.getSymbol(this.color);
     }
 
-    @Override
+    public abstract List<Location> getThreatenedLocations(Board board);
+
     public List<Move> getNaturalMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         for (Location location : this.getThreatenedLocations(board)) {
