@@ -54,6 +54,15 @@ public class ChessFrame extends JFrame implements MoveController, ChessMenuContr
         boardPanel.update();
         validate();
         repaint();
+        alertIfFinished();
+    }
+
+    public void alertIfFinished() {
+        switch (chess.getStatus()) {
+            case CHECKMATE -> JOptionPane.showMessageDialog(this, "Checkmate! " + chess.getTurnPlayer().getColor().opposite() + " wins!");
+            case STALEMATE -> JOptionPane.showMessageDialog(this, "Stalemate!");
+            case DRAW -> JOptionPane.showMessageDialog(this, "Draw!");
+        }
     }
 
     @Override
