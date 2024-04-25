@@ -17,6 +17,7 @@ public class Chess {
     public BlackPlayer blackPlayer = new BlackPlayer();
     public List<Move> moves = new ArrayList<>();
     public Color turn = Color.WHITE;
+    public List<Scene> history = new ArrayList<>();
 
     public Chess() {
         this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
@@ -24,6 +25,7 @@ public class Chess {
 
     public Chess(String fen) {
         this.setupFEN(fen);
+        history.add(new Scene(board.copy(), turn));
     }
 
     public void setupFEN(String fen) {
@@ -97,6 +99,7 @@ public class Chess {
         }
         turn = turn.opposite();
         moves.add(move);
+        history.add(new Scene(board.copy(), turn));
         return true;
     }
 
@@ -116,8 +119,12 @@ public class Chess {
     }
 
     public boolean isThreefoldRepetition() {
-        // TODO
-        return false;
+        Scene currentScene = history.getLast();
+        int count = 0;
+        for (Scene scene : history) {
+            if (scene.equals(currentScene)) count++;
+        }
+        return count >= 3;
     }
 
     public boolean is50MoveRule() {
@@ -126,11 +133,14 @@ public class Chess {
     }
 
     public boolean isDraw() {
-        return isStalemate() || is50MoveRule() || isThreefoldRepetition();
+        return is50MoveRule() || isThreefoldRepetition();
     }
 
-    public boolean isFinished() {
-        return isCheckmate() || isDraw();
+    public Status getStatus() {
+        if (isCheckmate()) return Status.CHECKMATE;
+        if (isStalemate()) return Status.STALEMATE;
+        if (isDraw()) return Status.DRAW;
+        return Status.ONGOING;
     }
 
     @Override

@@ -115,4 +115,7 @@ public abstract class Piece implements Movable, Attacker {
         return moves;
     }
 
+    public Piece copy() {
+        return generate(this.type, this.color, this.location);
+    }
 }
