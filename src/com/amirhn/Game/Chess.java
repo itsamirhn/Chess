@@ -5,9 +5,7 @@ import com.amirhn.Moves.*;
 import com.amirhn.Pieces.King;
 import com.amirhn.Pieces.Piece;
 import com.amirhn.Pieces.PieceType;
-import com.amirhn.Players.BlackPlayer;
 import com.amirhn.Players.Player;
-import com.amirhn.Players.WhitePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +13,8 @@ import java.util.List;
 public class Chess {
 
     private Board board;
-    public WhitePlayer whitePlayer = new WhitePlayer();
-    public BlackPlayer blackPlayer = new BlackPlayer();
+    public Player whitePlayer = new Player(Color.WHITE);
+    public Player blackPlayer = new Player(Color.BLACK);
     public List<Move> moves = new ArrayList<>();
     public Color turn = Color.WHITE;
     public List<Scene> history = new ArrayList<>();

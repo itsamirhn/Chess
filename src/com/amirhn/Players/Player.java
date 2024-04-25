@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Player {
+public class Player {
     private final Color color;
     public List<Piece> capturedPieces = new ArrayList<>();
 
