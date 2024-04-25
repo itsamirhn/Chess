@@ -6,7 +6,7 @@ import com.amirhn.Pieces.Piece;
 import com.amirhn.Pieces.PieceType;
 
 
-public class Promotion extends Move {
+public abstract class Promotion extends Move {
     public Move move;
     public Piece promotedPiece;
 
