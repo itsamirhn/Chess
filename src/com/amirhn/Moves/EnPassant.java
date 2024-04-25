@@ -4,6 +4,7 @@ import com.amirhn.Game.Board;
 import com.amirhn.Game.Chess;
 import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Pawn;
+import com.amirhn.Pieces.PieceType;
 
 public class EnPassant extends Capture {
 
@@ -42,7 +43,11 @@ public class EnPassant extends Capture {
 
     @Override
     public boolean isAllowed(Chess chess) {
-        return super.isAllowed(chess); // TODO: Check opponent just move the pawn
+        if (chess.moves.isEmpty()) return false;
+        Move lastMove = chess.moves.getLast();
+        if (!(lastMove instanceof Walk)) return false;
+        if (!lastMove.piece.equals(capturePiece)) return false;
+        return super.isAllowed(chess);
     }
 
     @Override
@@ -55,8 +60,4 @@ public class EnPassant extends Capture {
         return secondDestination;
     }
 
-    @Override
-    public Location getStartpointLocation() {
-        return source;
-    }
 }
