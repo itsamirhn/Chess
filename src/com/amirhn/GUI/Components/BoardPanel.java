@@ -77,6 +77,14 @@ public class BoardPanel extends JLayeredPane implements PieceController, Locatio
         this.tablePanel.getLocationPanel(move.getEndpointLocation()).setState(LocationPanel.State.LASTMOVE);
     }
 
+    public boolean applyMove(Move move) {
+        if (move != null && moveController.applyMove(move)) {
+            setLastMove(move);
+            return true;
+        }
+        return false;
+    }
+
     public void update() {
         this.tablePanel.resetStates();
         updatePieces();
@@ -95,10 +103,8 @@ public class BoardPanel extends JLayeredPane implements PieceController, Locatio
         } else if (!currentSelectedPiece.getLocation().equals(location)) {
             Move move = moveController.makeMove(currentSelectedPiece, location);
             setCurrentSelectedPiece(null);
-            if (move != null && moveController.applyMove(move)) {
-                setLastMove(move);
-                updatePieces();
-            } else if (board.isOccupied(location)) locationSelected(location, e);
+            if (applyMove(move)) updatePieces();
+            else if (board.isOccupied(location)) locationSelected(location, e);
         } else setCurrentSelectedPiece(null);
     }
 
@@ -119,8 +125,7 @@ public class BoardPanel extends JLayeredPane implements PieceController, Locatio
         if (!piece.getLocation().equals(location)) {
             Move move = moveController.makeMove(currentSelectedPiece, location);
             setCurrentSelectedPiece(null);
-            if (move != null && moveController.applyMove(move)) setLastMove(move);
+            if (applyMove(move)) updatePieces();;
         }
-        updatePieces();
     }
 }

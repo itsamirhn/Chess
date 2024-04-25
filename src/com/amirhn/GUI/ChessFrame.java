@@ -10,11 +10,14 @@ import com.amirhn.Pieces.Piece;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class ChessFrame extends JFrame implements MoveController, ChessMenuController{
+public class ChessFrame extends JFrame implements MoveController, ChessMenuController {
 
     private Chess chess;
     private BoardPanel boardPanel;
@@ -48,6 +51,17 @@ public class ChessFrame extends JFrame implements MoveController, ChessMenuContr
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                switch (e.getKeyChar()) {
+                    case 'n' -> newGame();
+                    case 'l' -> loadFEN();
+                    case 'r' -> boardPanel.applyMove(chess.getRandomMove());
+                }
+            }
+        });
     }
 
     public void update() {
