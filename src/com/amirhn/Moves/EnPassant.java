@@ -4,7 +4,6 @@ import com.amirhn.Game.Board;
 import com.amirhn.Game.Chess;
 import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Pawn;
-import com.amirhn.Pieces.PieceType;
 
 public class EnPassant extends Capture {
 

@@ -2,7 +2,6 @@ package com.amirhn.Moves;
 
 import com.amirhn.Game.Board;
 import com.amirhn.Game.Chess;
-import com.amirhn.Game.Location;
 
 import java.util.List;
 import java.util.stream.Collectors;

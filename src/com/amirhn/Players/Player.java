@@ -4,15 +4,12 @@ import com.amirhn.Game.Board;
 import com.amirhn.Game.Chess;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
-import com.amirhn.Moves.Castling;
 import com.amirhn.Moves.Move;
 import com.amirhn.Pieces.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public abstract class Player {
     private final Color color;

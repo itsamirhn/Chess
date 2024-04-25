@@ -2,7 +2,9 @@ package com.amirhn.Game;
 
 
 import com.amirhn.Moves.*;
-import com.amirhn.Pieces.*;
+import com.amirhn.Pieces.King;
+import com.amirhn.Pieces.Piece;
+import com.amirhn.Pieces.PieceType;
 import com.amirhn.Players.BlackPlayer;
 import com.amirhn.Players.Player;
 import com.amirhn.Players.WhitePlayer;
