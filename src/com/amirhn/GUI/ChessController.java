@@ -60,10 +60,15 @@ public class ChessController implements LocationListener, ChessMenuController {
     }
 
     private void playMoveSound(Move move) {
-        String soundName = "sound/" + (move.type == MoveType.CAPTURE ? "capture" : "move") + ".wav";
+        String soundPath;
+        if (move.type == MoveType.CAPTURE) {
+            soundPath = Constants.CaptureSoundPath;
+        } else {
+            soundPath = Constants.MoveSoundPath;
+        }
         AudioInputStream audioInputStream = null;
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+            audioInputStream = AudioSystem.getAudioInputStream(new File(soundPath).getAbsoluteFile());
         } catch (UnsupportedAudioFileException | IOException e) {
             e.printStackTrace();
         }

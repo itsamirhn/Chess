@@ -12,6 +12,8 @@ import java.util.List;
 
 public class Chess {
 
+    public static final String OriginalFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
+
     private Board board;
     public Player whitePlayer = new Player(Color.WHITE);
     public Player blackPlayer = new Player(Color.BLACK);
@@ -19,9 +21,7 @@ public class Chess {
     public Color turn = Color.WHITE;
     public List<Scene> history = new ArrayList<>();
 
-    public Chess() {
-        this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-    }
+    public Chess() { this(OriginalFen); }
 
     public Chess(String fen) {
         this.setupFEN(fen);

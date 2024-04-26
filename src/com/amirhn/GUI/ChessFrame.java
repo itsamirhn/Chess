@@ -17,7 +17,7 @@ public class ChessFrame extends JFrame {
         ChessController chessController = new ChessController(chess, boardPanel);
         this.setContentPane(boardPanel);
 
-        this.setTitle("Chess");
+        this.setTitle(Constants.GameTitle);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(new ChessMenuBar(chessController));
         this.setResizable(false);
