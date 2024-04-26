@@ -10,6 +10,8 @@ import com.amirhn.Players.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.amirhn.Pieces.PieceType.*;
+
 public class Chess {
 
     private Board board;
@@ -138,6 +140,31 @@ public class Chess {
         if (isStalemate()) return Status.STALEMATE;
         if (isDraw()) return Status.DRAW;
         return Status.ONGOING;
+    }
+
+    public Move moveFromString(String moveString) {
+        if (moveString.equals("O-O")) return new ShortCastling(getTurnPlayer().getKing(board), getTurnPlayer().getKingSideRook(board));
+        if (moveString.equals("O-O-O")) return new LongCastling(getTurnPlayer().getKing(board), getTurnPlayer().getQueenSideRook(board));
+        List<Piece> sourcePieces = getTurnPlayer().getActivePieces(board);
+        char sourceChar = moveString.charAt(0);
+        sourcePieces = sourcePieces.stream().filter(piece -> piece.type.letter == sourceChar).toList();
+        if (sourcePieces.isEmpty()) return null;
+        Location dest = Location.valueOf(moveString.substring(moveString.length() - 2));
+        List<Move> moves = sourcePieces.stream().map(piece -> piece.getAllowedMoves(this)).flatMap(List::stream).filter(move -> move.getEndpointLocation().equals(dest)).toList();
+        if (moves.isEmpty()) return null;
+        if (moves.size() == 1) return moves.getFirst();
+        if (Character.isAlphabetic(moveString.charAt(1))) {
+            char sourceColumn = moveString.charAt(1);
+            moves = moves.stream().filter(move -> move.getStartpointLocation().column == sourceColumn - 'a').toList();
+            if (moves.size() == 1) return moves.getFirst();
+        }
+        if (Character.isDigit(moveString.charAt(1))) {
+            char sourceRow = moveString.charAt(1);
+            moves = moves.stream().filter(move -> move.getStartpointLocation().row == sourceRow - '1').toList();
+            if (moves.size() == 1) return moves.getFirst();
+        }
+        Location source = Location.valueOf(moveString.substring(1, 3));
+        return moves.stream().filter(move -> move.getStartpointLocation().equals(source)).findFirst().orElse(null);
     }
 
     @Override

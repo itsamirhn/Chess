@@ -53,19 +53,19 @@ public class Player {
     }
 
     public King getKing(Board board) {
-        return (King) getPieces(board, PieceType.KING).get(0);
+        return (King) getPieces(board, PieceType.KING).getFirst();
     }
 
     public List<Rook> getRooks(Board board) {
         return getPieces(board, PieceType.ROOK).stream().map(piece -> (Rook) piece).toList();
     }
 
-    public List<Knight> getKnights(Board board) {
-        return getPieces(board, PieceType.KNIGHT).stream().map(piece -> (Knight) piece).toList();
+    public Rook getKingSideRook(Board board) {
+        return getRooks(board).stream().filter(rook -> rook.getLocation().column == 7).findFirst().orElse(null);
     }
 
-    public List<Bishop> getBishops(Board board) {
-        return getPieces(board, PieceType.BISHOP).stream().map(piece -> (Bishop) piece).toList();
+    public Rook getQueenSideRook(Board board) {
+        return getRooks(board).stream().filter(rook -> rook.getLocation().column == 0).findFirst().orElse(null);
     }
 
     public boolean isThreatening(Board board, Location location) {
