@@ -68,9 +68,6 @@ public class Chess {
         return blackPlayer;
     }
 
-    public List<Move> getNaturalMoves() {
-        return getTurnPlayer().getNaturalMoves(board);
-    }
     public List<Move> getAllowedMoves() {
         return getTurnPlayer().getAllowedMoves(this);
     }

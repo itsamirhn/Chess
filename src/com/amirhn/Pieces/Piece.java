@@ -4,7 +4,9 @@ import com.amirhn.Game.Board;
 import com.amirhn.Game.Chess;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
-import com.amirhn.Moves.*;
+import com.amirhn.Moves.Capture;
+import com.amirhn.Moves.Move;
+import com.amirhn.Moves.Walk;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,9 @@ package com.amirhn.GUI.Listeners;
 
 import com.amirhn.Game.Location;
 
-import java.awt.event.MouseEvent;
-
 public interface LocationListener {
-    void locationSelected(Location location, MouseEvent e);
+    void locationSelected(Location location);
+    void locationGrabbed(Location location);
+    void locationDropped(Location location);
+    boolean isLocationDraggable(Location location);
 }

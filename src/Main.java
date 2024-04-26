@@ -1,5 +1,4 @@
 import com.amirhn.GUI.ChessFrame;
-import com.amirhn.Game.Chess;
 
 public class Main {
     public static void main(String[] args) {
