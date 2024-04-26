@@ -10,8 +10,6 @@ import com.amirhn.Players.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.amirhn.Pieces.PieceType.*;
-
 public class Chess {
 
     private Board board;
@@ -80,19 +78,18 @@ public class Chess {
         return moves.get((int) (Math.random() * moves.size()));
     }
 
-    public boolean isAllowed(Move move) {
+    private boolean isAllowed(Move move) {
         return move.isAllowed(this);
     }
 
-    public boolean applyMove(Move move) {
-        if (move == null) return false;
+    private boolean applyLegalMove(Move move) {
         if (!isAllowed(move)) return false;
         if (!move.applyOnBoard(board)) return false;
-        if (move.type == MoveType.CAPTURE) {
+        if (move.type == MoveType.CAPTURE && move instanceof Capture) {
             Piece capturedPiece = ((Capture) move).capturePiece;
             getTurnPlayer().capturedPieces.add(capturedPiece);
         }
-        if (move.type == MoveType.CASTLING) {
+        if (move.type == MoveType.CASTLING && move instanceof Castling) {
             if (move instanceof ShortCastling) getTurnPlayer().hadShortCastling = true;
             if (move instanceof LongCastling) getTurnPlayer().hadLongCastling = true;
         }
@@ -100,6 +97,11 @@ public class Chess {
         moves.add(move);
         history.add(new Scene(board.copy(), turn));
         return true;
+    }
+
+    public boolean applyMove(Move move) {
+        if (move == null) return false;
+        return getAllowedMoves().stream().filter(m -> m.toString().equals(move.toString())).count() == 1 && applyLegalMove(move);
     }
 
     public boolean isInCheck() {

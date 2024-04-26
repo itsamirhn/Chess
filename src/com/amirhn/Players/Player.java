@@ -5,7 +5,10 @@ import com.amirhn.Game.Chess;
 import com.amirhn.Game.Color;
 import com.amirhn.Game.Location;
 import com.amirhn.Moves.Move;
-import com.amirhn.Pieces.*;
+import com.amirhn.Pieces.King;
+import com.amirhn.Pieces.Piece;
+import com.amirhn.Pieces.PieceType;
+import com.amirhn.Pieces.Rook;
 
 import java.util.ArrayList;
 import java.util.List;
