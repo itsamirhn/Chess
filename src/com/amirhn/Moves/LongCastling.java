@@ -6,12 +6,14 @@ import com.amirhn.Pieces.Rook;
 
 public class LongCastling extends Castling {
 
-    public LongCastling(King king, Rook rook) {
-        super(new Walk(king, Location.valueOf(king.getLocation().row, 2)), new Walk(rook, Location.valueOf(rook.getLocation().row, 3)));
-    }
+  public LongCastling(King king, Rook rook) {
+    super(
+        new Walk(king, Location.valueOf(king.getLocation().row, 2)),
+        new Walk(rook, Location.valueOf(rook.getLocation().row, 3)));
+  }
 
-    @Override
-    public String toString() {
-        return "O-O-O";
-    }
+  @Override
+  public String toString() {
+    return "O-O-O";
+  }
 }
