@@ -10,6 +10,7 @@ public class ChessMenuBar extends JMenuBar implements ActionListener {
 
   private final JMenuItem newGame;
   private final JMenuItem loadFEN;
+  private final JMenuItem undoMove;
   private final JMenuItem applyRandomMove;
 
   public ChessMenuBar(ChessMenuController controller) {
@@ -22,6 +23,9 @@ public class ChessMenuBar extends JMenuBar implements ActionListener {
 
     loadFEN = new JMenuItem("Load FEN (l)");
     loadFEN.addActionListener(this);
+
+    undoMove = new JMenuItem("Undo Move (z)");
+    undoMove.addActionListener(this);
 
     applyRandomMove = new JMenuItem("Apply Random Move (r)");
     applyRandomMove.addActionListener(this);
@@ -37,6 +41,8 @@ public class ChessMenuBar extends JMenuBar implements ActionListener {
       controller.newGame();
     } else if (e.getSource() == loadFEN) {
       controller.loadFEN();
+    } else if (e.getSource() == undoMove) {
+      controller.undoMove();
     } else if (e.getSource() == applyRandomMove) {
       controller.applyRandomMove();
     }

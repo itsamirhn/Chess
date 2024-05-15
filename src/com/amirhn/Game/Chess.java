@@ -147,6 +147,15 @@ public class Chess {
     return Status.ONGOING;
   }
 
+  public void undoMove() {
+    if (history.size() < 2) return;
+    history.removeLast();
+    Scene scene = history.getLast();
+    board = scene.getBoard().copy();
+    turn = scene.getTurn();
+    moves.removeLast();
+  }
+
   public Move moveFromString(String moveString) {
     if (moveString.equals("O-O"))
       return new ShortCastling(

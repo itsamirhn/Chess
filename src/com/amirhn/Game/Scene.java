@@ -9,6 +9,14 @@ public class Scene {
     this.turn = turn;
   }
 
+  public Board getBoard() {
+    return board;
+  }
+
+  public Color getTurn() {
+    return turn;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

@@ -187,4 +187,17 @@ public class ChessController implements LocationListener, ChessMenuController {
     if (fen == null) return;
     initialize(new Chess(fen));
   }
+
+  @Override
+  public void undoMove() {
+    if (finished) return;
+    chess.undoMove();
+    currentSelectedPiece = null;
+    if (!chess.moves.isEmpty()) {
+      lastMove = chess.moves.getLast();
+    } else {
+      lastMove = null;
+    }
+    draw();
+  }
 }

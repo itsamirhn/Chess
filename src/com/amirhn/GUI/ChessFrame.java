@@ -32,6 +32,7 @@ public class ChessFrame extends JFrame {
               case 'n' -> chessController.newGame();
               case 'l' -> chessController.loadFEN();
               case 'r' -> chessController.applyRandomMove();
+              case 'z' -> chessController.undoMove();
             }
           }
         });

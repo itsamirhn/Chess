@@ -5,5 +5,7 @@ public interface ChessMenuController {
 
   void loadFEN();
 
+  void undoMove();
+
   void applyRandomMove();
 }
