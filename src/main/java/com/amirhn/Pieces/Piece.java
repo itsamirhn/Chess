@@ -1,12 +1,12 @@
 package com.amirhn.Pieces;
 
-import com.amirhn.GameTest.Board;
-import com.amirhn.GameTest.Chess;
-import com.amirhn.GameTest.Color;
-import com.amirhn.GameTest.Location;
-import com.amirhn.MovesTest.Capture;
-import com.amirhn.MovesTest.Move;
-import com.amirhn.MovesTest.Walk;
+import com.amirhn.Game.Board;
+import com.amirhn.Game.Chess;
+import com.amirhn.Game.Color;
+import com.amirhn.Game.Location;
+import com.amirhn.Moves.Capture;
+import com.amirhn.Moves.Move;
+import com.amirhn.Moves.Walk;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

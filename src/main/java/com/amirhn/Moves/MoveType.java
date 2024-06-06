@@ -1,4 +1,4 @@
-package com.amirhn.MovesTest;
+package com.amirhn.Moves;
 
 public enum MoveType {
   WALK,

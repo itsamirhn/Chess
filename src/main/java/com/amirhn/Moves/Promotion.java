@@ -1,7 +1,7 @@
-package com.amirhn.MovesTest;
+package com.amirhn.Moves;
 
-import com.amirhn.GameTest.Board;
-import com.amirhn.GameTest.Location;
+import com.amirhn.Game.Board;
+import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Piece;
 import com.amirhn.Pieces.PieceType;
 

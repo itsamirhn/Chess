@@ -1,6 +1,6 @@
-package com.amirhn.MovesTest;
+package com.amirhn.Moves;
 
-import com.amirhn.GameTest.Location;
+import com.amirhn.Game.Location;
 import com.amirhn.Pieces.King;
 import com.amirhn.Pieces.Rook;
 

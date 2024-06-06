@@ -1,7 +1,7 @@
 package com.amirhn.GUI;
 
 import com.amirhn.GUI.Components.BoardPanel;
-import com.amirhn.GameTest.Chess;
+import com.amirhn.Game.Chess;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;

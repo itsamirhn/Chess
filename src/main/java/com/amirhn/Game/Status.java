@@ -1,4 +1,4 @@
-package com.amirhn.GameTest;
+package com.amirhn.Game;
 
 public enum Status {
   ONGOING,

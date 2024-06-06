@@ -1,7 +1,7 @@
 package com.amirhn.GUI.Components;
 
 import com.amirhn.GUI.Listeners.LocationListener;
-import com.amirhn.GameTest.Location;
+import com.amirhn.Game.Location;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;

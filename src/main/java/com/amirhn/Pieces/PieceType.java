@@ -1,6 +1,6 @@
 package com.amirhn.Pieces;
 
-import com.amirhn.GameTest.Color;
+import com.amirhn.Game.Color;
 
 public enum PieceType {
   KING('K', "♔♚"),

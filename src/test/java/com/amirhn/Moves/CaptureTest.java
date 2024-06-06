@@ -1,11 +1,11 @@
-package com.amirhn.MovesTest;
+package com.amirhn.Moves;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import com.amirhn.GameTest.Board;
-import com.amirhn.GameTest.Color;
-import com.amirhn.GameTest.Location;
+import com.amirhn.Game.Board;
+import com.amirhn.Game.Color;
+import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Pawn;
 import com.amirhn.Pieces.Piece;
 import com.amirhn.Pieces.Queen;

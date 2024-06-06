@@ -1,4 +1,4 @@
-package com.amirhn.GameTest;
+package com.amirhn.Game;
 
 public class Scene {
   private final Board board;

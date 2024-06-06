@@ -1,4 +1,4 @@
-package com.amirhn.GameTest;
+package com.amirhn.Game;
 
 import com.amirhn.Pieces.Piece;
 import java.util.HashMap;

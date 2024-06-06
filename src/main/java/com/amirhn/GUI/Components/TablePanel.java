@@ -1,6 +1,6 @@
 package com.amirhn.GUI.Components;
 
-import com.amirhn.GameTest.Location;
+import com.amirhn.Game.Location;
 import java.awt.*;
 import javax.swing.*;
 

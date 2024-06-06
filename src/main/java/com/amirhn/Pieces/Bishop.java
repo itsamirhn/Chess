@@ -1,8 +1,8 @@
 package com.amirhn.Pieces;
 
-import com.amirhn.GameTest.Board;
-import com.amirhn.GameTest.Color;
-import com.amirhn.GameTest.Location;
+import com.amirhn.Game.Board;
+import com.amirhn.Game.Color;
+import com.amirhn.Game.Location;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.amirhn.GUI.Listeners;
 
-import com.amirhn.GameTest.Location;
+import com.amirhn.Game.Location;
 
 public interface LocationListener {
   void locationSelected(Location location);
