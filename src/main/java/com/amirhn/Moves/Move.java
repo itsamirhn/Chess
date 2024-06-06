@@ -5,18 +5,13 @@ import com.amirhn.Game.Chess;
 import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Piece;
 
-/**
- * The type Move.
- */
+/** The type Move. */
 public abstract class Move {
-  /**
-   * The Type.
-   */
-public final MoveType type;
-  /**
-   * The Piece.
-   */
-public Piece piece;
+  /** The Type. */
+  public final MoveType type;
+
+  /** The Piece. */
+  public Piece piece;
 
   /**
    * Instantiates a new Move.
@@ -24,7 +19,7 @@ public Piece piece;
    * @param type the type
    * @param piece the piece
    */
-public Move(MoveType type, Piece piece) {
+  public Move(MoveType type, Piece piece) {
     this.type = type;
     this.piece = piece;
   }
@@ -35,7 +30,7 @@ public Move(MoveType type, Piece piece) {
    * @param chess the chess
    * @return the boolean
    */
-public boolean isAllowed(Chess chess) {
+  public boolean isAllowed(Chess chess) {
     Board board = chess.getBoard();
     if (!piece.isAllowedToMove(chess)) return false;
     if (!applyOnBoard(board)) return false;
@@ -50,14 +45,14 @@ public boolean isAllowed(Chess chess) {
    * @param board the board
    * @return the boolean
    */
-public abstract boolean applyOnBoard(Board board);
+  public abstract boolean applyOnBoard(Board board);
 
   /**
    * Undo on board.
    *
    * @param board the board
    */
-protected abstract void undoOnBoard(Board board);
+  protected abstract void undoOnBoard(Board board);
 
   /**
    * Is valid apply on board boolean.
@@ -65,7 +60,7 @@ protected abstract void undoOnBoard(Board board);
    * @param board the board
    * @return the boolean
    */
-public boolean isValidApplyOnBoard(Board board) {
+  public boolean isValidApplyOnBoard(Board board) {
     return board.isValidPiece(piece);
   }
 
@@ -74,12 +69,12 @@ public boolean isValidApplyOnBoard(Board board) {
    *
    * @return the startpoint location
    */
-public abstract Location getStartpointLocation();
+  public abstract Location getStartpointLocation();
 
   /**
    * Gets endpoint location.
    *
    * @return the endpoint location
    */
-public abstract Location getEndpointLocation();
+  public abstract Location getEndpointLocation();
 }

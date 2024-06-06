@@ -6,9 +6,7 @@ import com.amirhn.Game.Location;
 import java.util.List;
 import java.util.stream.Stream;
 
-/**
- * The type Queen.
- */
+/** The type Queen. */
 public class Queen extends Piece {
 
   private final Rook rook;
@@ -20,7 +18,7 @@ public class Queen extends Piece {
    * @param color the color
    * @param location the location
    */
-public Queen(Color color, Location location) {
+  public Queen(Color color, Location location) {
     super(PieceType.QUEEN, color, location);
     this.rook = new Rook(color, location);
     this.bishop = new Bishop(color, location);
@@ -31,7 +29,7 @@ public Queen(Color color, Location location) {
    *
    * @param location the location
    */
-@Override
+  @Override
   public void setLocation(Location location) {
     super.setLocation(location);
     this.rook.setLocation(location);
@@ -43,17 +41,15 @@ public Queen(Color color, Location location) {
    *
    * @param location the location
    */
-@Override
+  @Override
   public void setLocationBack(Location location) {
     super.setLocationBack(location);
     this.rook.setLocationBack(location);
     this.bishop.setLocationBack(location);
   }
 
-  /**
-   * Remove location.
-   */
-@Override
+  /** Remove location. */
+  @Override
   public void removeLocation() {
     super.removeLocation();
   }
@@ -64,7 +60,7 @@ public Queen(Color color, Location location) {
    * @param board the board
    * @return the threatened locations
    */
-@Override
+  @Override
   public List<Location> getThreatenedLocations(Board board) {
     List<Location> rookThreatenedLocation = this.rook.getThreatenedLocations(board);
     List<Location> bishopThreatenedLocation = this.bishop.getThreatenedLocations(board);

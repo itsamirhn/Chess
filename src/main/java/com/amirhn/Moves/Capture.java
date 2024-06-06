@@ -4,19 +4,14 @@ import com.amirhn.Game.Board;
 import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Piece;
 
-/**
- * The type Capture.
- */
+/** The type Capture. */
 public class Capture extends Move {
 
-  /**
-   * The Source.
-   */
-public Location source;
-  /**
-   * The Destination.
-   */
-public Location destination;
+  /** The Source. */
+  public Location source;
+
+  /** The Destination. */
+  public Location destination;
 
   /** The Capture piece. */
   public Piece capturePiece;
@@ -27,7 +22,7 @@ public Location destination;
    * @param piece the piece
    * @param capturePiece the capture piece
    */
-public Capture(Piece piece, Piece capturePiece) {
+  public Capture(Piece piece, Piece capturePiece) {
     super(MoveType.CAPTURE, piece);
     this.capturePiece = capturePiece;
     this.source = piece.getLocation();
@@ -40,7 +35,7 @@ public Capture(Piece piece, Piece capturePiece) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean applyOnBoard(Board board) {
     if (!isValidApplyOnBoard(board)) return false;
     board.removePiece(capturePiece);
@@ -56,7 +51,7 @@ public Capture(Piece piece, Piece capturePiece) {
    *
    * @param board the board
    */
-@Override
+  @Override
   public void undoOnBoard(Board board) {
     board.removePiece(capturePiece);
     board.removePiece(piece);
@@ -72,7 +67,7 @@ public Capture(Piece piece, Piece capturePiece) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean isValidApplyOnBoard(Board board) {
     return super.isValidApplyOnBoard(board)
         && board.isValidPiece(capturePiece)
@@ -84,7 +79,7 @@ public Capture(Piece piece, Piece capturePiece) {
    *
    * @return the string
    */
-@Override
+  @Override
   public String toString() {
     return "" + piece.type.letter + source + "x" + destination;
   }
@@ -94,7 +89,7 @@ public Capture(Piece piece, Piece capturePiece) {
    *
    * @return the endpoint location
    */
-@Override
+  @Override
   public Location getEndpointLocation() {
     return destination;
   }
@@ -104,7 +99,7 @@ public Capture(Piece piece, Piece capturePiece) {
    *
    * @return the startpoint location
    */
-@Override
+  @Override
   public Location getStartpointLocation() {
     return source;
   }

@@ -2,17 +2,12 @@ package com.amirhn.Game;
 
 import java.util.Objects;
 
-/**
- * The type Location.
- */
+/** The type Location. */
 public class Location {
-  /**
-   * The Row.
-   */
-public final int row, /**
-   * The Column.
-   */
-column;
+  /** The Row. */
+  public final int row,
+      /** The Column. */
+      column;
 
   /**
    * Instantiates a new Location.
@@ -20,7 +15,7 @@ column;
    * @param row the row
    * @param column the column
    */
-public Location(int row, int column) {
+  public Location(int row, int column) {
     this.row = row;
     this.column = column;
   }
@@ -31,7 +26,7 @@ public Location(int row, int column) {
    * @param loc the loc
    * @return the location
    */
-public static Location valueOf(String loc) {
+  public static Location valueOf(String loc) {
     return new Location(loc.charAt(1) - '1', loc.charAt(0) - 'a');
   }
 
@@ -42,7 +37,7 @@ public static Location valueOf(String loc) {
    * @param column the column
    * @return the location
    */
-public static Location valueOf(int row, int column) {
+  public static Location valueOf(int row, int column) {
     return new Location(row, column);
   }
 
@@ -53,7 +48,7 @@ public static Location valueOf(int row, int column) {
    * @param dy the dy
    * @return the location
    */
-public Location byOffset(int dx, int dy) {
+  public Location byOffset(int dx, int dy) {
     return Location.valueOf(this.row + dx, this.column + dy);
   }
 
@@ -62,7 +57,7 @@ public Location byOffset(int dx, int dy) {
    *
    * @return the boolean
    */
-public boolean isLight() {
+  public boolean isLight() {
     return ((this.row + this.column) % 2) == 1;
   }
 
@@ -71,7 +66,7 @@ public boolean isLight() {
    *
    * @return the string
    */
-@Override
+  @Override
   public String toString() {
     return ((char) (this.column + 'a')) + String.valueOf(this.row + 1);
   }
@@ -82,7 +77,7 @@ public boolean isLight() {
    * @param o the o
    * @return the boolean
    */
-@Override
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -95,7 +90,7 @@ public boolean isLight() {
    *
    * @return the int
    */
-@Override
+  @Override
   public int hashCode() {
     return Objects.hash(row, column);
   }

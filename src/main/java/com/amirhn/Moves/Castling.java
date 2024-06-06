@@ -6,25 +6,18 @@ import com.amirhn.Game.Location;
 import com.amirhn.Pieces.King;
 import com.amirhn.Pieces.Rook;
 
-/**
- * The type Castling.
- */
+/** The type Castling. */
 public abstract class Castling extends Move {
-  /**
-   * The King move.
-   */
-public Walk kingMove, /**
-   * The Rook move.
-   */
-rookMove;
-  /**
-   * The King.
-   */
-public King king;
-  /**
-   * The Rook.
-   */
-public Rook rook;
+  /** The King move. */
+  public Walk kingMove,
+      /** The Rook move. */
+      rookMove;
+
+  /** The King. */
+  public King king;
+
+  /** The Rook. */
+  public Rook rook;
 
   /**
    * Instantiates a new Castling.
@@ -32,7 +25,7 @@ public Rook rook;
    * @param kingMove the king move
    * @param rookMove the rook move
    */
-public Castling(Walk kingMove, Walk rookMove) {
+  public Castling(Walk kingMove, Walk rookMove) {
     super(MoveType.CASTLING, kingMove.piece);
     this.kingMove = kingMove;
     this.rookMove = rookMove;
@@ -47,7 +40,7 @@ public Castling(Walk kingMove, Walk rookMove) {
    * @param rook the rook
    * @return the castling
    */
-public static Castling generate(King king, Rook rook) {
+  public static Castling generate(King king, Rook rook) {
     if (king.getLocation().row != rook.getLocation().row) return null;
     if (king.getLocation().column < rook.getLocation().column) return new ShortCastling(king, rook);
     if (king.getLocation().column > rook.getLocation().column) return new LongCastling(king, rook);
@@ -60,7 +53,7 @@ public static Castling generate(King king, Rook rook) {
    * @param chess the chess
    * @return the boolean
    */
-@Override
+  @Override
   public boolean isAllowed(Chess chess) {
     if (!super.isAllowed(chess)) return false;
     if (king.hasMoved() || rook.hasMoved()) return false;
@@ -86,7 +79,7 @@ public static Castling generate(King king, Rook rook) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean applyOnBoard(Board board) {
     if (!isValidApplyOnBoard(board)) return false;
     kingMove.applyOnBoard(board);
@@ -99,7 +92,7 @@ public static Castling generate(King king, Rook rook) {
    *
    * @param board the board
    */
-@Override
+  @Override
   public void undoOnBoard(Board board) {
     rookMove.undoOnBoard(board);
     kingMove.undoOnBoard(board);
@@ -111,7 +104,7 @@ public static Castling generate(King king, Rook rook) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean isValidApplyOnBoard(Board board) {
     return super.isValidApplyOnBoard(board)
         && king.color.equals(rook.color)
@@ -125,7 +118,7 @@ public static Castling generate(King king, Rook rook) {
    *
    * @return the endpoint location
    */
-@Override
+  @Override
   public Location getEndpointLocation() {
     return rookMove.getStartpointLocation();
   }
@@ -135,7 +128,7 @@ public static Castling generate(King king, Rook rook) {
    *
    * @return the startpoint location
    */
-@Override
+  @Override
   public Location getStartpointLocation() {
     return kingMove.getStartpointLocation();
   }

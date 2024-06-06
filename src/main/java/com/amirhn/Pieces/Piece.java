@@ -12,27 +12,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * The type Piece.
- */
+/** The type Piece. */
 public abstract class Piece {
 
-  /**
-   * The Type.
-   */
-public final PieceType type;
-  /**
-   * The Color.
-   */
-public final Color color;
-  /**
-   * The Location.
-   */
-protected Location location;
-  /**
-   * The Moves.
-   */
-protected int moves = 0;
+  /** The Type. */
+  public final PieceType type;
+
+  /** The Color. */
+  public final Color color;
+
+  /** The Location. */
+  protected Location location;
+
+  /** The Moves. */
+  protected int moves = 0;
 
   /**
    * Instantiates a new Piece.
@@ -41,7 +34,7 @@ protected int moves = 0;
    * @param color the color
    * @param location the location
    */
-public Piece(PieceType type, Color color, Location location) {
+  public Piece(PieceType type, Color color, Location location) {
     this.type = type;
     this.color = color;
     this.location = location;
@@ -55,7 +48,7 @@ public Piece(PieceType type, Color color, Location location) {
    * @param location the location
    * @return the piece
    */
-public static Piece generate(PieceType pieceType, Color color, Location location) {
+  public static Piece generate(PieceType pieceType, Color color, Location location) {
     return switch (pieceType) {
       case KING -> new King(color, location);
       case PAWN -> new Pawn(color, location);
@@ -73,7 +66,7 @@ public static Piece generate(PieceType pieceType, Color color, Location location
    * @param location the location
    * @return the piece
    */
-public static Piece generate(char fen, Location location) {
+  public static Piece generate(char fen, Location location) {
     return generate(
         Objects.requireNonNull(PieceType.valueOf(fen)), Color.valueOfPieceChar(fen), location);
   }
@@ -83,7 +76,7 @@ public static Piece generate(char fen, Location location) {
    *
    * @return the location
    */
-public Location getLocation() {
+  public Location getLocation() {
     return location;
   }
 
@@ -92,7 +85,7 @@ public Location getLocation() {
    *
    * @param location the location
    */
-public void setLocation(Location location) {
+  public void setLocation(Location location) {
     if (this.location != null) moves++;
     this.location = location;
   }
@@ -102,15 +95,13 @@ public void setLocation(Location location) {
    *
    * @param location the location
    */
-public void setLocationBack(Location location) {
+  public void setLocationBack(Location location) {
     if (this.location != null) moves--;
     this.location = location;
   }
 
-  /**
-   * Remove location.
-   */
-public void removeLocation() {
+  /** Remove location. */
+  public void removeLocation() {
     this.location = null;
   }
 
@@ -119,7 +110,7 @@ public void removeLocation() {
    *
    * @return the boolean
    */
-public boolean hasMoved() {
+  public boolean hasMoved() {
     return moves > 0;
   }
 
@@ -129,7 +120,7 @@ public boolean hasMoved() {
    * @param o the o
    * @return the boolean
    */
-@Override
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -142,7 +133,7 @@ public boolean hasMoved() {
    *
    * @return the int
    */
-@Override
+  @Override
   public int hashCode() {
     return Objects.hash(type, color, location);
   }
@@ -152,7 +143,7 @@ public boolean hasMoved() {
    *
    * @return the string
    */
-@Override
+  @Override
   public String toString() {
     return this.type + "{" + "color=" + color + ", location=" + location + '}';
   }
@@ -163,7 +154,7 @@ public boolean hasMoved() {
    * @param chess the chess
    * @return the boolean
    */
-public boolean isAllowedToMove(Chess chess) {
+  public boolean isAllowedToMove(Chess chess) {
     return chess.turn.equals(this.color);
   }
 
@@ -173,7 +164,7 @@ public boolean isAllowedToMove(Chess chess) {
    * @param chess the chess
    * @return the allowed moves
    */
-public List<Move> getAllowedMoves(Chess chess) {
+  public List<Move> getAllowedMoves(Chess chess) {
     return this.getNaturalMoves(chess.getBoard()).stream()
         .filter(move -> move.isAllowed(chess))
         .collect(Collectors.toList());
@@ -185,7 +176,7 @@ public List<Move> getAllowedMoves(Chess chess) {
    * @param piece the piece
    * @return the boolean
    */
-public boolean canBeCapturedBy(Piece piece) {
+  public boolean canBeCapturedBy(Piece piece) {
     if (piece == null) return false;
     if (type == PieceType.KING) return false;
     return this.color != piece.color;
@@ -196,7 +187,7 @@ public boolean canBeCapturedBy(Piece piece) {
    *
    * @return the symbol
    */
-public char getSymbol() {
+  public char getSymbol() {
     return this.type.getSymbol(this.color);
   }
 
@@ -206,7 +197,7 @@ public char getSymbol() {
    * @param board the board
    * @return the threatened locations
    */
-public abstract List<Location> getThreatenedLocations(Board board);
+  public abstract List<Location> getThreatenedLocations(Board board);
 
   /**
    * Gets natural moves.
@@ -214,7 +205,7 @@ public abstract List<Location> getThreatenedLocations(Board board);
    * @param board the board
    * @return the natural moves
    */
-public List<Move> getNaturalMoves(Board board) {
+  public List<Move> getNaturalMoves(Board board) {
     List<Move> moves = new ArrayList<>();
     for (Location location : this.getThreatenedLocations(board)) {
       if (board.isOccupied(location)) {
@@ -230,7 +221,7 @@ public List<Move> getNaturalMoves(Board board) {
    *
    * @return the piece
    */
-public Piece copy() {
+  public Piece copy() {
     return generate(this.type, this.color, this.location);
   }
 }

@@ -1,26 +1,16 @@
 package com.amirhn.GUI;
 
-/**
- * The interface Chess menu controller.
- */
+/** The interface Chess menu controller. */
 public interface ChessMenuController {
-  /**
-   * New game.
-   */
-void newGame();
+  /** New game. */
+  void newGame();
 
-  /**
-   * Load fen.
-   */
-void loadFEN();
+  /** Load fen. */
+  void loadFEN();
 
-  /**
-   * Undo move.
-   */
-void undoMove();
+  /** Undo move. */
+  void undoMove();
 
-  /**
-   * Apply random move.
-   */
-void applyRandomMove();
+  /** Apply random move. */
+  void applyRandomMove();
 }

@@ -4,18 +4,13 @@ import com.amirhn.Game.Board;
 import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Piece;
 
-/**
- * The type Walk.
- */
+/** The type Walk. */
 public class Walk extends Move {
-  /**
-   * The Source.
-   */
-public Location source;
-  /**
-   * The Destination.
-   */
-public Location destination;
+  /** The Source. */
+  public Location source;
+
+  /** The Destination. */
+  public Location destination;
 
   /**
    * Instantiates a new Walk.
@@ -23,7 +18,7 @@ public Location destination;
    * @param sourcePiece the source piece
    * @param destination the destination
    */
-public Walk(Piece sourcePiece, Location destination) {
+  public Walk(Piece sourcePiece, Location destination) {
     super(MoveType.WALK, sourcePiece);
     this.source = sourcePiece.getLocation();
     this.destination = destination;
@@ -35,7 +30,7 @@ public Walk(Piece sourcePiece, Location destination) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean applyOnBoard(Board board) {
     if (!this.isValidApplyOnBoard(board)) return false;
     board.removePiece(this.piece);
@@ -49,7 +44,7 @@ public Walk(Piece sourcePiece, Location destination) {
    *
    * @param board the board
    */
-@Override
+  @Override
   public void undoOnBoard(Board board) {
     board.removePiece(this.piece);
     this.piece.setLocationBack(this.source);
@@ -62,7 +57,7 @@ public Walk(Piece sourcePiece, Location destination) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean isValidApplyOnBoard(Board board) {
     return super.isValidApplyOnBoard(board)
         && board.isValidLocation(this.destination)
@@ -74,7 +69,7 @@ public Walk(Piece sourcePiece, Location destination) {
    *
    * @return the startpoint location
    */
-@Override
+  @Override
   public Location getStartpointLocation() {
     return source;
   }
@@ -84,7 +79,7 @@ public Walk(Piece sourcePiece, Location destination) {
    *
    * @return the endpoint location
    */
-@Override
+  @Override
   public Location getEndpointLocation() {
     return destination;
   }
@@ -94,7 +89,7 @@ public Walk(Piece sourcePiece, Location destination) {
    *
    * @return the string
    */
-@Override
+  @Override
   public String toString() {
     return "" + this.piece.type.letter + this.source + "-" + this.destination;
   }

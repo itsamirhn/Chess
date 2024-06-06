@@ -5,9 +5,7 @@ import com.amirhn.Game.Chess;
 import com.amirhn.Game.Color;
 import com.amirhn.Pieces.PieceType;
 
-/**
- * The type Pawn promotion.
- */
+/** The type Pawn promotion. */
 public class PawnPromotion extends Promotion {
 
   /**
@@ -16,7 +14,7 @@ public class PawnPromotion extends Promotion {
    * @param move the move
    * @param promotedPieceType the promoted piece type
    */
-public PawnPromotion(Move move, PieceType promotedPieceType) {
+  public PawnPromotion(Move move, PieceType promotedPieceType) {
     super(move, promotedPieceType);
   }
 
@@ -26,7 +24,7 @@ public PawnPromotion(Move move, PieceType promotedPieceType) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean isValidApplyOnBoard(Board board) {
     return piece.type == PieceType.PAWN && super.isValidApplyOnBoard(board);
   }
@@ -37,7 +35,7 @@ public PawnPromotion(Move move, PieceType promotedPieceType) {
    * @param chess the chess
    * @return the boolean
    */
-@Override
+  @Override
   public boolean isAllowed(Chess chess) {
     boolean isLastRank = false;
     if (piece.color == Color.WHITE)

@@ -5,21 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * The type Board.
- */
+/** The type Board. */
 public class Board {
-  /**
-   * The Rows.
-   */
-public final int rows, /**
-   * The Columns.
-   */
-columns;
-  /**
-   * The Piece by location.
-   */
-public final Map<Location, Piece> pieceByLocation = new HashMap<>();
+  /** The Rows. */
+  public final int rows,
+      /** The Columns. */
+      columns;
+
+  /** The Piece by location. */
+  public final Map<Location, Piece> pieceByLocation = new HashMap<>();
 
   /**
    * Instantiates a new Board.
@@ -27,7 +21,7 @@ public final Map<Location, Piece> pieceByLocation = new HashMap<>();
    * @param rows the rows
    * @param columns the columns
    */
-public Board(int rows, int columns) {
+  public Board(int rows, int columns) {
     this.rows = rows;
     this.columns = columns;
   }
@@ -38,7 +32,7 @@ public Board(int rows, int columns) {
    * @param fen the fen
    * @return the board
    */
-public static Board fromFEN(String fen) {
+  public static Board fromFEN(String fen) {
     int rows = fen.split("/").length;
     Board board = new Board(rows, rows);
     board.setupFEN(fen);
@@ -50,7 +44,7 @@ public static Board fromFEN(String fen) {
    *
    * @param fen the fen
    */
-public void setupFEN(String fen) {
+  public void setupFEN(String fen) {
     pieceByLocation.clear();
     String[] rows = fen.split("/");
     int i = rows.length - 1;
@@ -74,7 +68,7 @@ public void setupFEN(String fen) {
    * @param location the location
    * @return the boolean
    */
-public boolean isValidLocation(Location location) {
+  public boolean isValidLocation(Location location) {
     if (location == null) return false;
     return 0 <= location.row
         && location.row < this.rows
@@ -88,7 +82,7 @@ public boolean isValidLocation(Location location) {
    * @param location the location
    * @return the boolean
    */
-public boolean isOccupied(Location location) {
+  public boolean isOccupied(Location location) {
     if (!this.isValidLocation(location)) return false;
     return getPiece(location) != null;
   }
@@ -99,7 +93,7 @@ public boolean isOccupied(Location location) {
    * @param location the location
    * @return the piece
    */
-public Piece getPiece(Location location) {
+  public Piece getPiece(Location location) {
     return this.pieceByLocation.get(location);
   }
 
@@ -108,7 +102,7 @@ public Piece getPiece(Location location) {
    *
    * @param piece the piece
    */
-public void setPiece(Piece piece) {
+  public void setPiece(Piece piece) {
     this.pieceByLocation.put(piece.getLocation(), piece);
   }
 
@@ -117,7 +111,7 @@ public void setPiece(Piece piece) {
    *
    * @param piece the piece
    */
-public void removePiece(Piece piece) {
+  public void removePiece(Piece piece) {
     this.pieceByLocation.remove(piece.getLocation());
   }
 
@@ -126,7 +120,7 @@ public void removePiece(Piece piece) {
    *
    * @return the all pieces
    */
-public List<Piece> getAllPieces() {
+  public List<Piece> getAllPieces() {
     return pieceByLocation.values().stream().toList();
   }
 
@@ -136,7 +130,7 @@ public List<Piece> getAllPieces() {
    * @param piece the piece
    * @return the boolean
    */
-public boolean isValidPiece(Piece piece) {
+  public boolean isValidPiece(Piece piece) {
     return this.getPiece(piece.getLocation()) == piece;
   }
 
@@ -145,7 +139,7 @@ public boolean isValidPiece(Piece piece) {
    *
    * @return the string
    */
-@Override
+  @Override
   public String toString() {
     StringBuilder board = new StringBuilder();
     board.append(" \t");
@@ -166,7 +160,7 @@ public boolean isValidPiece(Piece piece) {
    *
    * @return the board
    */
-public Board copy() {
+  public Board copy() {
     Board board = new Board(this.rows, this.columns);
     for (Piece piece : this.getAllPieces()) board.setPiece(piece.copy());
     return board;
@@ -178,7 +172,7 @@ public Board copy() {
    * @param o the o
    * @return the boolean
    */
-@Override
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;

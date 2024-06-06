@@ -8,41 +8,31 @@ import com.amirhn.Players.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The type Chess.
- */
+/** The type Chess. */
 public class Chess {
 
-  /**
-   * The constant OriginalFen.
-   */
-public static final String OriginalFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
-  /**
-   * The White player.
-   */
-public Player whitePlayer = new Player(Color.WHITE);
-  /**
-   * The Black player.
-   */
-public Player blackPlayer = new Player(Color.BLACK);
-  /**
-   * The Moves.
-   */
-public List<Move> moves = new ArrayList<>();
-  /**
-   * The Turn.
-   */
-public Color turn = Color.WHITE;
-  /**
-   * The History.
-   */
-public List<Scene> history = new ArrayList<>();
+  /** The constant OriginalFen. */
+  public static final String OriginalFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
+
+  /** The White player. */
+  public Player whitePlayer = new Player(Color.WHITE);
+
+  /** The Black player. */
+  public Player blackPlayer = new Player(Color.BLACK);
+
+  /** The Moves. */
+  public List<Move> moves = new ArrayList<>();
+
+  /** The Turn. */
+  public Color turn = Color.WHITE;
+
+  /** The History. */
+  public List<Scene> history = new ArrayList<>();
+
   private Board board;
 
-  /**
-   * Instantiates a new Chess.
-   */
-public Chess() {
+  /** Instantiates a new Chess. */
+  public Chess() {
     this(OriginalFen);
   }
 
@@ -51,7 +41,7 @@ public Chess() {
    *
    * @param fen the fen
    */
-public Chess(String fen) {
+  public Chess(String fen) {
     this.setupFEN(fen);
     history.add(new Scene(board.copy(), turn));
   }
@@ -61,7 +51,7 @@ public Chess(String fen) {
    *
    * @param fen the fen
    */
-public void setupFEN(String fen) {
+  public void setupFEN(String fen) {
     String[] parts = fen.split(" ");
     board = Board.fromFEN(parts[0]);
     turn = Color.fromString(parts[1]);
@@ -87,7 +77,7 @@ public void setupFEN(String fen) {
    *
    * @param piece the piece
    */
-public void setPiece(Piece piece) {
+  public void setPiece(Piece piece) {
     this.board.setPiece(piece);
   }
 
@@ -96,7 +86,7 @@ public void setPiece(Piece piece) {
    *
    * @return the board
    */
-public Board getBoard() {
+  public Board getBoard() {
     return board;
   }
 
@@ -105,7 +95,7 @@ public Board getBoard() {
    *
    * @return the turn player
    */
-public Player getTurnPlayer() {
+  public Player getTurnPlayer() {
     return getPlayer(turn);
   }
 
@@ -114,7 +104,7 @@ public Player getTurnPlayer() {
    *
    * @return the opponent player
    */
-public Player getOpponentPlayer() {
+  public Player getOpponentPlayer() {
     return getPlayer(turn.opposite());
   }
 
@@ -124,7 +114,7 @@ public Player getOpponentPlayer() {
    * @param color the color
    * @return the player
    */
-public Player getPlayer(Color color) {
+  public Player getPlayer(Color color) {
     if (color == Color.WHITE) return whitePlayer;
     return blackPlayer;
   }
@@ -134,7 +124,7 @@ public Player getPlayer(Color color) {
    *
    * @return the allowed moves
    */
-public List<Move> getAllowedMoves() {
+  public List<Move> getAllowedMoves() {
     return getTurnPlayer().getAllowedMoves(this);
   }
 
@@ -143,7 +133,7 @@ public List<Move> getAllowedMoves() {
    *
    * @return the random move
    */
-public Move getRandomMove() {
+  public Move getRandomMove() {
     List<Move> moves = getAllowedMoves();
     if (moves.isEmpty()) return null;
     return moves.get((int) (Math.random() * moves.size()));
@@ -176,7 +166,7 @@ public Move getRandomMove() {
    * @param move the move
    * @return the boolean
    */
-public boolean applyMove(Move move) {
+  public boolean applyMove(Move move) {
     if (move == null) return false;
     return getAllowedMoves().stream().filter(m -> m.toString().equals(move.toString())).count() == 1
         && applyLegalMove(move);
@@ -187,7 +177,7 @@ public boolean applyMove(Move move) {
    *
    * @return the boolean
    */
-public boolean isInCheck() {
+  public boolean isInCheck() {
     King king = getTurnPlayer().getKing(board);
     return getOpponentPlayer().isThreatening(board, king.getLocation());
   }
@@ -197,7 +187,7 @@ public boolean isInCheck() {
    *
    * @return the boolean
    */
-public boolean isCheckmate() {
+  public boolean isCheckmate() {
     if (!isInCheck()) return false;
     return getAllowedMoves().isEmpty();
   }
@@ -207,7 +197,7 @@ public boolean isCheckmate() {
    *
    * @return the boolean
    */
-public boolean isStalemate() {
+  public boolean isStalemate() {
     if (isInCheck()) return false;
     return getTurnPlayer().getAllowedMoves(this).isEmpty();
   }
@@ -217,7 +207,7 @@ public boolean isStalemate() {
    *
    * @return the boolean
    */
-public boolean isThreefoldRepetition() {
+  public boolean isThreefoldRepetition() {
     Scene currentScene = history.getLast();
     int count = 0;
     for (Scene scene : history) {
@@ -231,7 +221,7 @@ public boolean isThreefoldRepetition() {
    *
    * @return the boolean
    */
-public boolean is50MoveRule() {
+  public boolean is50MoveRule() {
     if (moves.size() < 50) return false;
     return moves.subList(moves.size() - 50, moves.size()).stream()
         .noneMatch(move -> move.type == MoveType.CAPTURE || move.piece.type == PieceType.PAWN);
@@ -242,7 +232,7 @@ public boolean is50MoveRule() {
    *
    * @return the boolean
    */
-public boolean isDraw() {
+  public boolean isDraw() {
     return is50MoveRule() || isThreefoldRepetition();
   }
 
@@ -251,17 +241,15 @@ public boolean isDraw() {
    *
    * @return the status
    */
-public Status getStatus() {
+  public Status getStatus() {
     if (isCheckmate()) return Status.CHECKMATE;
     if (isStalemate()) return Status.STALEMATE;
     if (isDraw()) return Status.DRAW;
     return Status.ONGOING;
   }
 
-  /**
-   * Undo move.
-   */
-public void undoMove() {
+  /** Undo move. */
+  public void undoMove() {
     if (history.size() < 2) return;
     history.removeLast();
     Scene scene = history.getLast();
@@ -276,7 +264,7 @@ public void undoMove() {
    * @param moveString the move string
    * @return the move
    */
-public Move moveFromString(String moveString) {
+  public Move moveFromString(String moveString) {
     if (moveString.equals("O-O"))
       return new ShortCastling(
           getTurnPlayer().getKing(board), getTurnPlayer().getKingSideRook(board));
@@ -324,7 +312,7 @@ public Move moveFromString(String moveString) {
    *
    * @return the string
    */
-@Override
+  @Override
   public String toString() {
     return "Turn: " + turn + "\n" + board;
   }

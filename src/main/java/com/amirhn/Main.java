@@ -1,15 +1,15 @@
+package com.amirhn;
+
 import com.amirhn.GUI.ChessFrame;
 
-/**
- * The type Main.
- */
+/** The type com.amirhn.Main. */
 public class Main {
   /**
    * The entry point of application.
    *
    * @param args the input arguments
    */
-public static void main(String[] args) {
+  public static void main(String[] args) {
     // GUI
     ChessFrame chessFrame = new ChessFrame();
 

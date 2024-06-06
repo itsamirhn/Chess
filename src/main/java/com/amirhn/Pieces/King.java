@@ -8,9 +8,7 @@ import com.amirhn.Moves.Move;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The type King.
- */
+/** The type King. */
 public class King extends Piece {
 
   /**
@@ -19,7 +17,7 @@ public class King extends Piece {
    * @param color the color
    * @param location the location
    */
-public King(Color color, Location location) {
+  public King(Color color, Location location) {
     super(PieceType.KING, color, location);
   }
 
@@ -29,7 +27,7 @@ public King(Color color, Location location) {
    * @param piece the piece
    * @return the boolean
    */
-@Override
+  @Override
   public boolean canBeCapturedBy(Piece piece) {
     return false;
   }
@@ -40,7 +38,7 @@ public King(Color color, Location location) {
    * @param board the board
    * @return the threatened locations
    */
-@Override
+  @Override
   public List<Location> getThreatenedLocations(Board board) {
     List<Location> threatenedLocations = new ArrayList<>();
     int[] dx = {+1, +1, +1, -1, -1, -1, 0, 0};
@@ -59,7 +57,7 @@ public King(Color color, Location location) {
    * @param board the board
    * @return the natural moves
    */
-@Override
+  @Override
   public List<Move> getNaturalMoves(Board board) {
     List<Move> moves = super.getNaturalMoves(board);
     int[] dy = {+1, -1};

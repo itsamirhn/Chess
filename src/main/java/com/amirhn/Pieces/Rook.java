@@ -6,9 +6,7 @@ import com.amirhn.Game.Location;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The type Rook.
- */
+/** The type Rook. */
 public class Rook extends Piece {
 
   /**
@@ -17,7 +15,7 @@ public class Rook extends Piece {
    * @param color the color
    * @param location the location
    */
-public Rook(Color color, Location location) {
+  public Rook(Color color, Location location) {
     super(PieceType.ROOK, color, location);
   }
 
@@ -27,7 +25,7 @@ public Rook(Color color, Location location) {
    * @param board the board
    * @return the threatened locations
    */
-@Override
+  @Override
   public List<Location> getThreatenedLocations(Board board) {
     List<Location> threatenedLocations = new ArrayList<>();
     int[] dx = {+1, -1, 0, 0};

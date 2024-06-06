@@ -5,18 +5,13 @@ import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Piece;
 import com.amirhn.Pieces.PieceType;
 
-/**
- * The type Promotion.
- */
+/** The type Promotion. */
 public abstract class Promotion extends Move {
-  /**
-   * The Move.
-   */
-public Move move;
-  /**
-   * The Promoted piece.
-   */
-public Piece promotedPiece;
+  /** The Move. */
+  public Move move;
+
+  /** The Promoted piece. */
+  public Piece promotedPiece;
 
   /**
    * Instantiates a new Promotion.
@@ -24,7 +19,7 @@ public Piece promotedPiece;
    * @param move the move
    * @param promotedPieceType the promoted piece type
    */
-public Promotion(Move move, PieceType promotedPieceType) {
+  public Promotion(Move move, PieceType promotedPieceType) {
     super(MoveType.PROMOTION, move.piece);
     this.move = move;
     this.promotedPiece = Piece.generate(promotedPieceType, move.piece.color, null);
@@ -36,7 +31,7 @@ public Promotion(Move move, PieceType promotedPieceType) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean applyOnBoard(Board board) {
     if (!isValidApplyOnBoard(board)) return false;
     move.applyOnBoard(board);
@@ -50,7 +45,7 @@ public Promotion(Move move, PieceType promotedPieceType) {
    *
    * @param board the board
    */
-@Override
+  @Override
   public void undoOnBoard(Board board) {
     board.removePiece(promotedPiece);
     promotedPiece.removeLocation();
@@ -63,7 +58,7 @@ public Promotion(Move move, PieceType promotedPieceType) {
    * @param board the board
    * @return the boolean
    */
-@Override
+  @Override
   public boolean isValidApplyOnBoard(Board board) {
     return super.isValidApplyOnBoard(board) && move.isValidApplyOnBoard(board);
   }
@@ -73,7 +68,7 @@ public Promotion(Move move, PieceType promotedPieceType) {
    *
    * @return the endpoint location
    */
-@Override
+  @Override
   public Location getEndpointLocation() {
     return move.getEndpointLocation();
   }
@@ -83,7 +78,7 @@ public Promotion(Move move, PieceType promotedPieceType) {
    *
    * @return the startpoint location
    */
-@Override
+  @Override
   public Location getStartpointLocation() {
     return move.getStartpointLocation();
   }
@@ -93,7 +88,7 @@ public Promotion(Move move, PieceType promotedPieceType) {
    *
    * @return the string
    */
-@Override
+  @Override
   public String toString() {
     return move.toString() + "=" + promotedPiece.type.letter;
   }

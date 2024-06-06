@@ -8,9 +8,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.Arrays;
 import javax.swing.*;
 
-/**
- * The type Board panel.
- */
+/** The type Board panel. */
 public class BoardPanel extends JLayeredPane implements MouseMotionListener, MouseListener {
 
   private final TablePanel tablePanel;
@@ -23,7 +21,7 @@ public class BoardPanel extends JLayeredPane implements MouseMotionListener, Mou
    * @param rows the rows
    * @param columns the columns
    */
-public BoardPanel(int rows, int columns) {
+  public BoardPanel(int rows, int columns) {
     super();
     this.tablePanel = new TablePanel(rows, columns);
     this.tablePanel.setBounds(
@@ -40,7 +38,7 @@ public BoardPanel(int rows, int columns) {
    *
    * @param locationListener the location listener
    */
-public void setLocationListener(LocationListener locationListener) {
+  public void setLocationListener(LocationListener locationListener) {
     this.locationListener = locationListener;
   }
 
@@ -50,7 +48,7 @@ public void setLocationListener(LocationListener locationListener) {
    * @param piecePanel the piece panel
    * @param location the location
    */
-public void addPiecePanel(PiecePanel piecePanel, Location location) {
+  public void addPiecePanel(PiecePanel piecePanel, Location location) {
     if (location == null) return;
     piecePanel.setBounds(
         this.tablePanel.pointOf(location).x,
@@ -60,17 +58,13 @@ public void addPiecePanel(PiecePanel piecePanel, Location location) {
     this.add(piecePanel, Integer.valueOf(1));
   }
 
-  /**
-   * Remove piece panels.
-   */
-public void removePiecePanels() {
+  /** Remove piece panels. */
+  public void removePiecePanels() {
     Arrays.stream(this.getComponents()).filter(c -> c instanceof PiecePanel).forEach(this::remove);
   }
 
-  /**
-   * Reset location states.
-   */
-public void resetLocationStates() {
+  /** Reset location states. */
+  public void resetLocationStates() {
     this.tablePanel.resetLocationStates();
   }
 
@@ -80,7 +74,7 @@ public void resetLocationStates() {
    * @param location the location
    * @param state the state
    */
-public void setLocationState(Location location, LocationState state) {
+  public void setLocationState(Location location, LocationState state) {
     this.tablePanel.getLocationPanel(location).setState(state);
   }
 
@@ -89,7 +83,7 @@ public void setLocationState(Location location, LocationState state) {
    *
    * @param e the e
    */
-@Override
+  @Override
   public void mouseDragged(MouseEvent e) {
     if (this.movingPiecePanel == null) return;
     e.translatePoint(-movingPiecePanel.getWidth() / 2, -movingPiecePanel.getHeight() / 2);
@@ -101,7 +95,7 @@ public void setLocationState(Location location, LocationState state) {
    *
    * @param e the e
    */
-@Override
+  @Override
   public void mouseMoved(MouseEvent e) {}
 
   /**
@@ -109,7 +103,7 @@ public void setLocationState(Location location, LocationState state) {
    *
    * @param e the e
    */
-@Override
+  @Override
   public void mouseClicked(MouseEvent e) {
     this.locationListener.locationSelected(this.tablePanel.locationOf(e.getPoint()));
   }
@@ -119,7 +113,7 @@ public void setLocationState(Location location, LocationState state) {
    *
    * @param e the e
    */
-@Override
+  @Override
   public void mousePressed(MouseEvent e) {
     if (this.movingPiecePanel != null) return;
     Location grabbedLocation = this.tablePanel.locationOf(e.getPoint());
@@ -138,7 +132,7 @@ public void setLocationState(Location location, LocationState state) {
    *
    * @param e the e
    */
-@Override
+  @Override
   public void mouseReleased(MouseEvent e) {
     if (this.movingPiecePanel == null) return;
     this.locationListener.locationDropped(this.tablePanel.locationOf(e.getPoint()));
@@ -150,7 +144,7 @@ public void setLocationState(Location location, LocationState state) {
    *
    * @param e the e
    */
-@Override
+  @Override
   public void mouseEntered(MouseEvent e) {}
 
   /**
@@ -158,6 +152,6 @@ public void setLocationState(Location location, LocationState state) {
    *
    * @param e the e
    */
-@Override
+  @Override
   public void mouseExited(MouseEvent e) {}
 }

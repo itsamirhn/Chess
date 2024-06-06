@@ -6,9 +6,7 @@ import com.amirhn.Game.Location;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The type Knight.
- */
+/** The type Knight. */
 public class Knight extends Piece {
 
   /**
@@ -17,7 +15,7 @@ public class Knight extends Piece {
    * @param color the color
    * @param location the location
    */
-public Knight(Color color, Location location) {
+  public Knight(Color color, Location location) {
     super(PieceType.KNIGHT, color, location);
   }
 
@@ -27,7 +25,7 @@ public Knight(Color color, Location location) {
    * @param board the board
    * @return the threatened locations
    */
-@Override
+  @Override
   public List<Location> getThreatenedLocations(Board board) {
     List<Location> threatenedLocations = new ArrayList<>();
     int[] dx = {+1, +1, -1, -1, +2, +2, -2, -2};

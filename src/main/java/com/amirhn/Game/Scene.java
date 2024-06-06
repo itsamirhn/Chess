@@ -1,8 +1,6 @@
 package com.amirhn.Game;
 
-/**
- * The type Scene.
- */
+/** The type Scene. */
 public class Scene {
   private final Board board;
   private final Color turn;
@@ -13,7 +11,7 @@ public class Scene {
    * @param board the board
    * @param turn the turn
    */
-public Scene(Board board, Color turn) {
+  public Scene(Board board, Color turn) {
     this.board = board;
     this.turn = turn;
   }
@@ -23,7 +21,7 @@ public Scene(Board board, Color turn) {
    *
    * @return the board
    */
-public Board getBoard() {
+  public Board getBoard() {
     return board;
   }
 
@@ -32,7 +30,7 @@ public Board getBoard() {
    *
    * @return the turn
    */
-public Color getTurn() {
+  public Color getTurn() {
     return turn;
   }
 
@@ -42,7 +40,7 @@ public Color getTurn() {
    * @param o the o
    * @return the boolean
    */
-@Override
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;

@@ -11,8 +11,10 @@ import com.amirhn.Pieces.Piece;
 import com.amirhn.Pieces.Queen;
 import org.junit.jupiter.api.Test;
 
+/** The type Capture test. */
 class CaptureTest {
 
+  /** Apply on board. */
   @Test
   void applyOnBoard() {
     Board board = new Board(8, 8);
@@ -26,6 +28,7 @@ class CaptureTest {
     assertFalse(board.isValidPiece(capturePiece));
   }
 
+  /** Undo on board. */
   @Test
   void undoOnBoard() {
     Board board = new Board(8, 8);
