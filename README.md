@@ -21,7 +21,7 @@ A Fully Object-Oriented Chess, written in pure Java
 
 ## Documentation
 You can visit the online Documentation on here: [Documentation](https://itsamirhn.github.io/Chess)
-
+Also the project structure diagrams are available in the [Project Structure Diagrams](#project-structure-diagrams) section
 
 ## Run Locally
 
@@ -40,6 +40,26 @@ The project use [Maven](https://maven.apache.org/) as build automation tool. To 
   mvn test
 ```
 
+## Project Structure Diagrams
+
+### Logic
+- Game Classes:
+
+<img src="docs/diagrams/game.png" alt="Game" width="500"/>
+
+- Pieces Classes:
+
+<img src="docs/diagrams/pieces.png" alt="Pieces" width="500"/>
+
+- Moves Classes:
+
+<img src="docs/diagrams/moves.png" alt="Pieces" width="500"/>
+
+### GUI
+This project follows the [Model-View-Controller](https://en.wikipedia.org/wiki/Model–view–controller) design pattern. The GUI part of the project is implemented using Java Swing.
+- GUI Classes:
+
+<img src="docs/diagrams/gui.png" alt="GUI" width="500"/>
 
 ## Authors
 
