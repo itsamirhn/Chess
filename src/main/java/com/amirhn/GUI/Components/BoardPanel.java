@@ -8,13 +8,22 @@ import java.awt.event.MouseMotionListener;
 import java.util.Arrays;
 import javax.swing.*;
 
+/**
+ * The type Board panel.
+ */
 public class BoardPanel extends JLayeredPane implements MouseMotionListener, MouseListener {
 
   private final TablePanel tablePanel;
   private PiecePanel movingPiecePanel;
   private LocationListener locationListener;
 
-  public BoardPanel(int rows, int columns) {
+  /**
+   * Instantiates a new Board panel.
+   *
+   * @param rows the rows
+   * @param columns the columns
+   */
+public BoardPanel(int rows, int columns) {
     super();
     this.tablePanel = new TablePanel(rows, columns);
     this.tablePanel.setBounds(
@@ -26,11 +35,22 @@ public class BoardPanel extends JLayeredPane implements MouseMotionListener, Mou
     this.validate();
   }
 
-  public void setLocationListener(LocationListener locationListener) {
+  /**
+   * Sets location listener.
+   *
+   * @param locationListener the location listener
+   */
+public void setLocationListener(LocationListener locationListener) {
     this.locationListener = locationListener;
   }
 
-  public void addPiecePanel(PiecePanel piecePanel, Location location) {
+  /**
+   * Add piece panel.
+   *
+   * @param piecePanel the piece panel
+   * @param location the location
+   */
+public void addPiecePanel(PiecePanel piecePanel, Location location) {
     if (location == null) return;
     piecePanel.setBounds(
         this.tablePanel.pointOf(location).x,
@@ -40,34 +60,66 @@ public class BoardPanel extends JLayeredPane implements MouseMotionListener, Mou
     this.add(piecePanel, Integer.valueOf(1));
   }
 
-  public void removePiecePanels() {
+  /**
+   * Remove piece panels.
+   */
+public void removePiecePanels() {
     Arrays.stream(this.getComponents()).filter(c -> c instanceof PiecePanel).forEach(this::remove);
   }
 
-  public void resetLocationStates() {
+  /**
+   * Reset location states.
+   */
+public void resetLocationStates() {
     this.tablePanel.resetLocationStates();
   }
 
-  public void setLocationState(Location location, LocationState state) {
+  /**
+   * Sets location state.
+   *
+   * @param location the location
+   * @param state the state
+   */
+public void setLocationState(Location location, LocationState state) {
     this.tablePanel.getLocationPanel(location).setState(state);
   }
 
-  @Override
+  /**
+   * Mouse dragged.
+   *
+   * @param e the e
+   */
+@Override
   public void mouseDragged(MouseEvent e) {
     if (this.movingPiecePanel == null) return;
     e.translatePoint(-movingPiecePanel.getWidth() / 2, -movingPiecePanel.getHeight() / 2);
     this.movingPiecePanel.setLocation(e.getPoint());
   }
 
-  @Override
+  /**
+   * Mouse moved.
+   *
+   * @param e the e
+   */
+@Override
   public void mouseMoved(MouseEvent e) {}
 
-  @Override
+  /**
+   * Mouse clicked.
+   *
+   * @param e the e
+   */
+@Override
   public void mouseClicked(MouseEvent e) {
     this.locationListener.locationSelected(this.tablePanel.locationOf(e.getPoint()));
   }
 
-  @Override
+  /**
+   * Mouse pressed.
+   *
+   * @param e the e
+   */
+@Override
   public void mousePressed(MouseEvent e) {
     if (this.movingPiecePanel != null) return;
     Location grabbedLocation = this.tablePanel.locationOf(e.getPoint());
@@ -81,16 +133,31 @@ public class BoardPanel extends JLayeredPane implements MouseMotionListener, Mou
             .orElse(null);
   }
 
-  @Override
+  /**
+   * Mouse released.
+   *
+   * @param e the e
+   */
+@Override
   public void mouseReleased(MouseEvent e) {
     if (this.movingPiecePanel == null) return;
     this.locationListener.locationDropped(this.tablePanel.locationOf(e.getPoint()));
     this.movingPiecePanel = null;
   }
 
-  @Override
+  /**
+   * Mouse entered.
+   *
+   * @param e the e
+   */
+@Override
   public void mouseEntered(MouseEvent e) {}
 
-  @Override
+  /**
+   * Mouse exited.
+   *
+   * @param e the e
+   */
+@Override
   public void mouseExited(MouseEvent e) {}
 }

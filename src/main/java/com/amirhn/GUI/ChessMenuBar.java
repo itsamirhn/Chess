@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * The type Chess menu bar.
+ */
 public class ChessMenuBar extends JMenuBar implements ActionListener {
 
   private final ChessMenuController controller;
@@ -13,7 +16,12 @@ public class ChessMenuBar extends JMenuBar implements ActionListener {
   private final JMenuItem undoMove;
   private final JMenuItem applyRandomMove;
 
-  public ChessMenuBar(ChessMenuController controller) {
+  /**
+   * Instantiates a new Chess menu bar.
+   *
+   * @param controller the controller
+   */
+public ChessMenuBar(ChessMenuController controller) {
     this.controller = controller;
 
     JMenu gameMenu = new JMenu("Game");
@@ -35,7 +43,12 @@ public class ChessMenuBar extends JMenuBar implements ActionListener {
     add(gameMenu);
   }
 
-  @Override
+  /**
+   * Action performed.
+   *
+   * @param e the e
+   */
+@Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == newGame) {
       controller.newGame();

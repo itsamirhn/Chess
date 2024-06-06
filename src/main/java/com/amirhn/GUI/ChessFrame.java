@@ -6,9 +6,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
+/**
+ * The type Chess frame.
+ */
 public class ChessFrame extends JFrame {
 
-  public ChessFrame() {
+  /**
+   * Instantiates a new Chess frame.
+   */
+public ChessFrame() {
     super();
 
     Chess chess = new Chess();

@@ -4,12 +4,23 @@ import com.amirhn.GUI.Constants;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * The type Location panel.
+ */
 public class LocationPanel extends JLayeredPane {
 
-  public static final Dimension Size = Constants.TileSize;
+  /**
+   * The constant Size.
+   */
+public static final Dimension Size = Constants.TileSize;
   private final JPanel statePanel;
 
-  public LocationPanel(boolean isLight) {
+  /**
+   * Instantiates a new Location panel.
+   *
+   * @param isLight the is light
+   */
+public LocationPanel(boolean isLight) {
     super();
     this.setPreferredSize(Constants.TileSize);
     this.setBackground(isLight ? Constants.LightTileColor : Constants.DarkTileColor);
@@ -26,7 +37,12 @@ public class LocationPanel extends JLayeredPane {
     this.validate();
   }
 
-  public void setState(LocationState state) {
+  /**
+   * Sets state.
+   *
+   * @param state the state
+   */
+public void setState(LocationState state) {
     this.statePanel.setBackground(state.color);
     repaint();
   }

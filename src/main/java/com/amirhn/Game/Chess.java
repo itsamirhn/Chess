@@ -8,26 +8,60 @@ import com.amirhn.Players.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Chess.
+ */
 public class Chess {
 
-  public static final String OriginalFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
-  public Player whitePlayer = new Player(Color.WHITE);
-  public Player blackPlayer = new Player(Color.BLACK);
-  public List<Move> moves = new ArrayList<>();
-  public Color turn = Color.WHITE;
-  public List<Scene> history = new ArrayList<>();
+  /**
+   * The constant OriginalFen.
+   */
+public static final String OriginalFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
+  /**
+   * The White player.
+   */
+public Player whitePlayer = new Player(Color.WHITE);
+  /**
+   * The Black player.
+   */
+public Player blackPlayer = new Player(Color.BLACK);
+  /**
+   * The Moves.
+   */
+public List<Move> moves = new ArrayList<>();
+  /**
+   * The Turn.
+   */
+public Color turn = Color.WHITE;
+  /**
+   * The History.
+   */
+public List<Scene> history = new ArrayList<>();
   private Board board;
 
-  public Chess() {
+  /**
+   * Instantiates a new Chess.
+   */
+public Chess() {
     this(OriginalFen);
   }
 
-  public Chess(String fen) {
+  /**
+   * Instantiates a new Chess.
+   *
+   * @param fen the fen
+   */
+public Chess(String fen) {
     this.setupFEN(fen);
     history.add(new Scene(board.copy(), turn));
   }
 
-  public void setupFEN(String fen) {
+  /**
+   * Sets fen.
+   *
+   * @param fen the fen
+   */
+public void setupFEN(String fen) {
     String[] parts = fen.split(" ");
     board = Board.fromFEN(parts[0]);
     turn = Color.fromString(parts[1]);
@@ -48,32 +82,68 @@ public class Chess {
     // TODO: move count
   }
 
-  public void setPiece(Piece piece) {
+  /**
+   * Sets piece.
+   *
+   * @param piece the piece
+   */
+public void setPiece(Piece piece) {
     this.board.setPiece(piece);
   }
 
-  public Board getBoard() {
+  /**
+   * Gets board.
+   *
+   * @return the board
+   */
+public Board getBoard() {
     return board;
   }
 
-  public Player getTurnPlayer() {
+  /**
+   * Gets turn player.
+   *
+   * @return the turn player
+   */
+public Player getTurnPlayer() {
     return getPlayer(turn);
   }
 
-  public Player getOpponentPlayer() {
+  /**
+   * Gets opponent player.
+   *
+   * @return the opponent player
+   */
+public Player getOpponentPlayer() {
     return getPlayer(turn.opposite());
   }
 
-  public Player getPlayer(Color color) {
+  /**
+   * Gets player.
+   *
+   * @param color the color
+   * @return the player
+   */
+public Player getPlayer(Color color) {
     if (color == Color.WHITE) return whitePlayer;
     return blackPlayer;
   }
 
-  public List<Move> getAllowedMoves() {
+  /**
+   * Gets allowed moves.
+   *
+   * @return the allowed moves
+   */
+public List<Move> getAllowedMoves() {
     return getTurnPlayer().getAllowedMoves(this);
   }
 
-  public Move getRandomMove() {
+  /**
+   * Gets random move.
+   *
+   * @return the random move
+   */
+public Move getRandomMove() {
     List<Move> moves = getAllowedMoves();
     if (moves.isEmpty()) return null;
     return moves.get((int) (Math.random() * moves.size()));
@@ -100,28 +170,54 @@ public class Chess {
     return true;
   }
 
-  public boolean applyMove(Move move) {
+  /**
+   * Apply move boolean.
+   *
+   * @param move the move
+   * @return the boolean
+   */
+public boolean applyMove(Move move) {
     if (move == null) return false;
     return getAllowedMoves().stream().filter(m -> m.toString().equals(move.toString())).count() == 1
         && applyLegalMove(move);
   }
 
-  public boolean isInCheck() {
+  /**
+   * Is in check boolean.
+   *
+   * @return the boolean
+   */
+public boolean isInCheck() {
     King king = getTurnPlayer().getKing(board);
     return getOpponentPlayer().isThreatening(board, king.getLocation());
   }
 
-  public boolean isCheckmate() {
+  /**
+   * Is checkmate boolean.
+   *
+   * @return the boolean
+   */
+public boolean isCheckmate() {
     if (!isInCheck()) return false;
     return getAllowedMoves().isEmpty();
   }
 
-  public boolean isStalemate() {
+  /**
+   * Is stalemate boolean.
+   *
+   * @return the boolean
+   */
+public boolean isStalemate() {
     if (isInCheck()) return false;
     return getTurnPlayer().getAllowedMoves(this).isEmpty();
   }
 
-  public boolean isThreefoldRepetition() {
+  /**
+   * Is threefold repetition boolean.
+   *
+   * @return the boolean
+   */
+public boolean isThreefoldRepetition() {
     Scene currentScene = history.getLast();
     int count = 0;
     for (Scene scene : history) {
@@ -130,24 +226,42 @@ public class Chess {
     return count >= 3;
   }
 
-  public boolean is50MoveRule() {
+  /**
+   * Is 50 move rule boolean.
+   *
+   * @return the boolean
+   */
+public boolean is50MoveRule() {
     if (moves.size() < 50) return false;
     return moves.subList(moves.size() - 50, moves.size()).stream()
         .noneMatch(move -> move.type == MoveType.CAPTURE || move.piece.type == PieceType.PAWN);
   }
 
-  public boolean isDraw() {
+  /**
+   * Is draw boolean.
+   *
+   * @return the boolean
+   */
+public boolean isDraw() {
     return is50MoveRule() || isThreefoldRepetition();
   }
 
-  public Status getStatus() {
+  /**
+   * Gets status.
+   *
+   * @return the status
+   */
+public Status getStatus() {
     if (isCheckmate()) return Status.CHECKMATE;
     if (isStalemate()) return Status.STALEMATE;
     if (isDraw()) return Status.DRAW;
     return Status.ONGOING;
   }
 
-  public void undoMove() {
+  /**
+   * Undo move.
+   */
+public void undoMove() {
     if (history.size() < 2) return;
     history.removeLast();
     Scene scene = history.getLast();
@@ -156,7 +270,13 @@ public class Chess {
     moves.removeLast();
   }
 
-  public Move moveFromString(String moveString) {
+  /**
+   * Move from string move.
+   *
+   * @param moveString the move string
+   * @return the move
+   */
+public Move moveFromString(String moveString) {
     if (moveString.equals("O-O"))
       return new ShortCastling(
           getTurnPlayer().getKing(board), getTurnPlayer().getKingSideRook(board));
@@ -199,7 +319,12 @@ public class Chess {
         .orElse(null);
   }
 
-  @Override
+  /**
+   * To string string.
+   *
+   * @return the string
+   */
+@Override
   public String toString() {
     return "Turn: " + turn + "\n" + board;
   }

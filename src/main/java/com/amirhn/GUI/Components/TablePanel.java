@@ -4,12 +4,21 @@ import com.amirhn.Game.Location;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * The type Table panel.
+ */
 public class TablePanel extends JPanel {
 
   private final int rows, columns;
   private final LocationPanel[][] locationPanels;
 
-  public TablePanel(int rows, int columns) {
+  /**
+   * Instantiates a new Table panel.
+   *
+   * @param rows the rows
+   * @param columns the columns
+   */
+public TablePanel(int rows, int columns) {
     super(new GridLayout(rows, columns));
     this.rows = rows;
     this.columns = columns;
@@ -22,15 +31,31 @@ public class TablePanel extends JPanel {
     this.validate();
   }
 
-  public LocationPanel getLocationPanel(Location location) {
+  /**
+   * Gets location panel.
+   *
+   * @param location the location
+   * @return the location panel
+   */
+public LocationPanel getLocationPanel(Location location) {
     return this.getLocationPanel(location.row, location.column);
   }
 
-  public LocationPanel getLocationPanel(int i, int j) {
+  /**
+   * Gets location panel.
+   *
+   * @param i the
+   * @param j the j
+   * @return the location panel
+   */
+public LocationPanel getLocationPanel(int i, int j) {
     return this.locationPanels[i][j];
   }
 
-  public void resetLocationStates() {
+  /**
+   * Reset location states.
+   */
+public void resetLocationStates() {
     for (int i = 0; i < rows; i++)
       for (int j = 0; j < columns; j++) {
         LocationPanel locationPanel = this.getLocationPanel(i, j);
@@ -38,13 +63,25 @@ public class TablePanel extends JPanel {
       }
   }
 
-  public Point pointOf(Location location) {
+  /**
+   * Point of point.
+   *
+   * @param location the location
+   * @return the point
+   */
+public Point pointOf(Location location) {
     return new Point(
         location.column * LocationPanel.Size.width,
         (rows - location.row - 1) * LocationPanel.Size.height);
   }
 
-  public Location locationOf(Point point) {
+  /**
+   * Location of location.
+   *
+   * @param point the point
+   * @return the location
+   */
+public Location locationOf(Point point) {
     return Location.valueOf(
         rows - 1 - point.y / LocationPanel.Size.height, point.x / LocationPanel.Size.width);
   }

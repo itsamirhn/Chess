@@ -6,12 +6,33 @@ import com.amirhn.Game.Location;
 import com.amirhn.Pieces.King;
 import com.amirhn.Pieces.Rook;
 
+/**
+ * The type Castling.
+ */
 public abstract class Castling extends Move {
-  public Walk kingMove, rookMove;
-  public King king;
-  public Rook rook;
+  /**
+   * The King move.
+   */
+public Walk kingMove, /**
+   * The Rook move.
+   */
+rookMove;
+  /**
+   * The King.
+   */
+public King king;
+  /**
+   * The Rook.
+   */
+public Rook rook;
 
-  public Castling(Walk kingMove, Walk rookMove) {
+  /**
+   * Instantiates a new Castling.
+   *
+   * @param kingMove the king move
+   * @param rookMove the rook move
+   */
+public Castling(Walk kingMove, Walk rookMove) {
     super(MoveType.CASTLING, kingMove.piece);
     this.kingMove = kingMove;
     this.rookMove = rookMove;
@@ -19,14 +40,27 @@ public abstract class Castling extends Move {
     this.rook = (Rook) rookMove.piece;
   }
 
-  public static Castling generate(King king, Rook rook) {
+  /**
+   * Generate castling.
+   *
+   * @param king the king
+   * @param rook the rook
+   * @return the castling
+   */
+public static Castling generate(King king, Rook rook) {
     if (king.getLocation().row != rook.getLocation().row) return null;
     if (king.getLocation().column < rook.getLocation().column) return new ShortCastling(king, rook);
     if (king.getLocation().column > rook.getLocation().column) return new LongCastling(king, rook);
     return null;
   }
 
-  @Override
+  /**
+   * Is allowed boolean.
+   *
+   * @param chess the chess
+   * @return the boolean
+   */
+@Override
   public boolean isAllowed(Chess chess) {
     if (!super.isAllowed(chess)) return false;
     if (king.hasMoved() || rook.hasMoved()) return false;
@@ -46,7 +80,13 @@ public abstract class Castling extends Move {
     return true;
   }
 
-  @Override
+  /**
+   * Apply on board boolean.
+   *
+   * @param board the board
+   * @return the boolean
+   */
+@Override
   public boolean applyOnBoard(Board board) {
     if (!isValidApplyOnBoard(board)) return false;
     kingMove.applyOnBoard(board);
@@ -54,13 +94,24 @@ public abstract class Castling extends Move {
     return true;
   }
 
-  @Override
+  /**
+   * Undo on board.
+   *
+   * @param board the board
+   */
+@Override
   public void undoOnBoard(Board board) {
     rookMove.undoOnBoard(board);
     kingMove.undoOnBoard(board);
   }
 
-  @Override
+  /**
+   * Is valid apply on board boolean.
+   *
+   * @param board the board
+   * @return the boolean
+   */
+@Override
   public boolean isValidApplyOnBoard(Board board) {
     return super.isValidApplyOnBoard(board)
         && king.color.equals(rook.color)
@@ -69,12 +120,22 @@ public abstract class Castling extends Move {
         && rookMove.isValidApplyOnBoard(board);
   }
 
-  @Override
+  /**
+   * Gets endpoint location.
+   *
+   * @return the endpoint location
+   */
+@Override
   public Location getEndpointLocation() {
     return rookMove.getStartpointLocation();
   }
 
-  @Override
+  /**
+   * Gets startpoint location.
+   *
+   * @return the startpoint location
+   */
+@Override
   public Location getStartpointLocation() {
     return kingMove.getStartpointLocation();
   }

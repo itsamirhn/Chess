@@ -4,12 +4,26 @@ import com.amirhn.GUI.Constants;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * The type Piece panel.
+ */
 public class PiecePanel extends JPanel {
 
-  public static final Dimension Size = Constants.PieceSize;
-  public JLabel label;
+  /**
+   * The constant Size.
+   */
+public static final Dimension Size = Constants.PieceSize;
+  /**
+   * The Label.
+   */
+public JLabel label;
 
-  public PiecePanel(PieceImageIcon icon) {
+  /**
+   * Instantiates a new Piece panel.
+   *
+   * @param icon the icon
+   */
+public PiecePanel(PieceImageIcon icon) {
     super(new BorderLayout());
     this.setOpaque(false);
     this.label =

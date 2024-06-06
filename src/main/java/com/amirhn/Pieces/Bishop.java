@@ -6,13 +6,28 @@ import com.amirhn.Game.Location;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Bishop.
+ */
 public class Bishop extends Piece {
 
-  public Bishop(Color color, Location location) {
+  /**
+   * Instantiates a new Bishop.
+   *
+   * @param color the color
+   * @param location the location
+   */
+public Bishop(Color color, Location location) {
     super(PieceType.BISHOP, color, location);
   }
 
-  @Override
+  /**
+   * Gets threatened locations.
+   *
+   * @param board the board
+   * @return the threatened locations
+   */
+@Override
   public List<Location> getThreatenedLocations(Board board) {
     List<Location> threatenedLocations = new ArrayList<>();
     int[] dx = {+1, +1, -1, -1};

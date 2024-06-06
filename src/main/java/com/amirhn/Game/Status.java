@@ -1,8 +1,23 @@
 package com.amirhn.Game;
 
+/**
+ * The enum Status.
+ */
 public enum Status {
-  ONGOING,
-  CHECKMATE,
-  STALEMATE,
-  DRAW
+  /**
+   *Ongoing status.
+   */
+ONGOING,
+  /**
+   *Checkmate status.
+   */
+CHECKMATE,
+  /**
+   *Stalemate status.
+   */
+STALEMATE,
+  /**
+   *Draw status.
+   */
+DRAW
 }

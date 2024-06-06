@@ -8,11 +8,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The type Pawn.
+ */
 public class Pawn extends Piece {
 
-  public final int direction;
+  /**
+   * The Direction.
+   */
+public final int direction;
 
-  public Pawn(Color color, Location location) {
+  /**
+   * Instantiates a new Pawn.
+   *
+   * @param color the color
+   * @param location the location
+   */
+public Pawn(Color color, Location location) {
     super(PieceType.PAWN, color, location);
     direction = color.direction;
   }
@@ -39,7 +51,13 @@ public class Pawn extends Piece {
     return promotions;
   }
 
-  @Override
+  /**
+   * Gets natural moves.
+   *
+   * @param board the board
+   * @return the natural moves
+   */
+@Override
   public List<Move> getNaturalMoves(Board board) {
     List<Move> moves = new ArrayList<>();
     for (Location location : this.getThreatenedLocations(board)) {
@@ -62,7 +80,13 @@ public class Pawn extends Piece {
     return moves;
   }
 
-  @Override
+  /**
+   * Gets threatened locations.
+   *
+   * @param board the board
+   * @return the threatened locations
+   */
+@Override
   public List<Location> getThreatenedLocations(Board board) {
     List<Location> threatenedLocations = new ArrayList<>();
     int[] dx = {direction, direction};

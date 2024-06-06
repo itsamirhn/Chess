@@ -15,6 +15,9 @@ import java.io.IOException;
 import javax.sound.sampled.*;
 import javax.swing.*;
 
+/**
+ * The type Chess controller.
+ */
 public class ChessController implements LocationListener, ChessMenuController {
 
   private final BoardPanel boardPanel;
@@ -23,7 +26,13 @@ public class ChessController implements LocationListener, ChessMenuController {
   private Piece currentSelectedPiece;
   private Move lastMove;
 
-  public ChessController(Chess chess, BoardPanel boardPanel) {
+  /**
+   * Instantiates a new Chess controller.
+   *
+   * @param chess the chess
+   * @param boardPanel the board panel
+   */
+public ChessController(Chess chess, BoardPanel boardPanel) {
     this.boardPanel = boardPanel;
     this.boardPanel.setLocationListener(this);
     initialize(chess);
@@ -43,7 +52,10 @@ public class ChessController implements LocationListener, ChessMenuController {
     this.boardPanel.addPiecePanel(piecePanel, piece.getLocation());
   }
 
-  public void applyRandomMove() {
+  /**
+   * Apply random move.
+   */
+public void applyRandomMove() {
     if (finished) return;
     Move move = chess.getRandomMove();
     if (move != null && applyMove(move)) {
@@ -89,7 +101,13 @@ public class ChessController implements LocationListener, ChessMenuController {
     clip.start();
   }
 
-  public boolean applyMove(Move move) {
+  /**
+   * Apply move boolean.
+   *
+   * @param move the move
+   * @return the boolean
+   */
+public boolean applyMove(Move move) {
     if (!chess.applyMove(move)) return false;
     playMoveSound(move);
     lastMove = move;
@@ -120,7 +138,12 @@ public class ChessController implements LocationListener, ChessMenuController {
     this.checkForFinish();
   }
 
-  @Override
+  /**
+   * Location selected.
+   *
+   * @param location the location
+   */
+@Override
   public void locationSelected(Location location) {
     if (finished) return;
     if (currentSelectedPiece == null) {
@@ -134,14 +157,24 @@ public class ChessController implements LocationListener, ChessMenuController {
     draw();
   }
 
-  @Override
+  /**
+   * Location grabbed.
+   *
+   * @param location the location
+   */
+@Override
   public void locationGrabbed(Location location) {
     if (finished) return;
     currentSelectedPiece = chess.getBoard().getPiece(location);
     draw();
   }
 
-  @Override
+  /**
+   * Location dropped.
+   *
+   * @param location the location
+   */
+@Override
   public void locationDropped(Location location) {
     if (finished) return;
     if (currentSelectedPiece == null) {
@@ -155,7 +188,13 @@ public class ChessController implements LocationListener, ChessMenuController {
     draw();
   }
 
-  @Override
+  /**
+   * Is location draggable boolean.
+   *
+   * @param location the location
+   * @return the boolean
+   */
+@Override
   public boolean isLocationDraggable(Location location) {
     return !finished
         && chess.getBoard().isOccupied(location)
@@ -176,19 +215,28 @@ public class ChessController implements LocationListener, ChessMenuController {
     finished = true;
   }
 
-  @Override
+  /**
+   * New game.
+   */
+@Override
   public void newGame() {
     initialize(new Chess());
   }
 
-  @Override
+  /**
+   * Load fen.
+   */
+@Override
   public void loadFEN() {
     String fen = JOptionPane.showInputDialog(boardPanel, "Enter FEN:");
     if (fen == null) return;
     initialize(new Chess(fen));
   }
 
-  @Override
+  /**
+   * Undo move.
+   */
+@Override
   public void undoMove() {
     if (finished) return;
     chess.undoMove();

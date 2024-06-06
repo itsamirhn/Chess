@@ -5,19 +5,43 @@ import com.amirhn.Game.Chess;
 import com.amirhn.Game.Location;
 import com.amirhn.Pieces.Pawn;
 
+/**
+ * The type En passant.
+ */
 public class EnPassant extends Capture {
 
-  public Location secondSource;
-  public Location secondDestination;
-  public Walk pushPawnMove;
+  /**
+   * The Second source.
+   */
+public Location secondSource;
+  /**
+   * The Second destination.
+   */
+public Location secondDestination;
+  /**
+   * The Push pawn move.
+   */
+public Walk pushPawnMove;
 
-  public EnPassant(Pawn pawn, Pawn capturePawn) {
+  /**
+   * Instantiates a new En passant.
+   *
+   * @param pawn the pawn
+   * @param capturePawn the capture pawn
+   */
+public EnPassant(Pawn pawn, Pawn capturePawn) {
     super(pawn, capturePawn);
     this.secondSource = capturePawn.getLocation();
     this.secondDestination = capturePawn.getLocation().byOffset(-1 * capturePawn.direction, 0);
   }
 
-  @Override
+  /**
+   * Apply on board boolean.
+   *
+   * @param board the board
+   * @return the boolean
+   */
+@Override
   public boolean applyOnBoard(Board board) {
     if (!isValidApplyOnBoard(board)) return false;
     super.applyOnBoard(board);
@@ -25,13 +49,24 @@ public class EnPassant extends Capture {
     return pushPawnMove.applyOnBoard(board);
   }
 
-  @Override
+  /**
+   * Undo on board.
+   *
+   * @param board the board
+   */
+@Override
   public void undoOnBoard(Board board) {
     pushPawnMove.undoOnBoard(board);
     super.undoOnBoard(board);
   }
 
-  @Override
+  /**
+   * Is valid apply on board boolean.
+   *
+   * @param board the board
+   * @return the boolean
+   */
+@Override
   public boolean isValidApplyOnBoard(Board board) {
     return super.isValidApplyOnBoard(board)
         && source.row == destination.row
@@ -40,7 +75,13 @@ public class EnPassant extends Capture {
         && !board.isOccupied(secondDestination);
   }
 
-  @Override
+  /**
+   * Is allowed boolean.
+   *
+   * @param chess the chess
+   * @return the boolean
+   */
+@Override
   public boolean isAllowed(Chess chess) {
     if (chess.moves.isEmpty()) return false;
     Move lastMove = chess.moves.getLast();
@@ -49,12 +90,22 @@ public class EnPassant extends Capture {
     return super.isAllowed(chess);
   }
 
-  @Override
+  /**
+   * To string string.
+   *
+   * @return the string
+   */
+@Override
   public String toString() {
     return "" + piece.type.letter + source + "x" + secondDestination + " " + "e.p.";
   }
 
-  @Override
+  /**
+   * Gets endpoint location.
+   *
+   * @return the endpoint location
+   */
+@Override
   public Location getEndpointLocation() {
     return secondDestination;
   }

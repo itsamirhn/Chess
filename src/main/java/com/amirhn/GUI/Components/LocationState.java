@@ -3,13 +3,31 @@ package com.amirhn.GUI.Components;
 import com.amirhn.GUI.Constants;
 import java.awt.*;
 
+/**
+ * The enum Location state.
+ */
 public enum LocationState {
-  LASTMOVE(Constants.YellowGreenColor),
-  SELECTED(Constants.GreenColor),
-  SUGGESTED(Constants.GreenColor),
-  NORMAL(Constants.TransparentColor);
+  /**
+   *Lastmove location state.
+   */
+LASTMOVE(Constants.YellowGreenColor),
+  /**
+   *Selected location state.
+   */
+SELECTED(Constants.GreenColor),
+  /**
+   *Suggested location state.
+   */
+SUGGESTED(Constants.GreenColor),
+  /**
+   *Normal location state.
+   */
+NORMAL(Constants.TransparentColor);
 
-  public final Color color;
+  /**
+   * The Color.
+   */
+public final Color color;
 
   LocationState(Color color) {
     this.color = color;

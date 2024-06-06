@@ -5,23 +5,52 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Board.
+ */
 public class Board {
-  public final int rows, columns;
-  public final Map<Location, Piece> pieceByLocation = new HashMap<>();
+  /**
+   * The Rows.
+   */
+public final int rows, /**
+   * The Columns.
+   */
+columns;
+  /**
+   * The Piece by location.
+   */
+public final Map<Location, Piece> pieceByLocation = new HashMap<>();
 
-  public Board(int rows, int columns) {
+  /**
+   * Instantiates a new Board.
+   *
+   * @param rows the rows
+   * @param columns the columns
+   */
+public Board(int rows, int columns) {
     this.rows = rows;
     this.columns = columns;
   }
 
-  public static Board fromFEN(String fen) {
+  /**
+   * From fen board.
+   *
+   * @param fen the fen
+   * @return the board
+   */
+public static Board fromFEN(String fen) {
     int rows = fen.split("/").length;
     Board board = new Board(rows, rows);
     board.setupFEN(fen);
     return board;
   }
 
-  public void setupFEN(String fen) {
+  /**
+   * Sets fen.
+   *
+   * @param fen the fen
+   */
+public void setupFEN(String fen) {
     pieceByLocation.clear();
     String[] rows = fen.split("/");
     int i = rows.length - 1;
@@ -39,7 +68,13 @@ public class Board {
     }
   }
 
-  public boolean isValidLocation(Location location) {
+  /**
+   * Is valid location boolean.
+   *
+   * @param location the location
+   * @return the boolean
+   */
+public boolean isValidLocation(Location location) {
     if (location == null) return false;
     return 0 <= location.row
         && location.row < this.rows
@@ -47,32 +82,70 @@ public class Board {
         && location.column < this.columns;
   }
 
-  public boolean isOccupied(Location location) {
+  /**
+   * Is occupied boolean.
+   *
+   * @param location the location
+   * @return the boolean
+   */
+public boolean isOccupied(Location location) {
     if (!this.isValidLocation(location)) return false;
     return getPiece(location) != null;
   }
 
-  public Piece getPiece(Location location) {
+  /**
+   * Gets piece.
+   *
+   * @param location the location
+   * @return the piece
+   */
+public Piece getPiece(Location location) {
     return this.pieceByLocation.get(location);
   }
 
-  public void setPiece(Piece piece) {
+  /**
+   * Sets piece.
+   *
+   * @param piece the piece
+   */
+public void setPiece(Piece piece) {
     this.pieceByLocation.put(piece.getLocation(), piece);
   }
 
-  public void removePiece(Piece piece) {
+  /**
+   * Remove piece.
+   *
+   * @param piece the piece
+   */
+public void removePiece(Piece piece) {
     this.pieceByLocation.remove(piece.getLocation());
   }
 
-  public List<Piece> getAllPieces() {
+  /**
+   * Gets all pieces.
+   *
+   * @return the all pieces
+   */
+public List<Piece> getAllPieces() {
     return pieceByLocation.values().stream().toList();
   }
 
-  public boolean isValidPiece(Piece piece) {
+  /**
+   * Is valid piece boolean.
+   *
+   * @param piece the piece
+   * @return the boolean
+   */
+public boolean isValidPiece(Piece piece) {
     return this.getPiece(piece.getLocation()) == piece;
   }
 
-  @Override
+  /**
+   * To string string.
+   *
+   * @return the string
+   */
+@Override
   public String toString() {
     StringBuilder board = new StringBuilder();
     board.append(" \t");
@@ -88,13 +161,24 @@ public class Board {
     return board.toString();
   }
 
-  public Board copy() {
+  /**
+   * Copy board.
+   *
+   * @return the board
+   */
+public Board copy() {
     Board board = new Board(this.rows, this.columns);
     for (Piece piece : this.getAllPieces()) board.setPiece(piece.copy());
     return board;
   }
 
-  @Override
+  /**
+   * Equals boolean.
+   *
+   * @param o the o
+   * @return the boolean
+   */
+@Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
