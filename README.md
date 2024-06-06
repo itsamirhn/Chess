@@ -1,7 +1,19 @@
 
 # Chess
+![Maven](https://github.com/itsamirhn/Chess/actions/workflows/maven.yml/badge.svg)
+![Release](https://github.com/itsamirhn/Chess/actions/workflows/release.yml/badge.svg)
 
 A Fully Object-Oriented Chess, written in pure Java
+
+
+## Table of Contents
+1. [Features](#features)
+2. [Demo](#demo)
+3. [Documentation](#documentation)
+4. [Run Locally](#run-locally)
+5. [Running Tests](#running-tests)
+6. [Project Structure Diagrams](#project-structure-diagrams)
+7. [License](#license)
 
 
 ## Features
@@ -10,7 +22,7 @@ A Fully Object-Oriented Chess, written in pure Java
 - Multiplayer
 - Undo Move
 - Plays sound
-- Support Stalement and Checkmate edge Cases
+- Support Stalemate and Checkmate edge Cases
 - Support [En Passant](https://en.wikipedia.org/wiki/En_passant) Move
 
 
@@ -61,7 +73,11 @@ This project follows the [Model-View-Controller](https://en.wikipedia.org/wiki/M
 
 <img src="docs/diagrams/gui.png" alt="GUI" width="500"/>
 
-## Authors
+## License
+![MIT](https://img.shields.io/badge/license-MIT-blue)
 
-- [@itsamirhn](https://github.com/itsamirhn)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+
+
 
