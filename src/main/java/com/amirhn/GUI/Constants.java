@@ -29,10 +29,10 @@ public class Constants {
   public static final String GameTitle = "Chess";
 
   /** The constant PieceImageDirectory. */
-  public static final String PieceImageDirectory = "png";
+  public static final String PieceImageDirectory = "/png";
 
   /** The constant SoundDirectory. */
-  public static final String SoundDirectory = "sound";
+  public static final String SoundDirectory = "/sound";
 
   /** The constant MoveSoundPath. */
   public static final String MoveSoundPath = Constants.SoundDirectory + "/" + "move.wav";

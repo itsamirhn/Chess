@@ -12,6 +12,8 @@ import com.amirhn.Moves.MoveType;
 import com.amirhn.Pieces.Piece;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 import javax.sound.sampled.*;
 import javax.swing.*;
 
@@ -76,9 +78,10 @@ public class ChessController implements LocationListener, ChessMenuController {
     } else {
       soundPath = Constants.MoveSoundPath;
     }
+    URL soundURL = getClass().getResource(soundPath);
     AudioInputStream audioInputStream = null;
     try {
-      audioInputStream = AudioSystem.getAudioInputStream(new File(soundPath).getAbsoluteFile());
+      audioInputStream = AudioSystem.getAudioInputStream(Objects.requireNonNull(soundURL));
     } catch (UnsupportedAudioFileException | IOException e) {
       e.printStackTrace();
     }
